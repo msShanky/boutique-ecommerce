@@ -5,9 +5,8 @@ import SearchInput from "./header/SearchInput";
 
 const appLinks = [
 	{ link: "/", label: "Home" },
-	{ link: "/pages", label: "Pages" },
 	{ link: "/products", label: "Products" },
-	{ link: "/shop", label: "Shop" },
+	{ link: "/cart", label: "Cart" },
 	{ link: "/contact", label: "Contact" },
 ];
 
