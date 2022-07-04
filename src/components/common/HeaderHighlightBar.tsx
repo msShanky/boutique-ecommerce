@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Mail, PhoneCall, CurrencyRupee, User, Heart, ShoppingCart } from "tabler-icons-react";
 
 const HeaderHighlightBar = () => {
@@ -32,9 +33,11 @@ const HeaderHighlightBar = () => {
 						<p>WishList</p>
 						<Heart size={15} />
 					</div>
-					<div className="flex flex-row items-center">
-						<ShoppingCart size={15} />
-					</div>
+					<Link href="/cart" passHref>
+						<div className="flex flex-row items-center hover:cursor-pointer">
+							<ShoppingCart size={15} />
+						</div>
+					</Link>
 				</div>
 			</section>
 		</main>

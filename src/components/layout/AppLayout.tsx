@@ -4,6 +4,7 @@ import AppFooter from "../common/AppFooter";
 
 type AppLayoutProps = {
 	children: ReactElement;
+	isContained?: boolean;
 };
 
 const AppLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
