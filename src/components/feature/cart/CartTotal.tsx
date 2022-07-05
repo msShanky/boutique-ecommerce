@@ -1,13 +1,18 @@
 import React from "react";
 import { Button, Text, Title } from "@mantine/core";
-import { useSelector } from "react-redux";
 import { Check, CurrencyRupee } from "tabler-icons-react";
-import { cartSafeSelector, draftSafeSelector } from "../../../reducer/cart";
+import { cartSafeSelector } from "../../../reducer/cart";
 import { useAppSelector } from "../../../app/hooks";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const CartTotal = () => {
 	const state = useAppSelector((state) => state);
 	const cartTotal = cartSafeSelector(state);
+
+	const router = useRouter();
+
+	const isCheckoutPage = router.route === "/checkout";
 
 	return (
 		<section className="flex flex-col items-center w-5/12 space-y-8">
@@ -26,7 +31,11 @@ const CartTotal = () => {
 					</div>
 					<Text>Shipping &amp; taxes calculated at checkout</Text>
 				</div>
-				<Button className="w-full bg-success">Proceed To Checkout</Button>
+				{!isCheckoutPage && (
+					<Link href="/checkout" passHref>
+						<Button className="w-full bg-success">Proceed To Checkout</Button>
+					</Link>
+				)}
 			</div>
 		</section>
 	);

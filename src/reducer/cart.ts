@@ -14,7 +14,10 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addProduct: (state, { payload }: PayloadAction<SelectedProduct>) => {
-			const existingIndex = state.products.findIndex((p) => p.id === payload.id);
+			console.log("The payload received is ", payload);
+			const existingIndex = state.products.findIndex(
+				(p) => p.id === payload.id && p.selectedSize === payload.selectedSize
+			);
 			console.log("The existing index is", existingIndex);
 			// If the product already exists then increase the quantity by 1
 			if (existingIndex >= 0) {
@@ -34,6 +37,7 @@ const { actions, reducer } = cartSlice;
 export const { addProduct, removeProduct, alterProduct } = actions;
 
 const selectSelf = (state: RootState) => state.cart;
+
 export const cartSafeSelector = createDraftSafeSelector(selectSelf, (state) => {
 	let totalValue = 0;
 	state.products.forEach((product) => {
@@ -42,11 +46,5 @@ export const cartSafeSelector = createDraftSafeSelector(selectSelf, (state) => {
 	});
 	return totalValue;
 });
-
-
-export const draftSafeSelector = createDraftSafeSelector(
-  selectSelf,
-  (state) => state.products.length
-)
 
 export default reducer;
