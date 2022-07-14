@@ -13,7 +13,7 @@ const Cart: NextPage = () => {
 		<AppLayout>
 			<>
 				<Head>
-					<title>Boutique | Cart</title>
+					<title>Breeze Boutique | Cart</title>
 				</Head>
 				<section className="flex w-full h-72 bg-violet-light">
 					<div className="container flex flex-col justify-center mx-auto">

@@ -13,7 +13,7 @@ const Checkout: NextPage = () => {
 		<AppLayout>
 			<>
 				<Head>
-					<title>Boutique | Checkout</title>
+					<title>Breeze Boutique | Checkout</title>
 				</Head>
 				<section className="flex w-full h-72 bg-violet-light">
 					<div className="container flex flex-col justify-center mx-auto">
