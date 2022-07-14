@@ -27,7 +27,7 @@ const Product: NextPage = () => {
 		<AppLayout>
 			<>
 				<Head>
-					<title>Boutique | Products</title>
+					<title>Breeze Boutique | Products</title>
 				</Head>
 				<section className="flex w-full h-72 bg-violet-light">
 					<div className="container flex flex-col justify-center mx-auto">
