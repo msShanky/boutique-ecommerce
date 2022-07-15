@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, MouseEvent } from "react";
 import { Anchor, Button, Checkbox, Divider, Group } from "@mantine/core";
 import { Paper, PaperProps, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 import { upperFirst, useForm, useToggle } from "@mantine/hooks";
 
 type AuthFormProps = {
-	paperProps: PaperProps<"div">;
+	paperProps?: PaperProps<"div">;
+	handleGoogleLogin: (event: MouseEvent) => void;
 };
 
 const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
@@ -30,7 +31,7 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			</Text>
 
 			<Group grow mb="md" mt="md">
-				<Button className="bg-pink hover:bg-violet" radius="xl">
+				<Button onClick={props.handleGoogleLogin} className="bg-pink hover:bg-violet" radius="xl">
 					Google
 				</Button>
 				<Button className="bg-pink hover:bg-violet" radius="xl">

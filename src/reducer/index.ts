@@ -1,5 +1,7 @@
-import cardReducer from './cart'
+import cartReducer from "./cart";
+import userReducer from "./user";
 
 export const rootReducer = {
-	cart: cardReducer,
+	cart: cartReducer,
+	user: userReducer,
 };

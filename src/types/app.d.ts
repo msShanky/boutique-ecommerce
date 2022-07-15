@@ -12,3 +12,7 @@ type SelectedProduct = Product & {
 type CartProduct = SelectedProduct & {
 	quantity: number;
 };
+
+type UserStateType = {
+	user: import("@supabase/supabase-js").Session | undefined;
+};
