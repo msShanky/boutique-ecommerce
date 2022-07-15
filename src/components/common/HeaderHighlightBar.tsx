@@ -25,10 +25,12 @@ const HeaderHighlightBar = () => {
 						<CurrencyRupee size={15} />
 						<p>INR</p>
 					</div>
-					<div className="flex flex-row items-center space-x-2">
-						<p>Login</p>
-						<User size={15} />
-					</div>
+					<Link href="/login" passHref>
+						<div className="flex flex-row items-center space-x-2 hover:cursor-pointer">
+							<p>Login</p>
+							<User size={15} />
+						</div>
+					</Link>
 					<div className="flex flex-row items-center space-x-2">
 						<p>WishList</p>
 						<Heart size={15} />
