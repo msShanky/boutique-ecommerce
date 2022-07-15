@@ -12,11 +12,11 @@ const HeaderHighlightBar = () => {
 				<div className="flex flex-row items-center space-x-8">
 					<div className="flex flex-row items-center space-x-2">
 						<Mail size={15} />
-						<p>sample@example.com</p>
+						<p>care@breezeboutique.in</p>
 					</div>
 					<div className="flex flex-row items-center space-x-2">
 						<PhoneCall size={15} />
-						<p>+91 8822447762</p>
+						<p>+91 8925769663</p>
 					</div>
 				</div>
 				{/* Right Content in Menu */}
