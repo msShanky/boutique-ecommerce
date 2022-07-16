@@ -15,6 +15,10 @@ module.exports = {
 				success: "#19D16F",
 			},
 		},
+		fontFamily: {
+			sans: ["Josefin Sans", "sans-serif"],
+			serif: ["Merriweather", "serif"],
+		},
 	},
 	plugins: [],
 };
