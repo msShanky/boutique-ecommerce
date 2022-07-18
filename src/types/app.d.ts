@@ -16,3 +16,11 @@ type CartProduct = SelectedProduct & {
 type UserStateType = {
 	user: import("@supabase/supabase-js").Session | undefined;
 };
+
+type SupaBaseResponse<T> = {
+	body: T;
+	statusText: null | string;
+	status: null | number;
+	error: null | any;
+	count: null | number;
+};
