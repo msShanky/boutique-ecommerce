@@ -1,12 +1,14 @@
-import { Breadcrumbs, Title } from "@mantine/core";
+import { Breadcrumbs, Loader, Title } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useAppDispatch } from "../../app/hooks";
-import ProductCard from "../../components/feature/product/ProductCard";
+import ProductCategoryCard from "../../components/feature/product/ProductCategoryCard";
 import AppLayout from "../../components/layout/AppLayout";
 import { useGetProductCategoriesQuery } from "../../reducer/breezeBaseApi";
 import { addProduct } from "../../reducer/cart";
+import { definitions } from "../../types/supabase";
 
 const products = [
 	{ id: 1, image: "/images/products/product_1.jpeg", price: 999, size: ["4xl"] },
@@ -25,6 +27,7 @@ const breadcrumbs = [
 
 const Product: NextPage = () => {
 	const dispatch = useAppDispatch();
+	const router = useRouter();
 
 	const { isLoading, data, error } = useGetProductCategoriesQuery();
 
@@ -32,7 +35,10 @@ const Product: NextPage = () => {
 		dispatch(addProduct(product));
 	};
 
-	console.log("the response from the api for category", data);
+	const handleCategoryRedirection = (category: definitions["product_category"]) => {
+		const categoryRoute = `/products/${category.category?.toLowerCase()}`;
+		router.push(categoryRoute);
+	};
 
 	return (
 		<AppLayout>
@@ -63,21 +69,21 @@ const Product: NextPage = () => {
 						</Breadcrumbs>
 					</div>
 				</section>
-				<section className="container flex flex-wrap gap-10 mx-auto mt-20">
+				<section className="container flex flex-wrap gap-10 mx-auto my-20">
 					{data?.body.map((categoryData, index) => {
-						const { category } = categoryData;
-						return <h1 key={`CATEGORY_INDEX_${index + 15}`}>{category}</h1>;
-					})}
-					{/* {data.body.map((product) => {
 						return (
-							<ProductCard
-								handleAddToCart={(selectedSize) => handleProductAdd({ ...product, selectedSize })}
-								handleWishList={() => {}}
-								product={product}
-								key={product.id}
+							<ProductCategoryCard
+								handleCardClick={() => handleCategoryRedirection(categoryData)}
+								key={`CATEGORY_INDEX_${index + 15}`}
+								categoryProp={categoryData}
 							/>
 						);
-					})} */}
+					})}
+					{isLoading && (
+						<div className="flex justify-center w-full h-56">
+							<Loader size={60} />
+						</div>
+					)}
 				</section>
 			</>
 		</AppLayout>

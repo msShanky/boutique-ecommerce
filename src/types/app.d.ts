@@ -24,3 +24,9 @@ type SupaBaseResponse<T> = {
 	error: null | any;
 	count: null | number;
 };
+
+type ProductVariants = {
+	variants: Array<import("../types/supabase").definitions["product_variant"]>;
+};
+
+type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;

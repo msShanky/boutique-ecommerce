@@ -10,7 +10,10 @@ export const breezeBaseApi = createApi({
 		getProductCategories: builder.query<SupaBaseResponse<Array<definitions["product_category"]>>, void>({
 			query: () => `product-category`,
 		}),
+		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
+			query: (categoryName: string) => `product-category/${categoryName}/products`,
+		}),
 	}),
 });
 
-export const { useGetProductCategoriesQuery } = breezeBaseApi;
+export const { useGetProductCategoriesQuery, useGetProductsByCategoryNameQuery } = breezeBaseApi;

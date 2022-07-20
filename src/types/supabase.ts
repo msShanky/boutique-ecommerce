@@ -428,6 +428,8 @@ export interface paths {
           created_at?: parameters["rowFilter.product_category.created_at"];
           category?: parameters["rowFilter.product_category.category"];
           description?: parameters["rowFilter.product_category.description"];
+          /** contains the image to be displayed for the category */
+          category_image?: parameters["rowFilter.product_category.category_image"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -482,6 +484,8 @@ export interface paths {
           created_at?: parameters["rowFilter.product_category.created_at"];
           category?: parameters["rowFilter.product_category.category"];
           description?: parameters["rowFilter.product_category.description"];
+          /** contains the image to be displayed for the category */
+          category_image?: parameters["rowFilter.product_category.category_image"];
         };
         header: {
           /** Preference */
@@ -500,6 +504,8 @@ export interface paths {
           created_at?: parameters["rowFilter.product_category.created_at"];
           category?: parameters["rowFilter.product_category.category"];
           description?: parameters["rowFilter.product_category.description"];
+          /** contains the image to be displayed for the category */
+          category_image?: parameters["rowFilter.product_category.category_image"];
         };
         body: {
           /** product_category */
@@ -632,6 +638,11 @@ export interface definitions {
     category?: string;
     /** Format: text */
     description?: string;
+    /**
+     * Format: text
+     * @description contains the image to be displayed for the category
+     */
+    category_image?: string;
   };
 }
 
@@ -734,6 +745,11 @@ export interface parameters {
   "rowFilter.product_category.category": string;
   /** Format: text */
   "rowFilter.product_category.description": string;
+  /**
+   * Format: text
+   * @description contains the image to be displayed for the category
+   */
+  "rowFilter.product_category.category_image": string;
 }
 
 export interface operations {}
