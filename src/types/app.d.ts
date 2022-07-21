@@ -30,3 +30,8 @@ type ProductVariants = {
 };
 
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
+
+type ProductInformationProps = {
+	categoryName: string;
+	productCode: string;
+};

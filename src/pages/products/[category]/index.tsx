@@ -36,9 +36,10 @@ const Product: NextPage = () => {
 
 	const { isLoading, data, error } = useGetProductsByCategoryNameQuery(category as string);
 
-	// const handleProductAdd = (product: SelectedProduct) => {
-	// 	dispatch(addProduct(product));
-	// };
+	const handleProductRedirection = (product: ProductWithRelations) => {
+		const productRoute = product.code;
+		router.push(`${router.asPath}/${productRoute}`);
+	};
 
 	return (
 		<AppLayout>
@@ -71,19 +72,16 @@ const Product: NextPage = () => {
 				</section>
 				<section className="container flex flex-wrap gap-10 mx-auto my-20">
 					{data?.body &&
-						data?.body.map((product, index) => {
+						data?.body.map((product) => {
 							return (
 								<ProductCard
-									handleAddToCart={(selectedSize) => console.log(" The size selected is", selectedSize)}
+									handleProductRedirection={() => handleProductRedirection(product)}
 									handleWishList={() => {}}
 									product={product}
 									key={product.id}
 								/>
 							);
 						})}
-					{/* {data.body.map((product) => {
-						
-					})} */}
 				</section>
 			</>
 		</AppLayout>

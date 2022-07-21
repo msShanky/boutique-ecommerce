@@ -1,20 +1,26 @@
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, MouseEvent } from "react";
 import { Heart } from "tabler-icons-react";
 
 type ProductCardProps = {
 	product: ProductWithRelations;
-	handleAddToCart: (selectedSize: string) => void;
+	handleProductRedirection: () => void;
 	handleWishList: () => void;
 };
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 	const { hovered, ref } = useHover();
-	const { id, images, msrp, title, sub_title, variants } = props.product;
+	const { handleProductRedirection, product } = props;
+	const { id, images, msrp, title, sub_title, variants } = product;
+
+	const _handleWishList = (event: MouseEvent<HTMLButtonElement>) => {
+		console.log("The wish list is clicked");
+		event.stopPropagation();
+	};
 
 	return (
-		<Card ref={ref} className="relative shadow-lg w-72 hover:cursor-pointer group">
+		<Card onClick={handleProductRedirection} ref={ref} className="relative shadow-lg w-72 hover:cursor-pointer group">
 			<Card.Section className="h-64 bg-violet-light">
 				<Image
 					height={256}
@@ -27,7 +33,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				/>
 			</Card.Section>
 			<div className="absolute flex flex-row space-x-4 top-2 left-2">
-				<ActionIcon className="hover:bg-transparent " onClick={() => console.log("Handle Product Wish listing")}>
+				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
 					<Heart className="active:fill-pink stroke-pink" size={40} />
 				</ActionIcon>
 			</div>
@@ -53,7 +59,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 					</>
 				)}
 			</div>
-			<div className="flex mt-6 space-x-4">
+			<div className="flex items-center mt-6 space-x-4">
 				<Text className="font-sans text-base text-page">Rs. {msrp ? (msrp as number) - 600 : msrp}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
 				<Text className="font-sans text-sm text-violet">(79% OFF)</Text>
