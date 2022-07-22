@@ -6,8 +6,8 @@ const HomeBanner = () => {
 		<section className="w-full bg-violet-light min-h-[764px] flex items-center">
 			<div className="container flex flex-row items-center mx-auto space-x-10">
 				<div className="w-3/6 space-y-8">
-					<Text className="font-bold text-pink ">Be style be comfort</Text>
-					<Title className="text-5xl text-black ">Breeze Boutique</Title>
+					<Text className="font-sans font-bold text-pink">Be style be comfort</Text>
+					<Title className="font-serif text-5xl text-black">Breeze Boutique</Title>
 					<Text className="text-violet-subtext">Hold tight !!! We&apos;re launching really soon.</Text>
 					{/* <Button className="text-white bg-pink hover:bg-violet">Shop Now</Button> */}
 				</div>

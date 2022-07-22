@@ -1,43 +1,45 @@
 {
-  "name": "botique-ecommerce-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@mantine/core": "^4.2.10",
-    "@mantine/dates": "^4.2.10",
-    "@mantine/form": "^4.2.10",
-    "@mantine/hooks": "^4.2.10",
-    "@mantine/modals": "^4.2.10",
-    "@mantine/next": "^4.2.10",
-    "@mantine/notifications": "^4.2.10",
-    "@mantine/spotlight": "^4.2.10",
-    "@reduxjs/toolkit": "^1.8.3",
-    "@supabase/supabase-js": "^1.35.4",
-    "appwrite": "^8.0.1",
-    "classnames": "^2.3.1",
-    "dayjs": "^1.11.3",
-    "next": "12.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-redux": "^8.0.2",
-    "tabler-icons-react": "^1.51.0"
-  },
-  "devDependencies": {
-    "@types/node": "18.0.0",
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
-    "@types/react-redux": "^7.1.24",
-    "autoprefixer": "^10.4.7",
-    "eslint": "8.18.0",
-    "eslint-config-next": "12.1.6",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.4",
-    "typescript": "4.7.4"
-  }
+	"name": "botique-ecommerce-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"generate-types": "npx openapi-typescript https://legumfivysflstxpzgou.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ3VtZml2eXNmbHN0eHB6Z291Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc4MTU2NDcsImV4cCI6MTk3MzM5MTY0N30.jMDdz3KZxLwtBsHrpT1OBbODFi8V2qIuCYODGbZ2n1Q --output src/types/supabase.ts"
+	},
+	"dependencies": {
+		"@mantine/core": "^4.2.10",
+		"@mantine/dates": "^4.2.10",
+		"@mantine/form": "^4.2.10",
+		"@mantine/hooks": "^4.2.10",
+		"@mantine/modals": "^4.2.10",
+		"@mantine/next": "^4.2.10",
+		"@mantine/notifications": "^4.2.10",
+		"@mantine/spotlight": "^4.2.10",
+		"@reduxjs/toolkit": "^1.8.3",
+		"@supabase/supabase-js": "^1.35.4",
+		"appwrite": "^8.0.1",
+		"classnames": "^2.3.1",
+		"dayjs": "^1.11.3",
+		"next": "12.1.6",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-redux": "^8.0.2",
+		"tabler-icons-react": "^1.51.0"
+	},
+	"devDependencies": {
+		"@types/node": "18.0.0",
+		"@types/react": "18.0.14",
+		"@types/react-dom": "18.0.5",
+		"@types/react-redux": "^7.1.24",
+		"autoprefixer": "^10.4.7",
+		"eslint": "8.18.0",
+		"eslint-config-next": "12.1.6",
+		"postcss": "^8.4.14",
+		"tailwindcss": "^3.1.4",
+		"typescript": "4.7.4"
+	}
 }
+
