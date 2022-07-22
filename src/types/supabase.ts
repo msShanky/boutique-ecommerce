@@ -26,6 +26,8 @@ export interface paths {
           sub_title?: parameters["rowFilter.product.sub_title"];
           purchase_price?: parameters["rowFilter.product.purchase_price"];
           msrp?: parameters["rowFilter.product.msrp"];
+          /** manages the product discount percentage */
+          product_discount?: parameters["rowFilter.product.product_discount"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -86,6 +88,8 @@ export interface paths {
           sub_title?: parameters["rowFilter.product.sub_title"];
           purchase_price?: parameters["rowFilter.product.purchase_price"];
           msrp?: parameters["rowFilter.product.msrp"];
+          /** manages the product discount percentage */
+          product_discount?: parameters["rowFilter.product.product_discount"];
         };
         header: {
           /** Preference */
@@ -110,6 +114,8 @@ export interface paths {
           sub_title?: parameters["rowFilter.product.sub_title"];
           purchase_price?: parameters["rowFilter.product.purchase_price"];
           msrp?: parameters["rowFilter.product.msrp"];
+          /** manages the product discount percentage */
+          product_discount?: parameters["rowFilter.product.product_discount"];
         };
         body: {
           /** product */
@@ -558,6 +564,11 @@ export interface definitions {
     purchase_price?: number;
     /** Format: numeric */
     msrp?: number;
+    /**
+     * Format: bigint
+     * @description manages the product discount percentage
+     */
+    product_discount?: number;
   };
   profiles: {
     /**
@@ -701,6 +712,11 @@ export interface parameters {
   "rowFilter.product.purchase_price": string;
   /** Format: numeric */
   "rowFilter.product.msrp": string;
+  /**
+   * Format: bigint
+   * @description manages the product discount percentage
+   */
+  "rowFilter.product.product_discount": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */

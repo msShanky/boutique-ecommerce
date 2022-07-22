@@ -9,7 +9,7 @@ const getProductFromProductCode = async (req: NextApiRequest, res: NextApiRespon
 	const getAllProducts = await supabase
 		.from<definitions["product"]>("product")
 		.select(
-			`id,code,images,category_id,msrp,title,sub_title,
+			`id,code,images,category_id,msrp,title,sub_title,product_discount,
 	category:category_id (id,category),
 	variants: product_variant(id,sku,size)`
 		)

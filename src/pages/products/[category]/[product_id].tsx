@@ -104,7 +104,7 @@ const Product: NextPage = () => {
 								Rs. {product?.msrp ? (product?.msrp as number) - 600 : product?.msrp}
 							</Text>
 							<Text className="font-sans text-xl line-through text-pink">Rs. {product?.msrp}</Text>
-							<Text className="font-sans text-xl text-violet">(79% OFF)</Text>
+							<Text className="font-sans text-xl text-violet">{`(${product?.product_discount}% OFF)`}</Text>
 						</div>
 						{/* Variant Section */}
 						<div className="flex flex-col mt-8 space-y-4">
