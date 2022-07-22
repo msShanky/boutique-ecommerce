@@ -3,11 +3,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { Heart, ShoppingCart } from "tabler-icons-react";
 import { useAppDispatch } from "../../../app/hooks";
 import AppLayout from "../../../components/layout/AppLayout";
 import { useGetProductsByCodeQuery } from "../../../reducer/breezeBaseApi";
 import { addProduct } from "../../../reducer/cart";
+import { definitions } from "../../../types/supabase";
 
 // const products = [
 // 	{ id: 1, image: "/images/products/product_1.jpeg", price: 999, size: ["4xl"] },
@@ -27,6 +29,7 @@ const breadcrumbs = [
 const Product: NextPage = () => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
+	const [selectedSize, setSize] = useState<definitions["product_variant"]>();
 
 	const { category, product_id } = router.query;
 
@@ -35,12 +38,9 @@ const Product: NextPage = () => {
 		productCode: product_id as string,
 	});
 
-	// const handleProductAdd = (product: SelectedProduct) => {
-	// 	dispatch(addProduct(product));
-	// };
 	const product = data?.body[0];
 
-	console.log("the response from the api for category", data?.body);
+	console.log("the selected size for product is", selectedSize);
 
 	return (
 		<AppLayout>
@@ -112,10 +112,14 @@ const Product: NextPage = () => {
 							<div className="flex mt-8 space-x-4">
 								{product?.variants?.map((variant) => {
 									const variantKey = `variant_key_${variant.id}`;
+									const isSelected = selectedSize?.id === variant.id;
 									return (
 										<Button
 											key={variantKey}
-											className="rounded-full w-14 h-14 border-pink text-pink hover:bg-pink hover:text-white"
+											onClick={() => setSize(variant)}
+											className={`rounded-full w-14 h-14 border-pink  hover:bg-pink hover:text-white ${
+												isSelected ? "bg-pink text-white" : "text-pink"
+											}`}
 										>
 											{variant.size}
 										</Button>
