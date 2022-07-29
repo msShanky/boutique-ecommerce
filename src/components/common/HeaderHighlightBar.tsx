@@ -21,23 +21,23 @@ const HeaderHighlightBar = () => {
 				</div>
 				{/* Right Content in Menu */}
 				<div className="flex flex-row items-center space-x-8">
-					<div className="flex flex-row items-center space-x-2">
-						<CurrencyRupee size={15} />
+					{/* <div className="flex flex-row items-center space-x-2">
+						<CurrencyRupee size={25} />
 						<p>INR</p>
-					</div>
+					</div> */}
 					<Link href="/login" passHref>
 						<div className="flex flex-row items-center space-x-2 hover:cursor-pointer">
 							<p>Login</p>
-							<User size={15} />
+							<User size={20} />
 						</div>
 					</Link>
 					<div className="flex flex-row items-center space-x-2">
 						<p>WishList</p>
-						<Heart size={15} />
+						<Heart size={20} />
 					</div>
 					<Link href="/cart" passHref>
 						<div className="flex flex-row items-center hover:cursor-pointer">
-							<ShoppingCart size={15} />
+							<ShoppingCart size={25} />
 						</div>
 					</Link>
 				</div>
