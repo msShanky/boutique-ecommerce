@@ -1,32 +1,33 @@
 import { Image, Table, Text } from "@mantine/core";
 import React from "react";
 import { useAppSelector } from "../../../app/hooks";
-
-const elements = [
-	{ position: 6, mass: 12.011, symbol: "C", name: "Carbon" },
-	{ position: 7, mass: 14.007, symbol: "N", name: "Nitrogen" },
-	{ position: 39, mass: 88.906, symbol: "Y", name: "Yttrium" },
-	{ position: 56, mass: 137.33, symbol: "Ba", name: "Barium" },
-	{ position: 58, mass: 140.12, symbol: "Ce", name: "Cerium" },
-];
+import { getSellingPrice } from "../../../helpers/price-calculator";
 
 const CartTable = () => {
 	const { products } = useAppSelector((state) => state.cart);
 
-	const rows = products.map((product) => {
-		const { image, price, quantity, selectedSize, id } = product;
+	const rows = products.map((productState: CartProduct) => {
+		const { product, variant, quantity } = productState;
+		const sellingPrice = getSellingPrice(product);
+
+		const { id, images } = product;
+
+		const baseImage = images && images.length > 0 ? (images[0] as string) : "";
+
+		console.log(baseImage);
+
 		return (
-			<tr key={product.id}>
+			<tr key={id}>
 				<td className="flex flex-row space-x-2">
-					<Image src={image} alt={`Product Image ${id}`} width={83} height={87} fit="contain" />
+					<Image src={baseImage} alt={`Product Image ${id}`} width={83} height={87} fit="contain" />
 					<div>
 						<Text className="text-sm text-violet">Selected Size:</Text>
-						<Text className="text-lg">{selectedSize}</Text>
+						<Text className="text-lg">{variant.size}</Text>
 					</div>
 				</td>
-				<td>{price}</td>
+				<td>{sellingPrice}</td>
 				<td>{quantity}</td>
-				<td>{quantity * price}</td>
+				<td>{quantity * sellingPrice}</td>
 			</tr>
 		);
 	});

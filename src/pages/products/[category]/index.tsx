@@ -1,9 +1,8 @@
-import { Breadcrumbs, Title } from "@mantine/core";
+import { Breadcrumbs, Loader, Title } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import { useEffect } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import ProductCard from "../../../components/feature/product/ProductCard";
 import AppLayout from "../../../components/layout/AppLayout";
@@ -34,7 +33,7 @@ const Product: NextPage = () => {
 	// 	}
 	// }, [category]);
 
-	const { isLoading, data, error } = useGetProductsByCategoryNameQuery(category as string);
+	const { isLoading, data, isSuccess } = useGetProductsByCategoryNameQuery(category as string);
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const productRoute = product.code;
@@ -47,7 +46,7 @@ const Product: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Products</title>
 				</Head>
-				<section className="flex w-full h-72 bg-violet-light">
+				{/* <section className="flex w-full h-72 bg-violet-light">
 					<div className="container flex flex-col justify-center mx-auto space-y-4">
 						<Title className="font-serif font-bold text-dark-blue">{category}</Title>
 						<Breadcrumbs
@@ -69,20 +68,27 @@ const Product: NextPage = () => {
 							})}
 						</Breadcrumbs>
 					</div>
-				</section>
-				<section className="container flex flex-wrap gap-10 mx-auto my-20">
-					{data?.body &&
-						data?.body.map((product) => {
-							return (
-								<ProductCard
-									handleProductRedirection={() => handleProductRedirection(product)}
-									handleWishList={() => {}}
-									product={product}
-									key={product.id}
-								/>
-							);
-						})}
-				</section>
+				</section> */}
+				{isLoading && (
+					<div className="flex justify-center w-full h-56 mt-20">
+						<Loader size={60} />
+					</div>
+				)}
+				{isSuccess && (
+					<section className="container flex flex-wrap gap-10 mx-auto my-20">
+						{data?.body &&
+							data?.body.map((product) => {
+								return (
+									<ProductCard
+										handleProductRedirection={() => handleProductRedirection(product)}
+										handleWishList={() => {}}
+										product={product}
+										key={product.id}
+									/>
+								);
+							})}
+					</section>
+				)}
 			</>
 		</AppLayout>
 	);

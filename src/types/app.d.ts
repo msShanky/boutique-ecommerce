@@ -5,11 +5,8 @@ type Product = {
 	size: Array<string>;
 };
 
-type SelectedProduct = Product & {
-	selectedSize: string;
-};
 
-type CartProduct = SelectedProduct & {
+type CartProduct = ProductCartType & {
 	quantity: number;
 };
 
@@ -34,4 +31,10 @@ type ProductWithRelations = import("../types/supabase").definitions["product"] &
 type ProductInformationProps = {
 	categoryName: string;
 	productCode: string;
+};
+
+
+type ProductCartType = {
+	product: ProductWithRelations;
+	variant: import("../types/supabase").definitions["product_variant"];
 };
