@@ -1,4 +1,5 @@
 import { Breadcrumbs, Button, Divider, Image, Loader, Text, Title } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -50,6 +51,10 @@ const Product: NextPage = () => {
 			setCartErrorState(false);
 		}
 		dispatch(addProductToCart({ product: product as ProductWithRelations, variant: selectedVariant }));
+		showNotification({
+			title: "Added Product",
+			message: `${product?.title} has been added, and size selected is ${selectedVariant.size}`,
+		});
 	};
 
 	return (

@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { Mail, PhoneCall, CurrencyRupee, User, Heart, ShoppingCart } from "tabler-icons-react";
+import { Mail, PhoneCall, User, Heart, ShoppingCart } from "tabler-icons-react";
+import { useAppSelector } from "../../app/hooks";
 
 const HeaderHighlightBar = () => {
+	const { products } = useAppSelector((state) => state.cart);
+
 	return (
 		<main className="flex flex-col bg-violet">
 			<section
@@ -36,7 +39,12 @@ const HeaderHighlightBar = () => {
 						<Heart size={20} />
 					</div>
 					<Link href="/cart" passHref>
-						<div className="flex flex-row items-center hover:cursor-pointer">
+						<div className="relative flex flex-row items-center hover:cursor-pointer">
+							{products.length > 0 && (
+								<div className="absolute flex items-center justify-center w-4 h-4 rounded-full -top-1 -right-1 bg-pink animate-pulse">
+									<span className="font-sans text-xs text-white">{products.length}</span>
+								</div>
+							)}
 							<ShoppingCart size={25} />
 						</div>
 					</Link>

@@ -4,23 +4,13 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
-import { signInWithGoogle } from "../utils/auth";
 import { supabase } from "../utils/supabaseClient";
-// import { Anchor, Button, Checkbox, Divider, Group } from "@mantine/core";
-// import { upperFirst, useForm, useToggle } from "@mantine/hooks";
 
 const Login = (props: PaperProps<"div">) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 
-	// const loginUserWithGoogle = async (event: MouseEvent) => {
-	// 	event.preventDefault();
-	// 	console.log("The google flow is initiated");
-	// 	const response = await signInWithGoogle();
-	// 	console.log(response);
-	// };
-
-	const handleLogin = async (event: MouseEvent) => {
+	const handleGoogleLogin = async (event: MouseEvent) => {
 		try {
 			setLoading(true);
 			const { error } = await supabase.auth.signIn({ provider: "google" });
@@ -39,7 +29,7 @@ const Login = (props: PaperProps<"div">) => {
 					<title>Breeze Boutique | Login</title>
 				</Head>
 				<main className="container mx-auto mt-12">
-					<AuthForm handleGoogleLogin={handleLogin} />
+					<AuthForm handleGoogleLogin={handleGoogleLogin} />
 				</main>
 			</>
 		</AppLayout>
