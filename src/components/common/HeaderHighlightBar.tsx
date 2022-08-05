@@ -1,9 +1,13 @@
-import Link from "next/link";
-import { Mail, PhoneCall, User, Heart, ShoppingCart } from "tabler-icons-react";
+import { useUser } from "@supabase/auth-helpers-react";
+import { IconMail, IconPhoneCall, IconUser, IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppSelector } from "../../app/hooks";
+import { LinkIcon, UserLoader, UserMenu } from "./header";
 
 const HeaderHighlightBar = () => {
 	const { products } = useAppSelector((state) => state.cart);
+	const { user, isLoading } = useUser();
+
+	console.log(" The user value is ", user)
 
 	return (
 		<main className="flex flex-col bg-violet">
@@ -14,40 +18,23 @@ const HeaderHighlightBar = () => {
 				{/* Left Content in Menu */}
 				<div className="flex flex-row items-center space-x-8">
 					<div className="flex flex-row items-center space-x-2">
-						<Mail size={15} />
+						<IconMail size={15} />
 						<p>care@breezeboutique.in</p>
 					</div>
 					<div className="flex flex-row items-center space-x-2">
-						<PhoneCall size={15} />
+						<IconPhoneCall size={15} />
 						<p>+91 8925769663</p>
 					</div>
 				</div>
 				{/* Right Content in Menu */}
-				<div className="flex flex-row items-center space-x-8">
-					{/* <div className="flex flex-row items-center space-x-2">
-						<CurrencyRupee size={25} />
-						<p>INR</p>
-					</div> */}
-					<Link href="/login" passHref>
-						<div className="flex flex-row items-center space-x-2 hover:cursor-pointer">
-							<p>Login</p>
-							<User size={20} />
-						</div>
-					</Link>
-					<div className="flex flex-row items-center space-x-2">
-						<p>WishList</p>
-						<Heart size={20} />
-					</div>
-					<Link href="/cart" passHref>
-						<div className="relative flex flex-row items-center hover:cursor-pointer">
-							{products.length > 0 && (
-								<div className="absolute flex items-center justify-center w-4 h-4 rounded-full -top-1 -right-1 bg-pink animate-pulse">
-									<span className="font-sans text-xs text-white">{products.length}</span>
-								</div>
-							)}
-							<ShoppingCart size={25} />
-						</div>
-					</Link>
+				<div className="relative flex flex-row items-center space-x-8">
+					<>
+						{!user && !isLoading && <LinkIcon icon={<IconUser size={20} />} link="/login" label="Login" />}
+						{isLoading && <UserLoader />}
+						{!isLoading && user && <UserMenu user={user} />}
+					</>
+					<LinkIcon icon={<IconHeart size={20} />} link="/wishlist" label="WishList" />
+					<LinkIcon icon={<IconShoppingCart size={25} />} link="/cart" dockCount={products.length} />
 				</div>
 			</section>
 		</main>

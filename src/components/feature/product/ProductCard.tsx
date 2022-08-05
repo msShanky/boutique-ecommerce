@@ -1,7 +1,7 @@
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import React, { FunctionComponent, MouseEvent } from "react";
-import { Heart } from "tabler-icons-react";
+import { IconHeart } from "@tabler/icons";
 
 type ProductCardProps = {
 	product: ProductWithRelations;
@@ -38,7 +38,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 			</Card.Section>
 			<div className="absolute flex flex-row space-x-4 top-2 left-2">
 				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
-					<Heart className="active:fill-pink stroke-pink" size={40} />
+					<IconHeart className="active:fill-pink stroke-pink" size={40} />
 				</ActionIcon>
 			</div>
 			<div className="h-20 mt-4 space-y-2 bg-white">

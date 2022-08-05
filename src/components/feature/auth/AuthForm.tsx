@@ -1,16 +1,20 @@
-import React, { FunctionComponent, MouseEvent } from "react";
-import { Anchor, Button, Checkbox, Divider, Group } from "@mantine/core";
-import { Paper, PaperProps, PasswordInput, Text, TextInput, Title } from "@mantine/core";
-import { upperFirst, useForm, useToggle } from "@mantine/hooks";
+import React, { FunctionComponent, MouseEvent, useState } from "react";
+import { Anchor, Button, Checkbox, Divider, Group, PaperProps, Stack } from "@mantine/core";
+import { Paper, PasswordInput, Text, TextInput } from "@mantine/core";
+import { upperFirst, useToggle } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+
 import { signInWithEmail, signUpWithEmail } from "../../../utils/auth";
 
 type AuthFormProps = {
-	paperProps?: PaperProps<"div">;
+	paperProps?: PaperProps;
 	handleGoogleLogin: (event: MouseEvent) => void;
 };
 
 const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
-	const [type, toggle] = useToggle<"login" | "register">("login", ["login", "register"]);
+	const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
+	const [isLoading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
 	const form = useForm<AuthFormInitialType>({
 		initialValues: {
 			email: "",
@@ -19,24 +23,37 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			terms: true,
 		},
 
-		validationRules: {
-			email: (val) => /^\S+@\S+$/.test(val),
-			password: (val) => val.length >= 6,
+		validate: {
+			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+			password: (val) => {
+				console.log(' THE FORM VALUE FOR PASSWORD IS', val, val.length);
+				return val.length <= 4;
+			},
 		},
 	});
 
 	const handleFormSubmit = async (formValues: AuthFormInitialType) => {
 		const { email, password } = formValues;
+		setLoading(true);
 		if (type === "login") {
-			const { user, error } = await signInWithEmail({ email, password });
-			console.log(user, "User logged in successfully");
-			console.log(error, "User log in failed");
+			const { error } = await signInWithEmail({ email, password });
+			if (error) {
+				console.log(error, "User log in failed");
+				setLoading(false);
+				setError(error.message);
+			}
 			return;
 		}
-		const { user, error } = await signUpWithEmail(formValues);
-		console.log(user, "User registered in successfully");
-		console.log(error, "User registration failed");
+		const { error } = await signUpWithEmail(formValues);
+		if (error) {
+			console.log(error, "User registration failed");
+			setLoading(false);
+			setError(error.message);
+		}
 	};
+
+
+	console.log(form.errors.password, "User For error")
 
 	return (
 		<Paper radius="lg" p="lg" className="w-4/12 mx-auto my-20 shadow-lg" withBorder {...props.paperProps}>
@@ -54,13 +71,14 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			</Group>
 			<Divider label="Or continue with email" labelPosition="center" my="lg" />
 			<form onSubmit={form.onSubmit(handleFormSubmit)}>
-				<Group direction="column" grow>
+				<Stack>
 					{type === "register" && (
 						<TextInput
 							label="Name"
 							placeholder="Your name"
 							value={form.values.name}
 							onChange={(event) => form.setFieldValue("name", event.currentTarget.value)}
+							classNames={{ wrapper: "w-full", input: "w-full" }}
 						/>
 					)}
 					<TextInput
@@ -86,12 +104,19 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 							onChange={(event) => form.setFieldValue("terms", event.currentTarget.checked)}
 						/>
 					)}
-				</Group>
+				</Stack>
 				<Group position="apart" mt="xl">
-					<Anchor className="text-page" component="button" type="button" color="gray" onClick={() => toggle()} size="xs">
+					<Anchor
+						className="text-page"
+						component="button"
+						type="button"
+						color="gray"
+						onClick={() => toggle()}
+						size="xs"
+					>
 						{type === "register" ? "Already have an account? Login" : "Don't have an account? Register"}
 					</Anchor>
-					<Button className="bg-black" type="submit">
+					<Button className="w-40 bg-black" type="submit">
 						{upperFirst(type)}
 					</Button>
 				</Group>

@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { definitions } from "../../types/supabase";
-import { supabase } from "../../utils/supabaseClient";
 
 const getAllProductsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const getAllProducts = await supabase.from<definitions["product"]>("product").select(`
+	const getAllProducts = await supabaseClient.from<definitions["product"]>("product").select(`
 	id,code,images,category_id,msrp,
 	category:category_id (id,category),
 	variants: product_variant(id,sku,size)

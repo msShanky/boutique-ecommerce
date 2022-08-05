@@ -1,4 +1,5 @@
 import { Title } from "@mantine/core";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useAppSelector } from "../app/hooks";
@@ -27,3 +28,5 @@ const WishListPage: NextPage = () => {
 };
 
 export default WishListPage;
+
+export const getServerSideProps = withPageAuth({ redirectTo: "/login" });

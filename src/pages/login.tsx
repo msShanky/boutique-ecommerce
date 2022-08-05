@@ -1,19 +1,24 @@
 import React, { MouseEvent, useState } from "react";
-import { PaperProps } from "@mantine/core";
+
 import { useRouter } from "next/router";
 import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
-import { supabase } from "../utils/supabaseClient";
+import { signInWithGoogle } from "../utils/auth";
+// import { supabase } from "../utils/supabaseClient";
 
-const Login = (props: PaperProps<"div">) => {
+const Login = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 
 	const handleGoogleLogin = async (event: MouseEvent) => {
+		console.log("THE GOOGLE LOGIN IS TRIGGERED", event);
 		try {
 			setLoading(true);
-			const { error } = await supabase.auth.signIn({ provider: "google" });
+			const { error, user } = await signInWithGoogle();
+			// const { error, user } = await supabase.auth.signIn({ provider: "google" });
+			console.log(error, "ERROR CHANGED");
+			console.log(user, "USER CHANGED");
 			if (error) throw error;
 		} catch (error) {
 			console.log("there is an error with google signIn");
@@ -21,6 +26,9 @@ const Login = (props: PaperProps<"div">) => {
 			setLoading(false);
 		}
 	};
+
+	// TODO: Handle user authentication errors
+	// TODO: Add Facebook login
 
 	return (
 		<AppLayout>

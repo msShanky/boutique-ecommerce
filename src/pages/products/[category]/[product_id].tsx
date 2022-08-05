@@ -1,11 +1,10 @@
-import { Breadcrumbs, Button, Divider, Image, Loader, Text, Title } from "@mantine/core";
+import { Button, Divider, Image, Loader, Text, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Heart, ShoppingCart } from "tabler-icons-react";
+import { IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppDispatch } from "../../../app/hooks";
 import AppLayout from "../../../components/layout/AppLayout";
 import { useGetProductsByCodeQuery } from "../../../reducer/breezeBaseApi";
@@ -133,7 +132,7 @@ const Product: NextPage = () => {
 									onClick={handleAddToCart}
 								>
 									<div>
-										<ShoppingCart size={20} />
+										<IconShoppingCart size={20} />
 									</div>
 									<Text>Add To Cart</Text>
 								</Button>
@@ -142,7 +141,7 @@ const Product: NextPage = () => {
 									className="w-48 h-12 border-2 border-violet text-violet hover:bg-transparent hover:border-black hover:text-black"
 								>
 									<div>
-										<Heart size={20} />
+										<IconHeart size={20} />
 									</div>
 									<Text>Wishlist</Text>
 								</Button>
