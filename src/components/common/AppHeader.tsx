@@ -4,7 +4,7 @@ import HeaderHighlightBar from "./HeaderHighlightBar";
 
 const AppHeader = () => {
 	return (
-		<nav className="z-0 w-full mx-auto h-28">
+		<nav className="w-full mx-auto h-28">
 			<HeaderHighlightBar />
 			<AppNavigation />
 		</nav>

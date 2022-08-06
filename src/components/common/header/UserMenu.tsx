@@ -24,7 +24,7 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 	};
 
 	return (
-		<div className="z-50" ref={ref}>
+		<div className="" ref={ref}>
 			<UserAvatar user={user} handleToggle={() => setOpened(!opened)} />
 			<Menu
 				opened={opened}

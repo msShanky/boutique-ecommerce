@@ -7,6 +7,8 @@ import { store } from "../app/store";
 import { Provider } from "react-redux";
 
 import { UserProvider } from "@supabase/auth-helpers-react";
+// import { supabase } from "../utils/supabaseClient";
+
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 // import { supabase } from "../utils/supabaseClient";
 // import { Session } from "@supabase/supabase-js";

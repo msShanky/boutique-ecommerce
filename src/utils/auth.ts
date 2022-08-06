@@ -1,22 +1,22 @@
 // import { supabase } from "./supabaseClient";
-import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { supabaseClient as supabase } from "@supabase/auth-helpers-nextjs";
 
 export async function signInWithGoogle() {
-	return await supabaseClient.auth.signIn(
+	return await supabase.auth.signIn(
 		{
 			provider: "google",
 		},
-		{ redirectTo: "/api/auth/user" }
+		{ redirectTo: "/" }
 	);
 }
 
 export async function signInWithEmail(formValues: UserSignInType) {
-	return await supabaseClient.auth.signIn(formValues);
+	return await supabase.auth.signIn(formValues);
 }
 
 export async function signUpWithEmail(formValues: AuthFormInitialType) {
 	const { email, password, ...data } = formValues;
-	return await supabaseClient.auth.signUp(
+	return await supabase.auth.signUp(
 		{ email, password },
 		{
 			redirectTo: "/",
@@ -26,5 +26,5 @@ export async function signUpWithEmail(formValues: AuthFormInitialType) {
 }
 
 export async function signOut() {
-	return await supabaseClient.auth.signOut();
+	return await supabase.auth.signOut();
 }

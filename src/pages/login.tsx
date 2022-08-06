@@ -1,30 +1,28 @@
 import React, { MouseEvent, useState } from "react";
-
 import { useRouter } from "next/router";
 import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
-import { signInWithGoogle } from "../utils/auth";
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+// import { signInWithGoogle } from "../utils/auth";
 // import { supabase } from "../utils/supabaseClient";
 
 const Login = () => {
 	const router = useRouter();
-	const [loading, setLoading] = useState(false);
-
 	const handleGoogleLogin = async (event: MouseEvent) => {
 		console.log("THE GOOGLE LOGIN IS TRIGGERED", event);
 		try {
-			setLoading(true);
-			const { error, user } = await signInWithGoogle();
-			// const { error, user } = await supabase.auth.signIn({ provider: "google" });
-			console.log(error, "ERROR CHANGED");
-			console.log(user, "USER CHANGED");
+			const { error, user } = await supabaseClient.auth.signIn(
+				{ provider: "google" },
+				{ redirectTo: "http://localhost:3000/api/force-refresh" }
+			);
+			console.log(user, " USER VALUE FROM GOOGLE LOGIN ");
+			console.log(error, " ERROR WHEN TRYING TO LOGIN TO GOOGLE ");
 			if (error) throw error;
 		} catch (error) {
-			console.log("there is an error with google signIn");
-		} finally {
-			setLoading(false);
+			console.log("there is an error with google signIn", error);
 		}
+		// setLoading(false);
 	};
 
 	// TODO: Handle user authentication errors

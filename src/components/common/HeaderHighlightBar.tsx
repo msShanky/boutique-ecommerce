@@ -13,7 +13,7 @@ const HeaderHighlightBar = () => {
 		<main className="flex flex-col bg-violet">
 			<section
 				role="header_highlight"
-				className="container flex flex-row justify-between w-full mx-auto text-white h-11 opacity-90"
+				className="container z-50 flex flex-row justify-between w-full mx-auto text-white h-11 bg-opacity-90"
 			>
 				{/* Left Content in Menu */}
 				<div className="flex flex-row items-center space-x-8">
