@@ -42,7 +42,6 @@ const Product: NextPage = () => {
 	};
 
 	const handleAddToCart = () => {
-		console.log("The product that should be added to cart", product);
 		if (!selectedVariant) {
 			setCartErrorState(true);
 			return;

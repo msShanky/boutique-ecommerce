@@ -1,13 +1,10 @@
-import { useUser } from "@supabase/auth-helpers-react";
 import { IconMail, IconPhoneCall, IconUser, IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppSelector } from "../../app/hooks";
-import { LinkIcon, UserLoader, UserMenu } from "./header";
+import { LinkIcon } from "./header";
+import { UserIcon } from "./user";
 
 const HeaderHighlightBar = () => {
 	const { products } = useAppSelector((state) => state.cart);
-	const { user, isLoading } = useUser();
-
-	console.log(" The user value is ", user)
 
 	return (
 		<main className="flex flex-col bg-violet">
@@ -28,11 +25,8 @@ const HeaderHighlightBar = () => {
 				</div>
 				{/* Right Content in Menu */}
 				<div className="relative flex flex-row items-center space-x-8">
-					<>
-						{!user && !isLoading && <LinkIcon icon={<IconUser size={20} />} link="/login" label="Login" />}
-						{isLoading && <UserLoader />}
-						{!isLoading && user && <UserMenu user={user} />}
-					</>
+					{/* FIXME: Fix the irritating loader */}
+					<UserIcon />
 					<LinkIcon icon={<IconHeart size={20} />} link="/wishlist" label="WishList" />
 					<LinkIcon icon={<IconShoppingCart size={25} />} link="/cart" dockCount={products.length} />
 				</div>

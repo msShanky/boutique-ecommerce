@@ -12,15 +12,15 @@ const WishListPage: NextPage = () => {
 		<AppLayout>
 			<>
 				<Head>
-					<title>Breeze Boutique | Checkout</title>
+					<title>Breeze Boutique | WishList</title>
 				</Head>
-				<section className="flex w-full h-72 bg-violet-light">
-					<div className="container flex flex-col justify-center mx-auto">
-						<Title>Checkout</Title>
+				<section className="container flex flex-wrap min-h-screen gap-10 mx-auto my-20">
+					<Title className="text-4xl font-bold text-violet" order={1}>
+						Wish listed products
+					</Title>
+					<div>
+						
 					</div>
-				</section>
-				<section className="container flex flex-wrap justify-center gap-10 mx-auto my-20">
-					<Title>Wish listed products</Title>
 				</section>
 			</>
 		</AppLayout>

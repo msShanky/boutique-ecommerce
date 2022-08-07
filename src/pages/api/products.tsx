@@ -10,15 +10,12 @@ const getAllProductsHandler = async (req: NextApiRequest, res: NextApiResponse) 
 	variants: product_variant(id,sku,size)
 	`);
 	const { data, ...response } = getAllProducts;
-	console.log("the response from the products are", getAllProducts);
 	res.status(200).json(response);
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "GET") {
-		console.log("The request object with query parameters is", req.query);
 		const containsQuery = Object.keys(req.query).length > 0;
-		console.log(containsQuery, " ---- The query containsQuery ---- ");
 		return getAllProductsHandler(req, res);
 	}
 }

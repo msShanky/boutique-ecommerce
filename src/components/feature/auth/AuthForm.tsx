@@ -26,7 +26,6 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 		validate: {
 			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
 			password: (val) => {
-				console.log(' THE FORM VALUE FOR PASSWORD IS', val, val.length);
 				return val.length <= 4;
 			},
 		},
@@ -38,7 +37,6 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 		if (type === "login") {
 			const { error } = await signInWithEmail({ email, password });
 			if (error) {
-				console.log(error, "User log in failed");
 				setLoading(false);
 				setError(error.message);
 			}
@@ -46,14 +44,10 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 		}
 		const { error } = await signUpWithEmail(formValues);
 		if (error) {
-			console.log(error, "User registration failed");
 			setLoading(false);
 			setError(error.message);
 		}
 	};
-
-
-	console.log(form.errors.password, "User For error")
 
 	return (
 		<Paper radius="lg" p="lg" className="w-4/12 mx-auto my-20 shadow-lg" withBorder {...props.paperProps}>

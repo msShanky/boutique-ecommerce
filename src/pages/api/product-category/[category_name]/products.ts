@@ -28,7 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	if (req.method === "GET") {
 		const { category_name } = req.query;
 		const { data: categoryData } = await getCategoryIdByName(category_name as string);
-		console.log(categoryData, "The category id is");
 		const _categoryId = categoryData ? categoryData[0].id : undefined;
 
 		if (!_categoryId) res.status(404).send({ message: "Category not found" });

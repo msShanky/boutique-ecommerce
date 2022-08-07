@@ -15,15 +15,12 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addProductToCart: (state, { payload }: PayloadAction<ProductCartType>) => {
-			console.log("The payload received is ", payload);
 			const { product, variant } = payload;
-			// const existingIndex = -1;
 			const existingIndex = state.products.findIndex((stateProduct) => {
 				const isSameProduct = stateProduct.product.id === product.id;
 				const isSameVariant = stateProduct.variant.id === variant.id;
 				return isSameProduct && isSameVariant;
 			});
-			console.log("The existing index is", existingIndex);
 			// If the product already exists then increase the quantity by 1
 			if (existingIndex >= 0) {
 				state.products[existingIndex].quantity = state.products[existingIndex].quantity + 1;

@@ -27,7 +27,6 @@ const Product: NextPage = () => {
 	// useEffect(() => {
 	// 	const categoryRoute = `/${category}`;
 	// 	const isExisting = breadcrumbs.some((crumb) => crumb.link === categoryRoute);
-	// 	console.log("The category breadcrumb is ", categoryRoute, isExisting);
 	// 	if (!isExisting) {
 	// 		breadcrumbs.push({ link: categoryRoute, label: category as string });
 	// 	}

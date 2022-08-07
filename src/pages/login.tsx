@@ -14,10 +14,8 @@ const Login = () => {
 		try {
 			const { error, user } = await supabaseClient.auth.signIn(
 				{ provider: "google" },
-				{ redirectTo: "http://localhost:3000/api/force-refresh" }
+				{ redirectTo: "/" }
 			);
-			console.log(user, " USER VALUE FROM GOOGLE LOGIN ");
-			console.log(error, " ERROR WHEN TRYING TO LOGIN TO GOOGLE ");
 			if (error) throw error;
 		} catch (error) {
 			console.log("there is an error with google signIn", error);

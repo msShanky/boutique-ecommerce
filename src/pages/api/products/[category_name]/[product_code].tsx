@@ -3,8 +3,7 @@ import { definitions } from "../../../../types/supabase";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 
 const getProductFromProductCode = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { product_code, category_name } = req.query;
-	console.log(req.query, "The request query received is");
+	const { product_code } = req.query;
 	const _productCode = parseInt(product_code as string, 10);
 	const getAllProducts = await supabaseClient
 		.from<definitions["product"]>("product")

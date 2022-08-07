@@ -15,7 +15,6 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 	const { id, images, msrp, title, sub_title, variants, product_discount } = product;
 
 	const _handleWishList = (event: MouseEvent<HTMLButtonElement>) => {
-		console.log("The wish list is clicked");
 		event.stopPropagation();
 	};
 

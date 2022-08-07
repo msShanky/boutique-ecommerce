@@ -7,6 +7,7 @@ import { useClickOutside } from "@mantine/hooks";
 // import UserLoader from "./UserLoader";
 import UserAvatar from "./UserAvatar";
 import { signOut } from "../../../utils/auth";
+import Link from "next/link";
 
 type UserMenuProps = {
 	user: User;
@@ -16,12 +17,6 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 	const { user } = props;
 	const [opened, setOpened] = useState(false);
 	const ref = useClickOutside(() => setOpened(false));
-
-	const handleLogout = async () => {
-		console.log("The user have clicked log out button");
-		const response = await signOut();
-		console.log(response, "SIGN OUT RESPONSE");
-	};
 
 	return (
 		<div className="" ref={ref}>
@@ -40,9 +35,11 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 					<Menu.Item icon={<IconPackage size={14} />}>Orders</Menu.Item>
 					<Menu.Item icon={<IconUser size={14} />}>Profile</Menu.Item>
 					<Menu.Divider />
-					<Menu.Item onClick={handleLogout} color="red" icon={<IconLogout size={14} />}>
-						Log Out
-					</Menu.Item>
+					<Link href="/api/auth/logout" passHref>
+						<Menu.Item color="red" icon={<IconLogout size={14} />}>
+							Log Out
+						</Menu.Item>
+					</Link>
 				</Menu.Dropdown>
 			</Menu>
 		</div>

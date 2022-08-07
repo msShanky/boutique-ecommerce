@@ -14,8 +14,6 @@ const CartTable = () => {
 
 		const baseImage = images && images.length > 0 ? (images[0] as string) : "";
 
-		console.log(baseImage);
-
 		return (
 			<tr key={id}>
 				<td className="flex flex-row space-x-2">
