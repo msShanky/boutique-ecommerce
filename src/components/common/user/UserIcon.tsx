@@ -1,15 +1,15 @@
 import React from "react";
-import { useUser } from "@supabase/auth-helpers-react";
 import { IconUser } from "@tabler/icons";
 import { LinkIcon } from "../header";
-import { UserMenu, UserLoader } from ".";
+import { UserMenu } from ".";
+import { useAuth } from "@/lib/auth";
 
 const UserIcon = () => {
-	const { user, isLoading } = useUser();
+	const { user } = useAuth();
 
-	if (isLoading) {
-		return <UserLoader />;
-	}
+	// if (isLoading) {
+	// 	return <UserLoader />;
+	// }
 
 	if (!user) {
 		return <LinkIcon icon={<IconUser size={20} />} link="/login" label="Login" />;

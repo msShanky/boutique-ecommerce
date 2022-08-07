@@ -2,11 +2,22 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import AppLayout from "../components/layout/AppLayout";
 import HomeBanner from "../components/feature/home/HomeBanner";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 // import FeaturedProducts from "../components/feature/home/FeaturedProducts";
 // import LatestProducts from "../components/feature/home/LatestProducts";
 // import SiteFeatures from "../components/feature/SiteFeatures";
 
 const Home: NextPage = () => {
+	const router = useRouter();
+
+	// useEffect(() => {
+	// 	console.log("The router change event ===> ", router);
+	// 	if (router.asPath.includes("access_token")) {
+	// 		router.push("/", undefined, { shallow: true });
+	// 	}
+	// }, [router]);
+
 	return (
 		<AppLayout>
 			<>
@@ -28,6 +39,8 @@ const Home: NextPage = () => {
 		</AppLayout>
 	);
 };
+
+// export const
 
 export default Home;
 

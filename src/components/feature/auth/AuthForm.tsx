@@ -4,7 +4,7 @@ import { Paper, PasswordInput, Text, TextInput } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
-import { signInWithEmail, signUpWithEmail } from "../../../utils/auth";
+import { signInWithEmail, signUpWithEmail } from "../../../lib/auth-helpers";
 
 type AuthFormProps = {
 	paperProps?: PaperProps;

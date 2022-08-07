@@ -1,35 +1,38 @@
 import "../styles/globals.css";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { MantineProvider, MantineTheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-import { Session } from "@supabase/supabase-js";
+// import { Session } from "@supabase/supabase-js";
 import type { AppProps } from "next/app";
 import { store } from "../app/store";
 import { Provider } from "react-redux";
-import { UserProvider } from "@supabase/auth-helpers-react";
-import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/router";
-import { useHash } from "@mantine/hooks";
-import { GetServerSideProps } from "next";
+// import { UserProvider } from "@supabase/auth-helpers-react";
+// import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+// import { useRouter } from "next/router";
+// import { useHash } from "@mantine/hooks";
+// import { GetServerSideProps } from "next";
+import { AuthProvider } from "@/lib/auth";
+import { supabase } from "@/lib/client";
 
 const breezeTheme: Partial<MantineTheme> = {
 	fontFamily: "Josefin Sans, sans-serif",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-	const [session, setSession] = useState<Session | null>(null);
+	// const [session, setSession] = useState<Session | null>(null);
 	// const [isRedirecting, setRedirection] = useState(false);
 	// const router = useRouter();
 
-	useEffect(() => {
-		setSession(supabaseClient.auth.session());
-		supabaseClient.auth.onAuthStateChange((_event, session) => {
-			console.log("session changed for supabase auth", session);
-			setSession(session);
-		});
-		supabaseClient.auth.setSession(session?.refresh_token as string);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// useEffect(() => {
+	// 	setSession(supabaseClient.auth.session());
+	// 	supabaseClient.auth.onAuthStateChange((_event, session) => {
+	// 		console.log("session changed for supabase auth", session);
+	// 		setSession(session);
+	// 		supabaseClient.auth.setSession(session?.refresh_token as string);
+	// 	});
+	// 	// supabaseClient.auth.setSession(session?.refresh_token as string);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 
 	// if (session) {
 	// 	supabaseClient.auth.setSession(session?.refresh_token as string);
@@ -62,25 +65,25 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<UserProvider supabaseClient={supabaseClient}>
-				<Provider store={store}>
-					<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
-						<NotificationsProvider position="bottom-right">
+			<Provider store={store}>
+				<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
+					<NotificationsProvider position="bottom-right">
+						<AuthProvider supabase={supabase}>
 							<Component {...pageProps} />
-						</NotificationsProvider>
-					</MantineProvider>
-				</Provider>
-			</UserProvider>
+						</AuthProvider>
+					</NotificationsProvider>
+				</MantineProvider>
+			</Provider>
 		</>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const session = supabaseClient.auth.session();
-	console.log(session, "SUPABASE SESSIOn");
-	return {
-		props: {}, // will be passed to the page component as props
-	};
-};
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+// 	const session = supabaseClient.auth.session();
+// 	console.log(session, "SUPABASE SESSIOn");
+// 	return {
+// 		props: {}, // will be passed to the page component as props
+// 	};
+// };
 
 export default MyApp;

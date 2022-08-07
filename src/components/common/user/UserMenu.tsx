@@ -6,7 +6,7 @@ import { useClickOutside } from "@mantine/hooks";
 
 // import UserLoader from "./UserLoader";
 import UserAvatar from "./UserAvatar";
-import { signOut } from "../../../utils/auth";
+// import { signOut } from "../../../lib/auth-helpers";
 import Link from "next/link";
 
 type UserMenuProps = {
@@ -32,8 +32,12 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 			>
 				<Menu.Dropdown>
 					<Menu.Label>Actions</Menu.Label>
-					<Menu.Item icon={<IconPackage size={14} />}>Orders</Menu.Item>
-					<Menu.Item icon={<IconUser size={14} />}>Profile</Menu.Item>
+					<Link href="/user/orders" passHref>
+						<Menu.Item icon={<IconPackage size={14} />}>Orders</Menu.Item>
+					</Link>
+					<Link href="/user/profile" passHref>
+						<Menu.Item icon={<IconUser size={14} />}>Profile</Menu.Item>
+					</Link>
 					<Menu.Divider />
 					<Link href="/api/auth/logout" passHref>
 						<Menu.Item color="red" icon={<IconLogout size={14} />}>

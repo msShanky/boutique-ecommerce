@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase } from "../../utils/supabaseClient";
+import { supabase } from "../../lib/client";
 
 // Example of how to verify and get user data server-side.
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
