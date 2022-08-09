@@ -7,15 +7,17 @@ type ProductCardProps = {
 	product: ProductWithRelations;
 	handleProductRedirection: () => void;
 	handleWishList: () => void;
+	isActive?: boolean;
 };
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 	const { hovered, ref } = useHover();
-	const { handleProductRedirection, product } = props;
+	const { handleProductRedirection, product, handleWishList, isActive } = props;
 	const { id, images, msrp, title, sub_title, variants, product_discount } = product;
 
 	const _handleWishList = (event: MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
+		handleWishList();
 	};
 
 	const _mrp = msrp as number;
@@ -35,9 +37,10 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 					fit="cover"
 				/>
 			</Card.Section>
+			{/* TODO: Fetch the wishlist status from the API call */}
 			<div className="absolute flex flex-row space-x-4 top-2 left-2">
 				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
-					<IconHeart className="active:fill-pink stroke-pink" size={40} />
+					<IconHeart className={`${isActive ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
 				</ActionIcon>
 			</div>
 			<div className="h-20 mt-4 space-y-2 bg-white">
@@ -45,14 +48,15 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 					<>
 						<Title className="font-sans text-xl text-dark-blue">Available Sizes:</Title>
 						<div className="flex flex-row flex-wrap space-x-2 ">
-							{variants.map((variant, index) => {
-								const variantKey = `product_variant_${index + 556}`;
-								return (
-									<Text key={variantKey} className="font-sans text-sm text-violet-subtext">
-										{variant.size}
-									</Text>
-								);
-							})}
+							{variants &&
+								variants.map((variant, index) => {
+									const variantKey = `product_variant_${index + 556}`;
+									return (
+										<Text key={variantKey} className="font-sans text-sm text-violet-subtext">
+											{variant.size}
+										</Text>
+									);
+								})}
 						</div>
 					</>
 				) : (

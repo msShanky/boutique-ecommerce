@@ -27,12 +27,12 @@ export const AuthProvider = ({ supabase, ...props }: AuthProviderType) => {
 			setSession(currentSession);
 			setUser(currentSession?.user ?? null);
 			// This is needed to set the cookie for SSR
-			fetch("/api/auth", {
-				method: "POST",
-				headers: new Headers({ "Content-Type": "application/json" }),
-				credentials: "same-origin",
-				body: JSON.stringify({ event, session: currentSession }),
-			}).then((res) => res.json());
+			// fetch("/api/auth", {
+			// 	method: "POST",
+			// 	headers: new Headers({ "Content-Type": "application/json" }),
+			// 	credentials: "same-origin",
+			// 	body: JSON.stringify({ event, session: currentSession }),
+			// }).then((res) => res.json());
 		});
 
 		return () => {

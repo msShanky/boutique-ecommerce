@@ -9,6 +9,9 @@
 		"lint": "next lint",
 		"generate-types": "npx openapi-typescript https://legumfivysflstxpzgou.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ3VtZml2eXNmbHN0eHB6Z291Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc4MTU2NDcsImV4cCI6MTk3MzM5MTY0N30.jMDdz3KZxLwtBsHrpT1OBbODFi8V2qIuCYODGbZ2n1Q --output src/types/supabase.ts"
 	},
+	"resolutions": {
+		"@supabase/gotrue-js": "1.22.21"
+	},
 	"dependencies": {
 		"@emotion/react": "^11.10.0",
 		"@emotion/server": "^11.10.0",

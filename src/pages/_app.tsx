@@ -1,79 +1,74 @@
 import "../styles/globals.css";
-// import { useState, useEffect } from "react";
 import { MantineProvider, MantineTheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-// import { Session } from "@supabase/supabase-js";
 import type { AppProps } from "next/app";
 import { store } from "../app/store";
 import { Provider } from "react-redux";
-// import { UserProvider } from "@supabase/auth-helpers-react";
-// import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-// import { useRouter } from "next/router";
-// import { useHash } from "@mantine/hooks";
-// import { GetServerSideProps } from "next";
+import { UserProvider, useUser } from "@supabase/auth-helpers-react";
 import { AuthProvider } from "@/lib/auth";
 import { supabase } from "@/lib/client";
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 const breezeTheme: Partial<MantineTheme> = {
 	fontFamily: "Josefin Sans, sans-serif",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-	// const [session, setSession] = useState<Session | null>(null);
-	// const [isRedirecting, setRedirection] = useState(false);
-	// const router = useRouter();
+	const router = useRouter();
+	// const [authenticatedState, setAuthenticatedState] = useState("not-authenticated");
 
-	// useEffect(() => {
-	// 	setSession(supabaseClient.auth.session());
-	// 	supabaseClient.auth.onAuthStateChange((_event, session) => {
-	// 		console.log("session changed for supabase auth", session);
-	// 		setSession(session);
-	// 		supabaseClient.auth.setSession(session?.refresh_token as string);
-	// 	});
-	// 	// supabaseClient.auth.setSession(session?.refresh_token as string);
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, []);
-
-	// if (session) {
-	// 	supabaseClient.auth.setSession(session?.refresh_token as string);
+	// async function checkUser() {
+	// 	const user = await supabase.auth.user();
+	// 	if (user) {
+	// 		setAuthenticatedState("authenticated");
+	// 	}
 	// }
 
+	// async function handleAuthChange(event: AuthChangeEvent, session: Session | null) {
+	// 	await fetch("/api/auth/user", {
+	// 		method: "POST",
+	// 		headers: new Headers({ "Content-Type": "application/json" }),
+	// 		credentials: "same-origin",
+	// 		body: JSON.stringify({ event, session }),
+	// 	});
+	// }
+
+	// supabase.auth.onAuthStateChange((event, session) => {
+	// 	console.log("THE EVENT CHANGED FOR AUTH", event);
+	// 	console.log("THE SESSION VALUE AVAILABLE IS", session);
+	// });
+
 	// useEffect(() => {
-	// 	console.log("The router change event ===> ", router);
-	// 	const handleRouteChangeError = (err: any, url: any) => {
-	// 		if (err.cancelled) {
-	// 			console.log(`Route to ${url} was cancelled!`);
+	// 	const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+	// 		handleAuthChange(event, session);
+	// 		if (event === "SIGNED_IN") {
+	// 			setAuthenticatedState("authenticated");
+	// 			router.push("/");
 	// 		}
-	// 	};
-
-	// 	// router.events.on("routeChangeStart", () => {});
-
-	// 	router.events.on("routeChangeError", handleRouteChangeError);
-
-	// 	if (router.asPath.includes("access_token") && !isRedirecting) {
-	// 		console.log(" -------- URL CONTAINS THE ACCESS_TOKEN AND NOT REDIRECTING -------- ");
-	// 		setRedirection(true);
-	// 		router.push("/", undefined, { shallow: true });
-	// 	} else {
-	// 		setRedirection(false);
-	// 	}
-
+	// 		if (event === "SIGNED_OUT") {
+	// 			setAuthenticatedState("not-authenticated");
+	// 		}
+	// 	});
+	// 	checkUser();
 	// 	return () => {
-	// 		router.events.off("routeChangeError", handleRouteChangeError);
+	// 		authListener?.unsubscribe();
 	// 	};
-	// }, [router, isRedirecting]);
+	// }, [router]);
 
 	return (
 		<>
-			<Provider store={store}>
-				<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
-					<NotificationsProvider position="bottom-right">
-						<AuthProvider supabase={supabase}>
+			<UserProvider supabaseClient={supabaseClient}>
+				<Provider store={store}>
+					<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
+						<NotificationsProvider position="bottom-right">
 							<Component {...pageProps} />
-						</AuthProvider>
-					</NotificationsProvider>
-				</MantineProvider>
-			</Provider>
+						</NotificationsProvider>
+					</MantineProvider>
+				</Provider>
+			</UserProvider>
 		</>
 	);
 }

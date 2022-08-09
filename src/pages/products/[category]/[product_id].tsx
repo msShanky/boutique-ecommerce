@@ -9,7 +9,6 @@ import { useAppDispatch } from "../../../app/hooks";
 import AppLayout from "../../../components/layout/AppLayout";
 import { useGetProductsByCodeQuery } from "../../../reducer/breezeBaseApi";
 import { addProductToCart } from "../../../reducer/cart";
-// import { addProduct } from "../../../reducer/cart";
 import { definitions } from "../../../types/supabase";
 
 const breadcrumbs = [

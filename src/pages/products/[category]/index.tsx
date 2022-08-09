@@ -1,42 +1,32 @@
-import { Breadcrumbs, Loader, Title } from "@mantine/core";
+import { Loader } from "@mantine/core";
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useUser } from "@supabase/auth-helpers-react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "../../../app/hooks";
+
 import ProductCard from "../../../components/feature/product/ProductCard";
 import AppLayout from "../../../components/layout/AppLayout";
 import { useGetProductsByCategoryNameQuery } from "../../../reducer/breezeBaseApi";
 
-const breadcrumbs = [
-	{ link: "/", label: "Home" },
-	{ link: "/products", label: "Categories" },
-];
-
 const Product: NextPage = () => {
-	const dispatch = useAppDispatch();
 	const router = useRouter();
+	const { user } = useUser();
 	const { category } = router.query;
-
-	// useEffect(() => {
-	// 	if (!categoryId) {
-	// 		router.push("/products");
-	// 	}
-	// }, [categoryId, router]);
-
-	// useEffect(() => {
-	// 	const categoryRoute = `/${category}`;
-	// 	const isExisting = breadcrumbs.some((crumb) => crumb.link === categoryRoute);
-	// 	if (!isExisting) {
-	// 		breadcrumbs.push({ link: categoryRoute, label: category as string });
-	// 	}
-	// }, [category]);
-
 	const { isLoading, data, isSuccess } = useGetProductsByCategoryNameQuery(category as string);
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const productRoute = product.code;
 		router.push(`${router.asPath}/${productRoute}`);
+	};
+
+	const handleWishList = async (product: ProductWithRelations) => {
+		console.log("THE PRODUCT IS ADDED TO WISHLIST", product);
+		if (!user) return;
+		// TODO: Handle the loader for the user_wishlist
+		const postBody = { product_id: product.id, user_id: user.id };
+		const { data, error } = await supabaseClient.from("user_wishlist").insert([postBody]);
+		console.log("THE PRODUCT HAS BEEN WHITELISTED", data);
 	};
 
 	return (
@@ -45,29 +35,6 @@ const Product: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Products</title>
 				</Head>
-				{/* <section className="flex w-full h-72 bg-violet-light">
-					<div className="container flex flex-col justify-center mx-auto space-y-4">
-						<Title className="font-serif font-bold text-dark-blue">{category}</Title>
-						<Breadcrumbs
-							separator={<span className="w-1 h-1 mb-1 rounded-full bg-pink" />}
-							className="flex items-end font-sans"
-							classNames={{
-								root: " text-dark-blue",
-								breadcrumb: "last:text-pink hover:text-violet",
-							}}
-						>
-							{breadcrumbs.map((crumb, key) => {
-								return (
-									<span key={`BREAD_CRUMB_${key}`}>
-										<Link href={crumb.link} passHref>
-											{crumb.label}
-										</Link>
-									</span>
-								);
-							})}
-						</Breadcrumbs>
-					</div>
-				</section> */}
 				{isLoading && (
 					<div className="flex justify-center w-full h-56 mt-20">
 						<Loader size={60} />
@@ -80,7 +47,7 @@ const Product: NextPage = () => {
 								return (
 									<ProductCard
 										handleProductRedirection={() => handleProductRedirection(product)}
-										handleWishList={() => {}}
+										handleWishList={() => handleWishList(product)}
 										product={product}
 										key={product.id}
 									/>

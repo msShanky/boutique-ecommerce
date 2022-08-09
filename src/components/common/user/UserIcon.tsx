@@ -2,10 +2,13 @@ import React from "react";
 import { IconUser } from "@tabler/icons";
 import { LinkIcon } from "../header";
 import { UserMenu } from ".";
-import { useAuth } from "@/lib/auth";
+// import { useAuth } from "@/lib/auth";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const UserIcon = () => {
-	const { user } = useAuth();
+	const { user } = useUser();
+
+	// console.log("THE USER VALUE FETCHED IS", user);
 
 	// if (isLoading) {
 	// 	return <UserLoader />;

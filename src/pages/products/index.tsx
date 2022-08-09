@@ -29,29 +29,6 @@ const Product: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Products</title>
 				</Head>
-				{/* <section className="flex w-full h-72 bg-violet-light">
-					<div className="container flex flex-col justify-center mx-auto space-y-4">
-						<Title className="font-serif font-bold text-dark-blue">Product Categories</Title>
-						<Breadcrumbs
-							separator={<span className="w-1 h-1 mb-1 rounded-full bg-pink" />}
-							className="flex items-end font-sans"
-							classNames={{
-								root: " text-dark-blue",
-								breadcrumb: "last:text-pink hover:text-violet",
-							}}
-						>
-							{breadcrumbs.map((crumb, key) => {
-								return (
-									<span key={`BREAD_CRUMB_${key}`}>
-										<Link href={crumb.link} passHref>
-											{crumb.label}
-										</Link>
-									</span>
-								);
-							})}
-						</Breadcrumbs>
-					</div>
-				</section> */}
 				{isLoading && (
 					<div className="flex justify-center w-full h-56">
 						<Loader size={60} />
