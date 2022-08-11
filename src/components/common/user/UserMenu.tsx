@@ -4,9 +4,7 @@ import { IconPackage, IconUser, IconLogout } from "@tabler/icons";
 import { User } from "@supabase/auth-helpers-react";
 import { useClickOutside } from "@mantine/hooks";
 
-// import UserLoader from "./UserLoader";
 import UserAvatar from "./UserAvatar";
-// import { signOut } from "../../../lib/auth-helpers";
 import Link from "next/link";
 
 type UserMenuProps = {

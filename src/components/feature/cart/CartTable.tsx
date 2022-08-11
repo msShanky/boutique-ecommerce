@@ -24,11 +24,15 @@ const CartTable = () => {
 					</div>
 				</td>
 				<td>{sellingPrice}</td>
+				{/* TODO: Quantity should be adjustable */}
+				{/* TODO: If quantity is less than zero then remove the product from cart */}
 				<td>{quantity}</td>
+				{/* TODO: Price should be updated as per the quantity  */}
 				<td>{quantity * sellingPrice}</td>
 			</tr>
 		);
 	});
+
 	return (
 		<Table className="w-7/12">
 			<thead>
