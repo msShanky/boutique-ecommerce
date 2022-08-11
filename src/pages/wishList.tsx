@@ -17,6 +17,7 @@ type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const WishListPage: NextPage<PageProps> = (props) => {
 	const { user } = props;
+	console.log("User object received is", user);
 	const router = useRouter();
 	const [isLoading, setLoading] = useState(false);
 	const [wishlistProducts, setWishListProducts] = useState<Array<UserWishListItem> | null>();
