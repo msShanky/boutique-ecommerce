@@ -41,3 +41,20 @@ type ProductCartType = {
 type UserWishListItem = import("../types/supabase").definitions["product_variant"] & {
 	product: ProductWithRelations;
 };
+
+type CheckoutFormValue = {
+	phone_number: string;
+	first_name: string;
+	last_name: string;
+	address: string;
+	address_line_two: string;
+	city: string;
+	country: string;
+	pin_code: string;
+};
+
+type CheckoutPostBody = {
+	products: Array<CartProduct>;
+	shipping_address: CheckoutFormValue;
+	user_id?: string;
+};

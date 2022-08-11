@@ -4,10 +4,23 @@ import Head from "next/head";
 import { useAppSelector } from "../app/hooks";
 import CartTotal from "../components/feature/cart/CartTotal";
 import CheckoutForm from "../components/feature/checkout/CheckoutForm";
-import AppLayout from "../components/layout/AppLayout";
+import { AppSection, AppLayout } from "@/components/layout";
+
+import { useCheckoutProductMutation } from "reducer/breezeBaseApi";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const Checkout: NextPage = () => {
-	const cartState = useAppSelector((state) => state.cart);
+	const { products } = useAppSelector((state) => state.cart);
+	const { user } = useUser();
+	const [checkoutCart, { isLoading, data, isSuccess }] = useCheckoutProductMutation();
+
+	console.log("THE DATA FETCHED AFTER CREATION OF ALL RESOURCES", data, isSuccess);
+
+	const handleCheckout = (formValues: CheckoutFormValue) => {
+		console.log(formValues, "FORM SUBMITTED ");
+		console.log(products, "Products in cart");
+		checkoutCart({ products, shipping_address: formValues, user_id: user?.id });
+	};
 
 	return (
 		<AppLayout>
@@ -15,25 +28,23 @@ const Checkout: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Checkout</title>
 				</Head>
-				<section className="flex w-full h-72 bg-violet-light">
-					<div className="container flex flex-col justify-center mx-auto">
-						<Title>Checkout</Title>
-					</div>
-				</section>
-				<section className="container flex flex-wrap justify-center gap-10 mx-auto my-20">
-					{cartState.products.length === 0 && (
-						<div className="flex flex-col items-center justify-center select-none">
-							<Image src="/images/404.svg" alt="No Orders Found" />
-							<Title className="text-4xl font-thin text-violet">The Cart Is Empty</Title>
-						</div>
-					)}
-					{cartState.products.length > 0 && (
-						<div className="flex flex-row items-start justify-center w-full gap-10">
-							<CheckoutForm />
-							<CartTotal />
-						</div>
-					)}
-				</section>
+				<AppSection>
+					<>
+						{products.length === 0 && (
+							<div className="flex flex-col items-center justify-center select-none">
+								<Image src="/images/404.svg" alt="No Orders Found" />
+								<Title className="text-4xl font-thin text-violet">The Cart Is Empty</Title>
+							</div>
+						)}
+						{products.length > 0 && !isSuccess && (
+							<div className="flex flex-row items-start justify-center w-full gap-10 relative">
+								<CheckoutForm handleCheckout={handleCheckout} isLoading={isLoading} user={user} />
+								<CartTotal />
+							</div>
+						)}
+						{isSuccess && <div>Order created !! {data && data?.order?.code} </div>}
+					</>
+				</AppSection>
 			</>
 		</AppLayout>
 	);

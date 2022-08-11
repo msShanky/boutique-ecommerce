@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { definitions } from "../../../../types/supabase";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { definitions } from "types/supabase";
 
 const getProductFromProductCode = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { product_code } = req.query;

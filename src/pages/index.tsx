@@ -46,6 +46,7 @@ const Home: NextPage = () => {
 
 	useEffect(() => {
 		if (shouldRedirect && !isWaitingForSignIn) {
+			console.log("Router state after login successful", router);
 			router.replace(router.pathname, undefined);
 		}
 	}, [shouldRedirect, router, isWaitingForSignIn]);
@@ -66,26 +67,16 @@ const Home: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Home</title>
 				</Head>
+				{/* TODO: Replace this loader with something decent with animations */}
 				{(isLoading || isWaitingForSignIn) && (
 					<section className="container mx-auto my-20 h-80">
 						<Loader size={300} />
 					</section>
 				)}
 				{!isLoading && !isWaitingForSignIn && <HomeBanner />}
-				{/* <div className="flex flex-col items-center justify-center mt-16 select-none">
-					<Title order={1} className="my-16 text-6xl font-bold">
-						Breeze Boutique
-					</Title>
-					<Image src="/images/under_construction.svg" alt="under construction" />
-					<Title className="mt-12 text-4xl font-thin text-violet">The Site Is Under Construction</Title>
-				</div> */}
-				{/* <FeaturedProducts /> */}
-				{/* <LatestProducts /> */}
-				{/* <SiteFeatures /> */}
 			</>
 		</AppLayout>
 	);
 };
 
 export default Home;
-

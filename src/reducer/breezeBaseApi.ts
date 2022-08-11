@@ -16,7 +16,19 @@ export const breezeBaseApi = createApi({
 		getProductsByCode: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, ProductInformationProps>({
 			query: (props: ProductInformationProps) => `products/${props.categoryName}/${props.productCode}`,
 		}),
+		checkoutProduct: builder.mutation<any, CheckoutPostBody>({
+			query: (body) => ({
+				url: "/checkout",
+				method: "POST",
+				body: body,
+			}),
+		}),
 	}),
 });
 
-export const { useGetProductCategoriesQuery, useGetProductsByCategoryNameQuery, useGetProductsByCodeQuery } = breezeBaseApi;
+export const {
+	useGetProductCategoriesQuery,
+	useGetProductsByCategoryNameQuery,
+	useGetProductsByCodeQuery,
+	useCheckoutProductMutation,
+} = breezeBaseApi;
