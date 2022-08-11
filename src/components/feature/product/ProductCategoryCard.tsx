@@ -10,9 +10,12 @@ type ProductCategoryCardProps = {
 const ProductCategoryCard: FunctionComponent<ProductCategoryCardProps> = (props) => {
 	const { categoryProp, handleCardClick } = props;
 	const { category, category_image } = categoryProp;
-	
+
 	return (
-		<Card onClick={handleCardClick} className="space-y-8 bg-white shadow-md w-72 h-80 hover:bg-violet group hover:cursor-pointer">
+		<Card
+			onClick={handleCardClick}
+			className="space-y-8 bg-white shadow-md w-72 h-80 hover:bg-violet group hover:cursor-pointer"
+		>
 			<Card.Section className="h-4/5">
 				<Image
 					classNames={{

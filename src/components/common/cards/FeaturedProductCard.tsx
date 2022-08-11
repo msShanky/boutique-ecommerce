@@ -1,6 +1,6 @@
 import { ActionIcon, Card, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { CurrencyRupee, Heart, ShoppingCart, ZoomIn } from "tabler-icons-react";
+import { IconCurrencyRupee, IconHeart, IconShoppingCart, IconZoomIn } from "@tabler/icons";
 import React from "react";
 
 const FeaturedProductCard = () => {
@@ -12,13 +12,13 @@ const FeaturedProductCard = () => {
 			{hovered && (
 				<div className="absolute flex flex-row space-x-4 top-2 left-2">
 					<ActionIcon>
-						<ShoppingCart size={16} />
+						<IconShoppingCart size={16} />
 					</ActionIcon>
 					<ActionIcon>
-						<Heart size={16} />
+						<IconHeart size={16} />
 					</ActionIcon>
 					<ActionIcon>
-						<ZoomIn size={16} />
+						<IconZoomIn size={16} />
 					</ActionIcon>
 				</div>
 			)}
@@ -26,7 +26,7 @@ const FeaturedProductCard = () => {
 				<Text className={`font-sans text-lg font-bold ${hovered ? "text-white" : "text-pink"} `}>Product 1</Text>
 				<Text className={`text-sm ${hovered ? "text-white" : "text-dark-blue"}`}>Code - Y523201</Text>
 				<span className={`flex flex-row items-center ${hovered ? "text-white" : "text-dark-blue"}`}>
-					<CurrencyRupee size="20" />
+					<IconCurrencyRupee size="20" />
 					<Text>650</Text>
 				</span>
 			</div>

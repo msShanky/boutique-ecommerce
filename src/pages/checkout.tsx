@@ -20,7 +20,7 @@ const Checkout: NextPage = () => {
 						<Title>Checkout</Title>
 					</div>
 				</section>
-				<section className="container flex flex-wrap justify-center gap-10 mx-auto mt-20">
+				<section className="container flex flex-wrap justify-center gap-10 mx-auto my-20">
 					{cartState.products.length === 0 && (
 						<div className="flex flex-col items-center justify-center select-none">
 							<Image src="/images/404.svg" alt="No Orders Found" />

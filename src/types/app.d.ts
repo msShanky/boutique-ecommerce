@@ -5,11 +5,7 @@ type Product = {
 	size: Array<string>;
 };
 
-type SelectedProduct = Product & {
-	selectedSize: string;
-};
-
-type CartProduct = SelectedProduct & {
+type CartProduct = ProductCartType & {
 	quantity: number;
 };
 
@@ -26,7 +22,8 @@ type SupaBaseResponse<T> = {
 };
 
 type ProductVariants = {
-	variants: Array<import("../types/supabase").definitions["product_variant"]>;
+	variants?: Array<import("../types/supabase").definitions["product_variant"]>;
+	category?: import("../types/supabase").definitions["product_category"];
 };
 
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
@@ -34,4 +31,13 @@ type ProductWithRelations = import("../types/supabase").definitions["product"] &
 type ProductInformationProps = {
 	categoryName: string;
 	productCode: string;
+};
+
+type ProductCartType = {
+	product: ProductWithRelations;
+	variant: import("../types/supabase").definitions["product_variant"];
+};
+
+type UserWishListItem = import("../types/supabase").definitions["product_variant"] & {
+	product: ProductWithRelations;
 };

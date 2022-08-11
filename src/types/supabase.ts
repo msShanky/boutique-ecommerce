@@ -12,6 +12,102 @@ export interface paths {
       };
     };
   };
+  "/user_wishlist": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["user_wishlist"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** user_wishlist */
+          user_wishlist?: definitions["user_wishlist"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+        };
+        body: {
+          /** user_wishlist */
+          user_wishlist?: definitions["user_wishlist"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/product": {
     get: {
       parameters: {
@@ -531,6 +627,27 @@ export interface paths {
 }
 
 export interface definitions {
+  user_wishlist: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: uuid */
+    user_id?: string;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `product.id`.<fk table='product' column='id'/>
+     */
+    product_id?: number;
+  };
   /** @description Maintains the product information of breeze */
   product: {
     /**
@@ -690,6 +807,16 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description user_wishlist */
+  "body.user_wishlist": definitions["user_wishlist"];
+  /** Format: bigint */
+  "rowFilter.user_wishlist.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.user_wishlist.created_at": string;
+  /** Format: uuid */
+  "rowFilter.user_wishlist.user_id": string;
+  /** Format: bigint */
+  "rowFilter.user_wishlist.product_id": string;
   /** @description product */
   "body.product": definitions["product"];
   /** Format: bigint */
