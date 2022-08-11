@@ -15,12 +15,12 @@ const Cart: NextPage = () => {
 				<Head>
 					<title>Breeze Boutique | Cart</title>
 				</Head>
-				<section className="flex w-full h-72 bg-violet-light">
+				{/* <section className="flex w-full h-72 bg-violet-light">
 					<div className="container flex flex-col justify-center mx-auto">
 						<Title>Cart</Title>
 					</div>
-				</section>
-				<section className="container flex flex-wrap justify-center gap-10 mx-auto mt-20">
+				</section> */}
+				<section className="container flex flex-wrap justify-center gap-10 mx-auto my-20">
 					{cartState.products.length === 0 && (
 						<div className="flex flex-col items-center justify-center select-none">
 							<Image src="/images/404.svg" alt="No Orders Found" />

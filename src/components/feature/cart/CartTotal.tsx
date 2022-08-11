@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Text, Title } from "@mantine/core";
-import { Check, CurrencyRupee } from "tabler-icons-react";
+import { IconCheck, IconCurrencyRupee } from "@tabler/icons";
 import { cartSafeSelector } from "../../../reducer/cart";
 import { useAppSelector } from "../../../app/hooks";
 import Link from "next/link";
@@ -21,13 +21,13 @@ const CartTotal = () => {
 				<div className="flex flex-row items-center justify-between border-b-2 border-b-violet-light">
 					<Title className="flex items-center space-x-4 text-lg font-semibold">Sub Totals:</Title>
 					<Title className="flex items-center space-x-4 text-base">
-						<CurrencyRupee />
+						<IconCurrencyRupee />
 						{cartTotal}
 					</Title>
 				</div>
 				<div className="flex flex-row space-x-4">
 					<div className="flex items-center w-8 h-8 rounded-full bg-success">
-						<Check width={40} color="white" />
+						<IconCheck width={40} color="white" />
 					</div>
 					<Text>Shipping &amp; taxes calculated at checkout</Text>
 				</div>
