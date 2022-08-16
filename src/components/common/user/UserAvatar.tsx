@@ -13,9 +13,6 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 	const userInitials = `${firstName[0].toUpperCase()} ${lastName[0].toUpperCase()}`;
 	const userImage = user?.user_metadata.avatar_url ?? undefined;
 
-	// console.log("THE USER DATA IS", user)
-	// console.log("THE USER IMAGE IS", userImage)
-
 	return (
 		<Button
 			unstyled
@@ -28,7 +25,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 		>
 			<Text className="">{firstName}</Text>
 			{userImage ? (
-				<Avatar size={30} radius="xl" src={userImage} />
+				<Avatar size={30} radius="xl" src={userImage} alt="user icon" />
 			) : (
 				<Avatar size={30} radius="xl">
 					{userInitials}

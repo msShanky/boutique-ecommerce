@@ -58,3 +58,13 @@ type CheckoutPostBody = {
 	shipping_address: CheckoutFormValue;
 	user_id?: string;
 };
+
+type OrderItemWithRelations = import("../types/supabase").definitions["order_item"] & {
+	product: import("../types/supabase").definitions["product"];
+	product_variant: import("../types/supabase").definitions["product_variant"];
+};
+
+type UserOrderWithRelations = import("../types/supabase").definitions["user_order"] & {
+	order_item: Array<OrderItemWithRelations>;
+	order_status: import("../types/supabase").definitions["order_status"];
+};

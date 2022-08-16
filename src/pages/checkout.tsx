@@ -1,26 +1,35 @@
-import { Image, Title } from "@mantine/core";
+import { Button, Image, Text, Title } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import CartTotal from "../components/feature/cart/CartTotal";
 import CheckoutForm from "../components/feature/checkout/CheckoutForm";
 import { AppSection, AppLayout } from "@/components/layout";
 
 import { useCheckoutProductMutation } from "reducer/breezeBaseApi";
 import { useUser } from "@supabase/auth-helpers-react";
+import Link from "next/link";
+import { useEffect } from "react";
+import { clearCart } from "reducer/cart";
 
 const Checkout: NextPage = () => {
 	const { products } = useAppSelector((state) => state.cart);
+	const dispatch = useAppDispatch();
 	const { user } = useUser();
 	const [checkoutCart, { isLoading, data, isSuccess }] = useCheckoutProductMutation();
 
-	console.log("THE DATA FETCHED AFTER CREATION OF ALL RESOURCES", data, isSuccess);
-
 	const handleCheckout = (formValues: CheckoutFormValue) => {
-		console.log(formValues, "FORM SUBMITTED ");
-		console.log(products, "Products in cart");
 		checkoutCart({ products, shipping_address: formValues, user_id: user?.id });
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			setTimeout(() => {
+				dispatch(clearCart());
+			}, 450);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isSuccess]);
 
 	return (
 		<AppLayout>
@@ -30,10 +39,13 @@ const Checkout: NextPage = () => {
 				</Head>
 				<AppSection>
 					<>
-						{products.length === 0 && (
+						{products.length === 0 && !isSuccess && (
 							<div className="flex flex-col items-center justify-center select-none">
-								<Image src="/images/404.svg" alt="No Orders Found" />
+								<Image height={450} src="/images/404.svg" alt="No Orders Found" />
 								<Title className="text-4xl font-thin text-violet">The Cart Is Empty</Title>
+								<Link href="/products">
+									<Text className="mt-8 hover:cursor-pointer hover:text-pink text=black underline">View Products</Text>
+								</Link>
 							</div>
 						)}
 						{products.length > 0 && !isSuccess && (
@@ -42,7 +54,19 @@ const Checkout: NextPage = () => {
 								<CartTotal />
 							</div>
 						)}
-						{isSuccess && <div>Order created !! {data && data?.order?.code} </div>}
+						{isSuccess && (
+							<div className="flex flex-col items-center justify-center select-none space-y-8 w-3/5 text-center">
+								<Image src="/images/success_icon.svg" alt="Cart Success Icon" />
+								<Title className="text-4xl font-bold text-page">Your Order Is Completed!</Title>
+								<Text className="text-base font-semibold text-violet-subtext">
+									Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You
+									will receive an email confirmation when your order is completed.
+								</Text>
+								<Link href="/products" passHref>
+									<Button className="border-none bg-pink text-white hover:bg-violet">Continue Shopping</Button>
+								</Link>
+							</div>
+						)}
 					</>
 				</AppSection>
 			</>
