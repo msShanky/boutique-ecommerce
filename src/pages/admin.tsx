@@ -1,33 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Select } from "@mantine/core";
-import { useRouter } from "next/router";
 import Head from "next/head";
-import AppLayout from "../components/layout/AppLayout";
-import { useGetProductCategoriesQuery } from "../reducer/breezeBaseApi";
-import ProductTable from "../components/feature/admin/ProductTable";
+import React, { useEffect, useState } from "react";
+import { Button, Drawer, Select } from "@mantine/core";
 import { Plus } from "tabler-icons-react";
-import AddProductForm from "../components/feature/admin/AddProductForm";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
+import { ProductForm, ProductTable } from "@/components/feature";
+import { AppLayout } from "@/components/layout";
+import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
+import { definitions } from "types/supabase";
 
 const Admin = () => {
-	const router = useRouter();
-	const [selectedCategory, setSelectedCategory] = useState<string | null>("");
-	const [isAddProductFormOpen, setIsAddProductFormOpen] = useState(false);
-
-	const { category, edit } = router.query;
+	const [selectedCategory, setSelectedCategory] = useState<definitions["product_category"] | null>();
+	const [isAddProduct, setIsProductAdd] = useState(false);
+	const [shouldOpenDrawer, setShouldOpenDrawer] = useState(false);
+	const [activeProduct, setActiveProduct] = useState<ProductWithRelations>();
 	const { data: categories } = useGetProductCategoriesQuery();
 
+	const handleCategoryUpdate = (value: definitions["product_category"] | null) => {
+		setSelectedCategory(value);
+	};
+
+	const handleCategoryChange = (value: string) => {
+		const _selectedCategory = categories?.body.filter((category) => category.id === parseInt(value, 10))[0];
+		if (!_selectedCategory) return null;
+		handleCategoryUpdate(_selectedCategory);
+	};
+
 	useEffect(() => {
-		if (category && categories?.body.filter((c) => `${c.category}` === category))
-			handleCategoryUpdate(category.toString());
-		else handleCategoryUpdate(categories?.body[0].category || "");
+		handleCategoryUpdate(categories?.body[0] || null);
 	}, [categories]);
 
-	const handleCategoryUpdate = (value: string | null) => {
-		setSelectedCategory(value);
-		if (value) router.query.category = value;
-		else delete router.query.category;
-		router.push(router);
+	const toggleProductAdd = () => {
+		setShouldOpenDrawer(true);
+		setIsProductAdd(true);
+	};
+
+	const getCategoryData = () => {
+		if (!categories) return [];
+		return categories.body.map(({ category, id }) => ({ value: id.toString() || "", label: category }));
+	};
+
+	const handleProductEdit = (product: ProductWithRelations) => {
+		setShouldOpenDrawer(true);
+		setIsProductAdd(false);
+		setActiveProduct(product);
+	};
+
+	const handleDrawerClose = () => {
+		// TODO: Add a warning when trying to close the drawer
+		setShouldOpenDrawer(false);
 	};
 
 	return (
@@ -37,22 +57,39 @@ const Admin = () => {
 					<title>Breeze Boutique | Admin</title>
 				</Head>
 				<main className="container mx-auto mt-12">
-					<Select
-						className="w-3/12 inline-block"
-						label="Category"
-						value={selectedCategory}
-						onChange={handleCategoryUpdate}
-						data={
-							categories ? categories.body.map(({ category, id }) => ({ value: category || "", label: category })) : []
-						}
-					/>
-					<Button variant="light" leftIcon={<Plus size={14} />} onClick={() => setIsAddProductFormOpen(true)}>
-						Add Product
-					</Button>
-					<Modal opened={isAddProductFormOpen} onClose={() => setIsAddProductFormOpen(false)} title="Add Product">
-						<AddProductForm />
-					</Modal>
-					{selectedCategory && <ProductTable category={selectedCategory} />}
+					<div className="flex items-end space-x-8">
+						<Select
+							className="inline-block w-3/12"
+							label="Category"
+							value={selectedCategory?.id.toString()}
+							onChange={handleCategoryChange}
+							data={getCategoryData()}
+						/>
+						<Button
+							variant="filled"
+							className="bg-violet hover:bg-pink"
+							leftIcon={<Plus size={14} />}
+							onClick={toggleProductAdd}
+						>
+							Add Product
+						</Button>
+					</div>
+					<Drawer
+						closeOnClickOutside={false}
+						closeOnEscape={false}
+						opened={shouldOpenDrawer}
+						position="right"
+						onClose={handleDrawerClose}
+						title={`Product ${isAddProduct ? "Add" : "Edit"}`}
+						padding="xl"
+						size="xl"
+					>
+						{/* Drawer content */}
+						<ProductForm isAdd={isAddProduct} product={activeProduct} categories={categories?.body} />
+					</Drawer>
+					{selectedCategory && (
+						<ProductTable category={selectedCategory.category as string} handleProductEdit={handleProductEdit} />
+					)}
 				</main>
 			</>
 		</AppLayout>
