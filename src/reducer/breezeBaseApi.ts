@@ -1,6 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Session } from "@supabase/supabase-js";
-// import { RootState } from "../app/store";
 import { definitions } from "../types/supabase";
 
 export const breezeBaseApi = createApi({
