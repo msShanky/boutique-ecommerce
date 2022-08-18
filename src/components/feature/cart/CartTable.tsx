@@ -1,35 +1,53 @@
-import { Image, Table, Text } from "@mantine/core";
+import { Button, Image, Table, Text } from "@mantine/core";
+import { IconMinus, IconPlus } from "@tabler/icons";
 import React from "react";
-import { useAppSelector } from "../../../app/hooks";
-
-const elements = [
-	{ position: 6, mass: 12.011, symbol: "C", name: "Carbon" },
-	{ position: 7, mass: 14.007, symbol: "N", name: "Nitrogen" },
-	{ position: 39, mass: 88.906, symbol: "Y", name: "Yttrium" },
-	{ position: 56, mass: 137.33, symbol: "Ba", name: "Barium" },
-	{ position: 58, mass: 140.12, symbol: "Ce", name: "Cerium" },
-];
+import { increaseQuantity, decreaseQuantity } from "reducer/cart";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { getSellingPrice } from "../../../helpers/price-calculator";
 
 const CartTable = () => {
 	const { products } = useAppSelector((state) => state.cart);
+	const dispatch = useAppDispatch();
 
-	const rows = products.map((product) => {
-		const { image, price, quantity, selectedSize, id } = product;
+	const rows = products.map((productState: CartProduct, index: number) => {
+		const { product, variant, quantity } = productState;
+		const sellingPrice = getSellingPrice(product);
+		const { id, images } = product;
+		const baseImage = images && images.length > 0 ? (images[0] as string) : "";
+
+		const handleQuantityUpdate = () => {};
+
 		return (
-			<tr key={product.id}>
+			<tr key={`PRODUCT_${id}_suffix_${(index + 5) * 255}_`}>
 				<td className="flex flex-row space-x-2">
-					<Image src={image} alt={`Product Image ${id}`} width={83} height={87} fit="contain" />
+					<Image src={baseImage} alt={`Product Image ${id}`} width={83} height={87} fit="contain" />
 					<div>
 						<Text className="text-sm text-violet">Selected Size:</Text>
-						<Text className="text-lg">{selectedSize}</Text>
+						<Text className="text-lg">{variant.size}</Text>
 					</div>
 				</td>
-				<td>{price}</td>
-				<td>{quantity}</td>
-				<td>{quantity * price}</td>
+				<td>{sellingPrice}</td>
+				{/* TODO: Quantity should be adjustable */}
+				{/* TODO: If quantity is less than zero then remove the product from cart */}
+				<td>
+					<Button.Group className="flex items-center">
+						<Button onClick={() => dispatch(decreaseQuantity(productState))} variant="default">
+							<IconMinus size="15" />
+						</Button>
+						<div className="border w-12 h-9 flex items-center justify-center">
+							<Text className=" text-center align-middle ">{quantity}</Text>
+						</div>
+						<Button onClick={() => dispatch(increaseQuantity(productState))} variant="default">
+							<IconPlus size="15" />
+						</Button>
+					</Button.Group>
+				</td>
+				{/* TODO: Price should be updated as per the quantity  */}
+				<td>{quantity * sellingPrice}</td>
 			</tr>
 		);
 	});
+
 	return (
 		<Table className="w-7/12">
 			<thead>

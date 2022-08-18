@@ -1,16 +1,21 @@
-import React, { FunctionComponent, MouseEvent } from "react";
-import { Anchor, Button, Checkbox, Divider, Group } from "@mantine/core";
-import { Paper, PaperProps, PasswordInput, Text, TextInput, Title } from "@mantine/core";
-import { upperFirst, useForm, useToggle } from "@mantine/hooks";
+import React, { FunctionComponent, MouseEvent, useState } from "react";
+import { Anchor, Button, Checkbox, Divider, Group, PaperProps, Stack } from "@mantine/core";
+import { Paper, PasswordInput, Text, TextInput } from "@mantine/core";
+import { upperFirst, useToggle } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+
+import { signInWithEmail, signUpWithEmail } from "../../../lib/auth-helpers";
 
 type AuthFormProps = {
-	paperProps?: PaperProps<"div">;
+	paperProps?: PaperProps;
 	handleGoogleLogin: (event: MouseEvent) => void;
 };
 
 const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
-	const [type, toggle] = useToggle("login", ["login", "register"]);
-	const form = useForm({
+	const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
+	const [isLoading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
+	const form = useForm<AuthFormInitialType>({
 		initialValues: {
 			email: "",
 			name: "",
@@ -18,11 +23,31 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			terms: true,
 		},
 
-		validationRules: {
-			email: (val) => /^\S+@\S+$/.test(val),
-			password: (val) => val.length >= 6,
+		validate: {
+			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+			password: (val) => {
+				return val.length <= 4;
+			},
 		},
 	});
+
+	const handleFormSubmit = async (formValues: AuthFormInitialType) => {
+		const { email, password } = formValues;
+		setLoading(true);
+		if (type === "login") {
+			const { error } = await signInWithEmail({ email, password });
+			if (error) {
+				setLoading(false);
+				setError(error.message);
+			}
+			return;
+		}
+		const { error } = await signUpWithEmail(formValues);
+		if (error) {
+			setLoading(false);
+			setError(error.message);
+		}
+	};
 
 	return (
 		<Paper radius="lg" p="lg" className="w-4/12 mx-auto my-20 shadow-lg" withBorder {...props.paperProps}>
@@ -39,35 +64,33 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 				</Button>
 			</Group>
 			<Divider label="Or continue with email" labelPosition="center" my="lg" />
-			<form onSubmit={form.onSubmit((values) => console.log(values))}>
-				<Group direction="column" grow>
+			<form onSubmit={form.onSubmit(handleFormSubmit)}>
+				<Stack>
 					{type === "register" && (
 						<TextInput
 							label="Name"
 							placeholder="Your name"
 							value={form.values.name}
 							onChange={(event) => form.setFieldValue("name", event.currentTarget.value)}
+							classNames={{ wrapper: "w-full", input: "w-full" }}
 						/>
 					)}
-
 					<TextInput
 						required
 						label="Email"
-						placeholder="hello@mantine.dev"
+						placeholder="sample@example.dev"
 						value={form.values.email}
 						onChange={(event) => form.setFieldValue("email", event.currentTarget.value)}
 						error={form.errors.email && "Invalid email"}
 					/>
-
 					<PasswordInput
 						required
 						label="Password"
-						placeholder="Your password"
+						placeholder="your secret password"
 						value={form.values.password}
 						onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
 						error={form.errors.password && "Password should include at least 6 characters"}
 					/>
-
 					{type === "register" && (
 						<Checkbox
 							label="I accept terms and conditions"
@@ -75,12 +98,19 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 							onChange={(event) => form.setFieldValue("terms", event.currentTarget.checked)}
 						/>
 					)}
-				</Group>
+				</Stack>
 				<Group position="apart" mt="xl">
-					<Anchor component="button" type="button" color="gray" onClick={() => toggle()} size="xs">
+					<Anchor
+						className="text-page"
+						component="button"
+						type="button"
+						color="gray"
+						onClick={() => toggle()}
+						size="xs"
+					>
 						{type === "register" ? "Already have an account? Login" : "Don't have an account? Register"}
 					</Anchor>
-					<Button className="bg-black" type="submit">
+					<Button className="w-40 bg-black" type="submit">
 						{upperFirst(type)}
 					</Button>
 				</Group>

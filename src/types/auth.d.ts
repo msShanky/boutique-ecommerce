@@ -40,3 +40,15 @@ type UserAuthType = {
 	token_type: string;
 	user: OAuthUser;
 };
+
+type AuthFormInitialType = {
+	name: string;
+	terms: boolean;
+	email: string;
+	password: string;
+};
+
+type UserSignInType = {
+	email: string;
+	password: string;
+};

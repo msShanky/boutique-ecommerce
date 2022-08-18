@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button, Image } from "@mantine/core";
-import SearchInput from "./header/SearchInput";
+import SearchInput from "./input/Search";
 
 const appLinks = [
 	{ link: "/", label: "Home" },

@@ -19,6 +19,12 @@ module.exports = {
 			sans: ["Josefin Sans", "sans-serif"],
 			serif: ["Merriweather", "serif"],
 		},
+		keyframes: {
+			wiggle: {
+				"0%, 100%": { transform: "rotate(-3deg)" },
+				"50%": { transform: "rotate(3deg)" },
+			},
+		},
 	},
 	plugins: [],
 };

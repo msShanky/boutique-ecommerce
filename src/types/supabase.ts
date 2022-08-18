@@ -12,6 +12,417 @@ export interface paths {
       };
     };
   };
+  "/user_order": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_order.id"];
+          created_at?: parameters["rowFilter.user_order.created_at"];
+          code?: parameters["rowFilter.user_order.code"];
+          status_id?: parameters["rowFilter.user_order.status_id"];
+          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
+          shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
+          user_id?: parameters["rowFilter.user_order.user_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["user_order"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** user_order */
+          user_order?: definitions["user_order"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_order.id"];
+          created_at?: parameters["rowFilter.user_order.created_at"];
+          code?: parameters["rowFilter.user_order.code"];
+          status_id?: parameters["rowFilter.user_order.status_id"];
+          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
+          shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
+          user_id?: parameters["rowFilter.user_order.user_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_order.id"];
+          created_at?: parameters["rowFilter.user_order.created_at"];
+          code?: parameters["rowFilter.user_order.code"];
+          status_id?: parameters["rowFilter.user_order.status_id"];
+          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
+          shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
+          user_id?: parameters["rowFilter.user_order.user_id"];
+        };
+        body: {
+          /** user_order */
+          user_order?: definitions["user_order"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/user_shipping_address": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_shipping_address.id"];
+          user_id?: parameters["rowFilter.user_shipping_address.user_id"];
+          created_at?: parameters["rowFilter.user_shipping_address.created_at"];
+          phone_number?: parameters["rowFilter.user_shipping_address.phone_number"];
+          first_name?: parameters["rowFilter.user_shipping_address.first_name"];
+          last_name?: parameters["rowFilter.user_shipping_address.last_name"];
+          address?: parameters["rowFilter.user_shipping_address.address"];
+          address_line_two?: parameters["rowFilter.user_shipping_address.address_line_two"];
+          city?: parameters["rowFilter.user_shipping_address.city"];
+          country?: parameters["rowFilter.user_shipping_address.country"];
+          pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["user_shipping_address"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** user_shipping_address */
+          user_shipping_address?: definitions["user_shipping_address"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_shipping_address.id"];
+          user_id?: parameters["rowFilter.user_shipping_address.user_id"];
+          created_at?: parameters["rowFilter.user_shipping_address.created_at"];
+          phone_number?: parameters["rowFilter.user_shipping_address.phone_number"];
+          first_name?: parameters["rowFilter.user_shipping_address.first_name"];
+          last_name?: parameters["rowFilter.user_shipping_address.last_name"];
+          address?: parameters["rowFilter.user_shipping_address.address"];
+          address_line_two?: parameters["rowFilter.user_shipping_address.address_line_two"];
+          city?: parameters["rowFilter.user_shipping_address.city"];
+          country?: parameters["rowFilter.user_shipping_address.country"];
+          pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_shipping_address.id"];
+          user_id?: parameters["rowFilter.user_shipping_address.user_id"];
+          created_at?: parameters["rowFilter.user_shipping_address.created_at"];
+          phone_number?: parameters["rowFilter.user_shipping_address.phone_number"];
+          first_name?: parameters["rowFilter.user_shipping_address.first_name"];
+          last_name?: parameters["rowFilter.user_shipping_address.last_name"];
+          address?: parameters["rowFilter.user_shipping_address.address"];
+          address_line_two?: parameters["rowFilter.user_shipping_address.address_line_two"];
+          city?: parameters["rowFilter.user_shipping_address.city"];
+          country?: parameters["rowFilter.user_shipping_address.country"];
+          pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+        };
+        body: {
+          /** user_shipping_address */
+          user_shipping_address?: definitions["user_shipping_address"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/user_wishlist": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["user_wishlist"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** user_wishlist */
+          user_wishlist?: definitions["user_wishlist"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.user_wishlist.id"];
+          created_at?: parameters["rowFilter.user_wishlist.created_at"];
+          user_id?: parameters["rowFilter.user_wishlist.user_id"];
+          product_id?: parameters["rowFilter.user_wishlist.product_id"];
+        };
+        body: {
+          /** user_wishlist */
+          user_wishlist?: definitions["user_wishlist"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/order_status": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_status.id"];
+          status?: parameters["rowFilter.order_status.status"];
+          created_at?: parameters["rowFilter.order_status.created_at"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["order_status"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** order_status */
+          order_status?: definitions["order_status"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_status.id"];
+          status?: parameters["rowFilter.order_status.status"];
+          created_at?: parameters["rowFilter.order_status.created_at"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_status.id"];
+          status?: parameters["rowFilter.order_status.status"];
+          created_at?: parameters["rowFilter.order_status.created_at"];
+        };
+        body: {
+          /** order_status */
+          order_status?: definitions["order_status"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/product": {
     get: {
       parameters: {
@@ -141,6 +552,8 @@ export interface paths {
           username?: parameters["rowFilter.profiles.username"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
+          /** Checks if the user is Admin or Not */
+          is_admin?: parameters["rowFilter.profiles.is_admin"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -196,6 +609,8 @@ export interface paths {
           username?: parameters["rowFilter.profiles.username"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
+          /** Checks if the user is Admin or Not */
+          is_admin?: parameters["rowFilter.profiles.is_admin"];
         };
         header: {
           /** Preference */
@@ -215,6 +630,8 @@ export interface paths {
           username?: parameters["rowFilter.profiles.username"];
           avatar_url?: parameters["rowFilter.profiles.avatar_url"];
           website?: parameters["rowFilter.profiles.website"];
+          /** Checks if the user is Admin or Not */
+          is_admin?: parameters["rowFilter.profiles.is_admin"];
         };
         body: {
           /** profiles */
@@ -318,6 +735,114 @@ export interface paths {
         body: {
           /** product_variant */
           product_variant?: definitions["product_variant"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/order_item": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_item.id"];
+          created_at?: parameters["rowFilter.order_item.created_at"];
+          order_id?: parameters["rowFilter.order_item.order_id"];
+          variant_id?: parameters["rowFilter.order_item.variant_id"];
+          product_id?: parameters["rowFilter.order_item.product_id"];
+          price?: parameters["rowFilter.order_item.price"];
+          discount?: parameters["rowFilter.order_item.discount"];
+          quantity?: parameters["rowFilter.order_item.quantity"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["order_item"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** order_item */
+          order_item?: definitions["order_item"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_item.id"];
+          created_at?: parameters["rowFilter.order_item.created_at"];
+          order_id?: parameters["rowFilter.order_item.order_id"];
+          variant_id?: parameters["rowFilter.order_item.variant_id"];
+          product_id?: parameters["rowFilter.order_item.product_id"];
+          price?: parameters["rowFilter.order_item.price"];
+          discount?: parameters["rowFilter.order_item.discount"];
+          quantity?: parameters["rowFilter.order_item.quantity"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.order_item.id"];
+          created_at?: parameters["rowFilter.order_item.created_at"];
+          order_id?: parameters["rowFilter.order_item.order_id"];
+          variant_id?: parameters["rowFilter.order_item.variant_id"];
+          product_id?: parameters["rowFilter.order_item.product_id"];
+          price?: parameters["rowFilter.order_item.price"];
+          discount?: parameters["rowFilter.order_item.discount"];
+          quantity?: parameters["rowFilter.order_item.quantity"];
+        };
+        body: {
+          /** order_item */
+          order_item?: definitions["order_item"];
         };
         header: {
           /** Preference */
@@ -531,6 +1056,103 @@ export interface paths {
 }
 
 export interface definitions {
+  /** @description Manages the user's orders and the items */
+  user_order: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: text */
+    code?: string;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `order_status.id`.<fk table='order_status' column='id'/>
+     */
+    status_id?: number;
+    /** Format: text */
+    payment_ref?: string;
+    /** Format: text */
+    shipment_ref?: string;
+    /** Format: uuid */
+    user_id?: string;
+  };
+  /** @description Contains the user shipping information for each instance created */
+  user_shipping_address: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: uuid */
+    user_id?: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: text */
+    phone_number?: string;
+    /** Format: text */
+    first_name?: string;
+    /** Format: text */
+    last_name?: string;
+    /** Format: character varying */
+    address?: string;
+    /** Format: character varying */
+    address_line_two?: string;
+    /** Format: text */
+    city?: string;
+    /** Format: text */
+    country?: string;
+    /** Format: text */
+    pin_code?: string;
+  };
+  user_wishlist: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: uuid */
+    user_id?: string;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `product.id`.<fk table='product' column='id'/>
+     */
+    product_id?: number;
+  };
+  /** @description Manages the order status for the application and track the items */
+  order_status: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /** Format: text */
+    status?: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+  };
   /** @description Maintains the product information of breeze */
   product: {
     /**
@@ -585,6 +1207,11 @@ export interface definitions {
     avatar_url?: string;
     /** Format: text */
     website?: string;
+    /**
+     * Format: boolean
+     * @description Checks if the user is Admin or Not
+     */
+    is_admin?: boolean;
   };
   /** @description Maintains the product variant of each product */
   product_variant: {
@@ -609,6 +1236,44 @@ export interface definitions {
      * This is a Foreign Key to `product.id`.<fk table='product' column='id'/>
      */
     product_id?: number;
+  };
+  /** @description manages the order items for a specific order */
+  order_item: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `user_order.id`.<fk table='user_order' column='id'/>
+     */
+    order_id?: number;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `product_variant.id`.<fk table='product_variant' column='id'/>
+     */
+    variant_id?: number;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `product.id`.<fk table='product' column='id'/>
+     */
+    product_id?: number;
+    /** Format: bigint */
+    price?: number;
+    /** Format: bigint */
+    discount?: number;
+    /** Format: bigint */
+    quantity?: number;
   };
   /** @description Maintains the product inventory for variants */
   product_inventory: {
@@ -690,6 +1355,64 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description user_order */
+  "body.user_order": definitions["user_order"];
+  /** Format: bigint */
+  "rowFilter.user_order.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.user_order.created_at": string;
+  /** Format: text */
+  "rowFilter.user_order.code": string;
+  /** Format: bigint */
+  "rowFilter.user_order.status_id": string;
+  /** Format: text */
+  "rowFilter.user_order.payment_ref": string;
+  /** Format: text */
+  "rowFilter.user_order.shipment_ref": string;
+  /** Format: uuid */
+  "rowFilter.user_order.user_id": string;
+  /** @description user_shipping_address */
+  "body.user_shipping_address": definitions["user_shipping_address"];
+  /** Format: bigint */
+  "rowFilter.user_shipping_address.id": string;
+  /** Format: uuid */
+  "rowFilter.user_shipping_address.user_id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.user_shipping_address.created_at": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.phone_number": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.first_name": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.last_name": string;
+  /** Format: character varying */
+  "rowFilter.user_shipping_address.address": string;
+  /** Format: character varying */
+  "rowFilter.user_shipping_address.address_line_two": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.city": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.country": string;
+  /** Format: text */
+  "rowFilter.user_shipping_address.pin_code": string;
+  /** @description user_wishlist */
+  "body.user_wishlist": definitions["user_wishlist"];
+  /** Format: bigint */
+  "rowFilter.user_wishlist.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.user_wishlist.created_at": string;
+  /** Format: uuid */
+  "rowFilter.user_wishlist.user_id": string;
+  /** Format: bigint */
+  "rowFilter.user_wishlist.product_id": string;
+  /** @description order_status */
+  "body.order_status": definitions["order_status"];
+  /** Format: bigint */
+  "rowFilter.order_status.id": string;
+  /** Format: text */
+  "rowFilter.order_status.status": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.order_status.created_at": string;
   /** @description product */
   "body.product": definitions["product"];
   /** Format: bigint */
@@ -729,6 +1452,11 @@ export interface parameters {
   "rowFilter.profiles.avatar_url": string;
   /** Format: text */
   "rowFilter.profiles.website": string;
+  /**
+   * Format: boolean
+   * @description Checks if the user is Admin or Not
+   */
+  "rowFilter.profiles.is_admin": string;
   /** @description product_variant */
   "body.product_variant": definitions["product_variant"];
   /** Format: bigint */
@@ -741,6 +1469,24 @@ export interface parameters {
   "rowFilter.product_variant.size": string;
   /** Format: bigint */
   "rowFilter.product_variant.product_id": string;
+  /** @description order_item */
+  "body.order_item": definitions["order_item"];
+  /** Format: bigint */
+  "rowFilter.order_item.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.order_item.created_at": string;
+  /** Format: bigint */
+  "rowFilter.order_item.order_id": string;
+  /** Format: bigint */
+  "rowFilter.order_item.variant_id": string;
+  /** Format: bigint */
+  "rowFilter.order_item.product_id": string;
+  /** Format: bigint */
+  "rowFilter.order_item.price": string;
+  /** Format: bigint */
+  "rowFilter.order_item.discount": string;
+  /** Format: bigint */
+  "rowFilter.order_item.quantity": string;
   /** @description product_inventory */
   "body.product_inventory": definitions["product_inventory"];
   /** Format: bigint */
