@@ -3,15 +3,18 @@ import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { IconCloudUpload, IconDownload, IconX } from "@tabler/icons";
 import React, { FunctionComponent, useRef, useState } from "react";
+import { nanoid } from "nanoid";
 
 // TODO: Add props and their information
 
 type ImageUploaderProps = {
 	isDisabled: boolean;
+	handleImageSuccess: (images: string) => void;
+	formValues: ProductFormStateProps;
 };
 
 const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
-	const { isDisabled } = props;
+	const { isDisabled, handleImageSuccess, formValues } = props;
 	const openRef = useRef<() => void>(null);
 	const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -19,12 +22,20 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 	const handleFileUpload = async (files: File[]) => {
 		console.log(" File has been uploaded  ", files);
 		setLoading(true);
+		if (!formValues.code) {
+			setLoading(false);
+			return;
+		}
+		// Always upload the first file
 		const imageFile = files[0];
-		const { data, error } = await supabaseClient.storage
-			.from("product-image")
-			.upload(`assets/${imageFile.name}`, imageFile);
-		console.log(data, "Data fetched from the API for file upload");
-		console.log(error, "ERROR: File Upload");
+		const fileExt = imageFile.type.split("/")[1];
+		const imageName = `assets/${formValues.code}/${nanoid()}.${fileExt}`;
+		const { data, error } = await supabaseClient.storage.from("product-image").upload(imageName, imageFile);
+		// console.log(data, "Data fetched from the API for file upload");
+		// console.log(error, "ERROR: File Upload");
+		if (data) {
+			handleImageSuccess(data?.Key ?? "");
+		}
 		setLoading(false);
 	};
 
@@ -35,7 +46,10 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 				disabled={isDisabled}
 				onDrop={handleFileUpload}
 				loading={isLoading}
-				className={`border-2 ${isDisabled && "cursor-not-allowed hover:bg-error hover:text-white bg-opacity-25 group"}`}
+				className={`border-2 ${
+					isDisabled &&
+					"cursor-not-allowed bg-error text-white  hover:bg-error hover:bg-opacity-80 hover:text-white group"
+				}`}
 				radius="md"
 				accept={IMAGE_MIME_TYPE}
 				maxSize={30 * 1024 ** 2}
@@ -55,13 +69,18 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 					<Text align="center" weight={700} size="lg" mt="xl">
 						<Dropzone.Accept>Drop files here</Dropzone.Accept>
 						<Dropzone.Reject>File format/size does not meet requirements</Dropzone.Reject>
-						<Dropzone.Idle>Upload product image</Dropzone.Idle>
+						<Dropzone.Idle>{isDisabled ? "Generate Product Code" : "Upload product image"}</Dropzone.Idle>
 					</Text>
-					{}
-					<Text className="group-hover:text-white text-violet-subtext" align="center" size="sm" mt="xs">
-						Drag&apos;n&apos;drop files here to upload. We can accept only <i>.png</i>, <i>.jpg</i>, <i>.webp</i>, files
-						that are less than 2mb in size.
-					</Text>
+					{isDisabled ? (
+						<Text className="text-white" align="center" size="sm" mt="xs">
+							Please generate a product code to upload product images
+						</Text>
+					) : (
+						<Text className="text-black " align="center" size="sm" mt="xs">
+							Drag&apos;n&apos;drop files here to upload. We can accept only <i>.png</i>, <i>.jpg</i>, <i>.webp</i>,
+							files that are less than 2mb in size.
+						</Text>
+					)}
 				</div>
 			</Dropzone>
 		</div>

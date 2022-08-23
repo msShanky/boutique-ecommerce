@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import { Button, Select, TextInput } from "@mantine/core";
+import { Button, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { definitions } from "types/supabase";
 import { getCategoryData } from "helpers/supabase-helper";
@@ -7,6 +7,7 @@ import { IconX } from "@tabler/icons";
 import { ImageUploader, ImageViewer } from "@/components/common/admin";
 import { customAlphabet } from "nanoid";
 import { getSellingPriceFromDiscount } from "helpers/price-calculator";
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 const nanoid = customAlphabet("1234567890", 8);
 
 type ProductFormProps = {
@@ -16,13 +17,16 @@ type ProductFormProps = {
 	onCancel: () => void;
 };
 
-const initialFormState = {
+const initialFormState: ProductFormStateProps = {
 	code: "",
-	msrp: null,
+	images: [],
+	category_id: "",
+	description: "",
 	title: "",
 	sub_title: "",
+	purchase_price: "",
+	msrp: null,
 	product_discount: null,
-	category_id: "",
 };
 
 const getFormInitialState = (product: ProductWithRelations | undefined) => {
@@ -32,9 +36,12 @@ const getFormInitialState = (product: ProductWithRelations | undefined) => {
 
 const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	const { isAdd, product, categories, onCancel } = props;
+	const [isLoading, setLoading] = useState<boolean>(false);
 	const [productCode, setProductCode] = useState<string | null>();
-	const { setFieldValue, onSubmit, getInputProps, values } = useForm({
+	const [productImages, setProductImages] = useState<Array<string>>([]);
+	const { setFieldValue, onSubmit, getInputProps, values, errors } = useForm({
 		initialValues: getFormInitialState(product),
+		// TODO: Add Form validation for all fields that has to be validated
 		validate: {
 			code: (value: string) => {
 				return value.length < 8
@@ -51,58 +58,69 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	// TODO: Show the selling price in the form
 
 	const handleProductCodeGeneration = () => {
-		console.log(" CODE GEN: ", nanoid());
 		setProductCode(nanoid());
 		setFieldValue("code", nanoid());
 	};
 
+	const handleImageSuccess = (value: string) => {
+		setProductImages([...productImages, value]);
+		setFieldValue("images", productImages);
+	};
+
+	const handleImageDelete = async (index: number) => {
+		const localCopy = [...productImages];
+		const imageUrl = localCopy[index];
+		setLoading(true);
+		await supabaseClient.storage.from("product-images").remove([imageUrl]);
+		localCopy.splice(index, 1);
+		setLoading(false);
+		setProductImages(localCopy);
+		setFieldValue("images", productImages);
+	};
+
+	const handleFormCancel = async () => {
+		// TODO: Delete all the images which were not synced
+		await supabaseClient.storage.from("product-images").remove(productImages);
+		onCancel();
+	};
+
 	return (
-		<form className="grid grid-cols-2 gap-5 " onSubmit={onSubmit((values) => console.log(values))}>
+		<form className="grid grid-cols-2 gap-5" onSubmit={onSubmit((values) => console.log(values))}>
 			<section className="">
-				<ImageUploader isDisabled={!productCode} />
-				<ImageViewer />
+				<ImageUploader
+					isDisabled={!productCode}
+					handleImageSuccess={handleImageSuccess}
+					formValues={values as ProductFormStateProps}
+				/>
+				<ImageViewer productImages={productImages} handleImageDelete={handleImageDelete} />
 			</section>
 			<section className="flex flex-col space-y-4">
-				<div className="flex items-end space-x-4">
+				<div className={`flex  space-x-4 ${!!errors["code"] ? "items-center" : "items-end"}`}>
 					{/* TODO: Add Validation that the value must be all numeric and should always be 8 digits */}
 					<TextInput
 						label="Product Code"
-						className="w-9/12"
+						className="w-11/12"
 						classNames={{
 							input: "tracking-widest",
 						}}
 						placeholder="00000000"
 						required
+						readOnly
+						rightSection={
+							isAdd && (
+								<Button
+									disabled={!!productCode}
+									onClick={handleProductCodeGeneration}
+									className="bg-violet hover:bg-pink hover:bg-opacity-80 h-9"
+								>
+									Generate Code
+								</Button>
+							)
+						}
 						{...getInputProps("code")}
 					/>
-					{isAdd && (
-						<Button
-							disabled={!!productCode}
-							onClick={handleProductCodeGeneration}
-							className="bg-violet hover:bg-pink hover:bg-opacity-80"
-						>
-							Generate Code
-						</Button>
-					)}
 				</div>
-				<div className="flex items-center justify-between gap-4">
-					<Select
-						className="inline-block w-6/12"
-						label="Category"
-						placeholder="Select a category"
-						required
-						{...getInputProps("category_id")}
-						data={getCategoryData(categories)}
-					/>
-					<TextInput
-						className="w-6/12"
-						placeholder="350"
-						label="MRP"
-						type="number"
-						required
-						{...getInputProps("msrp")}
-					/>
-				</div>
+
 				<TextInput placeholder="Kalini" label="Product Title" required {...getInputProps("title")} />
 				<TextInput
 					placeholder="Women Teal Yoke Design Kurta with Palazzos &amp; With Dupatta"
@@ -110,13 +128,44 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 					required
 					{...getInputProps("sub_title")}
 				/>
+				<Textarea placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
+				<div className="flex items-center justify-between gap-4">
+					<Select
+						className="inline-block w-full"
+						label="Category"
+						placeholder="Select a category"
+						required
+						{...getInputProps("category_id")}
+						data={getCategoryData(categories)}
+					/>
+				</div>
+				<div className="flex items-center justify-between gap-4">
+					<NumberInput
+						className="w-6/12"
+						placeholder="350"
+						label="Purchase Price"
+						type="number"
+						required
+						step={5}
+						{...getInputProps("purchase_price")}
+					/>
+					<NumberInput
+						className="w-6/12"
+						placeholder="350"
+						label="MRP"
+						type="number"
+						required
+						step={5}
+						{...getInputProps("msrp")}
+					/>
+				</div>
 				<div className="flex items-center gap-4">
-					<TextInput
+					<NumberInput
 						placeholder="10"
 						label="Product Discount"
 						className="w-6/12"
 						type="number"
-						required
+						step={1}
 						{...getInputProps("product_discount")}
 					/>
 					<TextInput
@@ -128,13 +177,13 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 						value={getSellingPriceFromDiscount(values.msrp ?? 0, values.product_discount ?? 0)}
 						readOnly
 						placeholder="10"
-						label="Product Price"
+						label="Selling Price"
 						type="number"
 					/>
 				</div>
 			</section>
-			<div className="flex space-x-4">
-				<Button leftIcon={<IconX />} onClick={onCancel} variant="filled" className="bg-error" type="reset">
+			<div className="flex justify-end col-start-2 mt-12 space-x-4">
+				<Button leftIcon={<IconX />} onClick={handleFormCancel} variant="filled" className="bg-error" type="reset">
 					Cancel
 				</Button>
 				<Button variant="outline" type="submit">

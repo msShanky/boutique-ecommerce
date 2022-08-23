@@ -53,16 +53,6 @@ const ProductContent = () => {
 
 	return (
 		<>
-			{/* <Drawer
-				closeOnClickOutside={false}
-				closeOnEscape={false}
-				opened={shouldOpenDrawer}
-				position="right"
-				onClose={handleDrawerClose}
-				title={`Product ${isAddProduct ? "Add" : "Edit"}`}
-				padding="xl"
-				size="xl"
-			> */}
 			{crudState === "read" && (
 				<ProductList
 					categories={categories?.body}
@@ -79,8 +69,6 @@ const ProductContent = () => {
 					onCancel={() => setCrudState("read")}
 				/>
 			)}
-			{/* <ProductForm isAdd={isAddProduct} product={activeProduct} categories={categories?.body} /> */}
-			{/* </Drawer> */}
 		</>
 	);
 };
