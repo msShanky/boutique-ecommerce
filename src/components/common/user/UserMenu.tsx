@@ -11,6 +11,8 @@ type UserMenuProps = {
 	user: User;
 };
 
+// TODO: If the user is an administrator then show the button to redirect to the admin page
+
 const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 	const { user } = props;
 	const [opened, setOpened] = useState(false);
