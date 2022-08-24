@@ -30,7 +30,6 @@ const ProductList: FunctionComponent<ProductListProps> = (props) => {
 	return (
 		<div>
 			<div className="flex items-end space-x-8">
-				{/* Convert this to a component called ProductFloatingBar */}
 				<ProductFloatingBar
 					categories={categories}
 					handleCategoryChange={handleCategoryChange}

@@ -23,7 +23,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 
 	const handleDelete = (imageIndex: number) => {
 		setOpened(true);
-		setImageIndex(imageIndex)
+		setImageIndex(imageIndex);
 	};
 
 	return (
@@ -62,6 +62,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 					</div>
 				</div>
 			</Modal>
+			{/* Product Images should be draggable so the priority of the cover image changes */}
 			{productImages.map((image, index) => {
 				return (
 					<div

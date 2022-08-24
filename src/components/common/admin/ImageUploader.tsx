@@ -52,7 +52,7 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 				}`}
 				radius="md"
 				accept={IMAGE_MIME_TYPE}
-				maxSize={30 * 1024 ** 2}
+				maxSize={5 * 1024 ** 2}
 			>
 				<div style={{ pointerEvents: "none" }}>
 					<Group position="center">

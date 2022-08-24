@@ -14,7 +14,8 @@ type ProductFormProps = {
 	isAdd: boolean;
 	product?: ProductWithRelations;
 	categories?: Array<definitions["product_category"]>;
-	onCancel: () => void;
+	handleCancel: () => void;
+	handleSubmit: (values: ProductFormStateProps) => void;
 };
 
 const initialFormState: ProductFormStateProps = {
@@ -35,7 +36,7 @@ const getFormInitialState = (product: ProductWithRelations | undefined) => {
 };
 
 const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
-	const { isAdd, product, categories, onCancel } = props;
+	const { isAdd, product, categories, handleCancel, handleSubmit } = props;
 	const [isLoading, setLoading] = useState<boolean>(false);
 	const [productCode, setProductCode] = useState<string | null>();
 	const [productImages, setProductImages] = useState<Array<string>>([]);
@@ -64,7 +65,7 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 
 	const handleImageSuccess = (value: string) => {
 		setProductImages([...productImages, value]);
-		setFieldValue("images", productImages);
+		setFieldValue("images", [...productImages, value]);
 	};
 
 	const handleImageDelete = async (index: number) => {
@@ -81,11 +82,14 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	const handleFormCancel = async () => {
 		// TODO: Delete all the images which were not synced
 		await supabaseClient.storage.from("product-images").remove(productImages);
-		onCancel();
+		handleCancel();
 	};
 
 	return (
-		<form className="grid grid-cols-2 gap-5" onSubmit={onSubmit((values) => console.log(values))}>
+		<form
+			className="grid grid-cols-2 gap-5"
+			onSubmit={onSubmit((values) => handleSubmit(values as ProductFormStateProps))}
+		>
 			<section className="">
 				<ImageUploader
 					isDisabled={!productCode}
@@ -94,9 +98,9 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 				/>
 				<ImageViewer productImages={productImages} handleImageDelete={handleImageDelete} />
 			</section>
+			{/* Product Information Section */}
 			<section className="flex flex-col space-y-4">
 				<div className={`flex  space-x-4 ${!!errors["code"] ? "items-center" : "items-end"}`}>
-					{/* TODO: Add Validation that the value must be all numeric and should always be 8 digits */}
 					<TextInput
 						label="Product Code"
 						className="w-11/12"
@@ -120,7 +124,6 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 						{...getInputProps("code")}
 					/>
 				</div>
-
 				<TextInput placeholder="Kalini" label="Product Title" required {...getInputProps("title")} />
 				<TextInput
 					placeholder="Women Teal Yoke Design Kurta with Palazzos &amp; With Dupatta"
@@ -139,11 +142,12 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 						data={getCategoryData(categories)}
 					/>
 				</div>
-				<div className="flex items-center justify-between gap-4">
+				<div className="flex items-end justify-between gap-4">
 					<NumberInput
 						className="w-6/12"
 						placeholder="350"
 						label="Purchase Price"
+						description="Visible only for Admin"
 						type="number"
 						required
 						step={5}

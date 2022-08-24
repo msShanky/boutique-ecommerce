@@ -1,58 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { Drawer } from "@mantine/core";
+import React, { useState } from "react";
+import { LoadingOverlay } from "@mantine/core";
 import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
-import { definitions } from "types/supabase";
-import { ProductForm, ProductTable } from "@/components/feature";
-import { ProductFloatingBar } from "@/components/common/admin";
+import { ProductForm } from "@/components/feature";
 import { ProductList } from "@/components/common/admin/product";
+import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 
 const ProductContent = () => {
-	const [selectedCategory, setSelectedCategory] = useState<definitions["product_category"] | null>();
-	const [isAddProduct, setIsProductAdd] = useState(false);
-	const [shouldOpenDrawer, setShouldOpenDrawer] = useState(false);
 	const [crudState, setCrudState] = useState<AdminCRUDContent>("read");
 	const [activeProduct, setActiveProduct] = useState<ProductWithRelations>();
+	const [isProductLoading, setProductLoading] = useState<boolean>(false);
 
 	const { data: categories, isLoading } = useGetProductCategoriesQuery();
 
-	// const handleCategoryUpdate = (value: definitions["product_category"] | null) => {
-	// 	setSelectedCategory(value);
-	// };
-
-	// const handleCategoryChange = (value: string | null) => {
-	// 	if (!value) return null;
-	// 	const _selectedCategory = categories?.body.filter((category) => category.id === parseInt(value, 10))[0];
-	// 	if (!_selectedCategory) return null;
-	// 	handleCategoryUpdate(_selectedCategory);
-	// };
-
-	// useEffect(() => {
-	// 	handleCategoryUpdate(categories?.body[0] || null);
-	// }, [categories]);
-
 	const toggleProductAdd = () => {
-		// setShouldOpenDrawer(true);
 		setCrudState("create");
 	};
 
-	// const getCategoryData = () => {
-	// 	if (!categories) return [];
-	// 	return categories.body.map(({ category, id }) => ({ value: id.toString() || "", label: category }));
-	// };
-
 	const handleProductEdit = (product: ProductWithRelations) => {
-		setShouldOpenDrawer(true);
-		setIsProductAdd(false);
 		setActiveProduct(product);
 	};
 
-	const handleDrawerClose = () => {
-		// TODO: Add a warning when trying to close the drawer
-		setShouldOpenDrawer(false);
+	const handleProductAdd = async (product: ProductFormStateProps) => {
+		setProductLoading(true);
+		const { data, error } = await supabaseClient.from("product").insert([product]);
+		console.log("The data from the API call is", data);
+		console.log("The ERROR from the API call is", error);
+		setProductLoading(false);
 	};
 
 	return (
 		<>
+			{(isLoading || isProductLoading) && (
+				<div style={{ width: 400, position: "relative" }}>
+					<LoadingOverlay visible={isLoading} overlayBlur={2} />
+				</div>
+			)}
 			{crudState === "read" && (
 				<ProductList
 					categories={categories?.body}
@@ -61,12 +43,14 @@ const ProductContent = () => {
 				/>
 			)}
 			{/* TODO: Add a loader  */}
+			{/* TODO: Display a success screen after creating a product */}
 			{(crudState === "create" || crudState === "update") && (
 				<ProductForm
 					isAdd={crudState === "create"}
 					product={activeProduct}
 					categories={categories?.body}
-					onCancel={() => setCrudState("read")}
+					handleSubmit={(values) => handleProductAdd(values)}
+					handleCancel={() => setCrudState("read")}
 				/>
 			)}
 		</>
