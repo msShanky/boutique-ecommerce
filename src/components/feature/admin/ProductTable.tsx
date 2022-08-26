@@ -1,10 +1,9 @@
 import { ProductRow } from "@/components/common/admin";
 import { Table } from "@mantine/core";
 import React, { FunctionComponent } from "react";
-import { useGetProductsByCategoryNameQuery } from "../../../reducer/breezeBaseApi";
 
 type ProductTableProps = {
-	category: string;
+	products: Array<ProductWithRelations>;
 	handleProductEdit: (product: ProductWithRelations) => void;
 };
 
@@ -19,10 +18,9 @@ const columns = [
 ];
 
 const ProductTable: FunctionComponent<ProductTableProps> = (props) => {
-	const { category, handleProductEdit } = props;
-	const { data: products } = useGetProductsByCategoryNameQuery(category);
+	const { products, handleProductEdit } = props;
 
-	const rows = products?.body.map((product) => {
+	const rows = products?.map((product) => {
 		const key = `PRODUCT_ROW_${product.code}`;
 		return <ProductRow key={key} product={product} handleProductEdit={handleProductEdit} />;
 	});

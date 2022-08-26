@@ -27,7 +27,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 	};
 
 	return (
-		<div>
+		<div className="h-[40vh] overflow-scroll scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
 			<Modal
 				transition="slide-left"
 				transitionDuration={200}
@@ -66,22 +66,23 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 			{productImages.map((image, index) => {
 				return (
 					<div
-						className="flex items-center justify-between w-full p-8 my-4 rounded-md bg-violet-light"
+						className="flex items-center justify-between w-full p-4 mb-4 rounded-md bg-violet-light"
 						key={`IMAGE PRINT ${index + 8}`}
 					>
-						<div className="flex space-x-6">
-							<Image
-								fit="cover"
-								radius={"sm"}
-								className="object-top"
-								width={50}
-								height={75}
-								src={`${baseUrl}${image}`}
-								alt="Product Image"
-							/>
-							<Text>{image.split("assets/")[1]}</Text>
-						</div>
-						<ActionIcon onClick={() => handleDelete(index)}>
+						<Image
+							fit="cover"
+							radius={"sm"}
+							className="object-top"
+							width={50}
+							height={75}
+							src={`${baseUrl}${image}`}
+							alt="Product Image"
+						/>
+						<Text className="text-ellipsis overflow-hidden text-sm w-8/12">{image.split("assets/")[1]}</Text>
+						<ActionIcon
+							className="bg-error bg-opacity-80 hover:bg-error hover:bg-opacity-40 text-white"
+							onClick={() => handleDelete(index)}
+						>
 							<IconTrash size={18} />
 						</ActionIcon>
 					</div>

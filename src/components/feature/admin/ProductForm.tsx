@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { Button, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { definitions } from "types/supabase";
@@ -15,42 +15,54 @@ type ProductFormProps = {
 	product?: ProductWithRelations;
 	categories?: Array<definitions["product_category"]>;
 	handleCancel: () => void;
-	handleSubmit: (values: ProductFormStateProps) => void;
+	handleSubmit: (values: ProductWithRelations) => void;
 };
 
-const initialFormState: ProductFormStateProps = {
-	code: "",
+// const initialFormState: ProductFormStateProps = {
+// 	code: null,
+// 	images: [],
+// 	category_id: "",
+// 	description: "",
+// 	title: "",
+// 	sub_title: "",
+// 	purchase_price: "",
+// 	msrp: null,
+// 	product_discount: null,
+// };
+const initialFormState: definitions["product"] = {
+	id: 0,
+	code: undefined,
 	images: [],
-	category_id: "",
+	category_id: undefined,
 	description: "",
 	title: "",
 	sub_title: "",
-	purchase_price: "",
-	msrp: null,
-	product_discount: null,
+	purchase_price: undefined,
+	msrp: undefined,
+	product_discount: undefined,
 };
 
 const getFormInitialState = (product: ProductWithRelations | undefined) => {
 	if (!product) return initialFormState;
 	return { ...product };
+	// return { ...product, category_id: product.category_id?.toString() ?? "" };
 };
 
 const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	const { isAdd, product, categories, handleCancel, handleSubmit } = props;
-	const [isLoading, setLoading] = useState<boolean>(false);
-	const [productCode, setProductCode] = useState<string | null>();
+	// const [isLoading, setLoading] = useState<boolean>(false);
 	const [productImages, setProductImages] = useState<Array<string>>([]);
 	const { setFieldValue, onSubmit, getInputProps, values, errors } = useForm({
 		initialValues: getFormInitialState(product),
 		// TODO: Add Form validation for all fields that has to be validated
 		validate: {
-			code: (value: string) => {
-				return value.length < 8
-					? "The code must be 8 characters"
-					: value.length > 8
-					? "The code must 8 characters no more no less"
-					: null;
-			},
+			// code: (value: number) => {
+			// 	return value.length < 8
+			// 		? "The code must be 8 characters"
+			// 		: value.length > 8
+			// 		? "The code must 8 characters no more no less"
+			// 		: null;
+			// },
 		},
 	});
 
@@ -59,8 +71,8 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	// TODO: Show the selling price in the form
 
 	const handleProductCodeGeneration = () => {
-		setProductCode(nanoid());
-		setFieldValue("code", nanoid());
+		// setProductCode(nanoid());
+		setFieldValue("code", parseInt(nanoid(), 10));
 	};
 
 	const handleImageSuccess = (value: string) => {
@@ -71,10 +83,10 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	const handleImageDelete = async (index: number) => {
 		const localCopy = [...productImages];
 		const imageUrl = localCopy[index];
-		setLoading(true);
+		// setLoading(true);
 		await supabaseClient.storage.from("product-images").remove([imageUrl]);
 		localCopy.splice(index, 1);
-		setLoading(false);
+		// setLoading(false);
 		setProductImages(localCopy);
 		setFieldValue("images", productImages);
 	};
@@ -85,45 +97,46 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 		handleCancel();
 	};
 
+	useEffect(() => {
+		// setProductCode(product?.code?.toString());
+		setProductImages((product?.images as string[]) ?? []);
+	}, [product]);
+
 	return (
-		<form
-			className="grid grid-cols-2 gap-5"
-			onSubmit={onSubmit((values) => handleSubmit(values as ProductFormStateProps))}
-		>
-			<section className="">
+		<form className="grid grid-cols-2 gap-5" onSubmit={onSubmit((values) => handleSubmit(values))}>
+			<section className="flex flex-col">
 				<ImageUploader
-					isDisabled={!productCode}
+					isDisabled={!values.code}
 					handleImageSuccess={handleImageSuccess}
 					formValues={values as ProductFormStateProps}
 				/>
-				<ImageViewer productImages={productImages} handleImageDelete={handleImageDelete} />
+				<ImageViewer productImages={values.images as string[]} handleImageDelete={handleImageDelete} />
 			</section>
 			{/* Product Information Section */}
 			<section className="flex flex-col space-y-4">
-				<div className={`flex  space-x-4 ${!!errors["code"] ? "items-center" : "items-end"}`}>
-					<TextInput
-						label="Product Code"
-						className="w-11/12"
-						classNames={{
-							input: "tracking-widest",
-						}}
-						placeholder="00000000"
-						required
-						readOnly
-						rightSection={
-							isAdd && (
-								<Button
-									disabled={!!productCode}
-									onClick={handleProductCodeGeneration}
-									className="bg-violet hover:bg-pink hover:bg-opacity-80 h-9"
-								>
-									Generate Code
-								</Button>
-							)
-						}
-						{...getInputProps("code")}
-					/>
-				</div>
+				<TextInput
+					label="Product Code"
+					className="w-full"
+					classNames={{
+						input: "tracking-widest",
+					}}
+					placeholder="00000000"
+					required
+					readOnly
+					rightSection={
+						isAdd && (
+							<Button
+								disabled={!!values.code}
+								onClick={handleProductCodeGeneration}
+								className="bg-violet hover:bg-pink hover:bg-opacity-80 h-9"
+							>
+								Generate Code
+							</Button>
+						)
+					}
+					{...getInputProps("code")}
+				/>
+				{/* <div className={`flex  space-x-4 ${!!errors["code"] ? "items-center" : "items-end"}`}> </div> */}
 				<TextInput placeholder="Kalini" label="Product Title" required {...getInputProps("title")} />
 				<TextInput
 					placeholder="Women Teal Yoke Design Kurta with Palazzos &amp; With Dupatta"

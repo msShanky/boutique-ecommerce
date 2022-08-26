@@ -10,3 +10,8 @@ export const getCategoryData = (categories: GetCategoryDataInput): Array<Product
 		return { value: category?.id.toString() ?? "", label: category?.category ?? "" };
 	});
 };
+
+export const formatProductFormForUpdate = (product: ProductWithRelations): definitions["product"] => {
+	const { category, variants, ...coreProduct } = product;
+	return coreProduct;
+};

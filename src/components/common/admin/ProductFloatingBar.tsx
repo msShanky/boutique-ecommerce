@@ -14,14 +14,12 @@ type ProductFloatingBarProps = {
 const ProductFloatingBar: FunctionComponent<ProductFloatingBarProps> = (props) => {
 	const { selectedCategory, handleCategoryChange, toggleProductAdd, categories } = props;
 
-	console.log(" Selected category: " + selectedCategory);
 	return (
 		<>
 			<Select
 				className="inline-block w-60"
 				value={selectedCategory}
 				placeholder="Select Category"
-				// value={selectedCategory?.id.toString()}
 				onChange={handleCategoryChange}
 				data={getCategoryData(categories)}
 			/>

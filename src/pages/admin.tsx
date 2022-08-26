@@ -24,7 +24,6 @@ const Admin = () => {
 
 	const links = panelLinks.map((item) => {
 		const isActive = activeMenu === item.content;
-
 		return (
 			<a
 				className={`flex flex-row space-x-6 items-center 

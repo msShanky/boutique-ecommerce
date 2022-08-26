@@ -11,6 +11,9 @@ export const breezeBaseApi = createApi({
 		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
 			query: (categoryName: string) => `product-category/${categoryName}/products`,
 		}),
+		getProductsForAdminByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
+			query: (categoryName: string) => `product-category/${categoryName}/products?isAdmin=true`,
+		}),
 		getProductsByCode: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, ProductInformationProps>({
 			query: (props: ProductInformationProps) => `products/${props.categoryName}/${props.productCode}`,
 		}),
@@ -27,6 +30,7 @@ export const breezeBaseApi = createApi({
 export const {
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
+	useGetProductsForAdminByCategoryNameQuery,
 	useGetProductsByCodeQuery,
 	useCheckoutProductMutation,
 } = breezeBaseApi;

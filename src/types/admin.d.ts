@@ -5,9 +5,9 @@ type AdminCRUDContent = "create" | "read" | "update" | "delete";
 type ApiStatus = "idle" | "in-progress" | "success" | "error";
 
 type ProductFormStateProps = {
-	code?: string;
+	code: number | null;
 	images?: Array<string>;
-	category_id?: string;
+	category_id?: number;
 	description?: string;
 	title?: string;
 	sub_title?: string;
