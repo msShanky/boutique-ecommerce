@@ -3,7 +3,6 @@ import { Anchor, Button, Checkbox, Divider, Group, PaperProps, Stack } from "@ma
 import { Paper, PasswordInput, Text, TextInput } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-
 import { signInWithEmail, signUpWithEmail } from "../../../lib/auth-helpers";
 
 type AuthFormProps = {
@@ -31,6 +30,7 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 		},
 	});
 
+	// TODO: Move this one level up
 	const handleFormSubmit = async (formValues: AuthFormInitialType) => {
 		const { email, password } = formValues;
 		setLoading(true);
@@ -54,7 +54,6 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			<Text size="lg" weight={500}>
 				Welcome to breeze boutique, {type} with
 			</Text>
-
 			<Group grow mb="md" mt="md">
 				<Button onClick={props.handleGoogleLogin} className="bg-pink hover:bg-violet" radius="xl">
 					Google

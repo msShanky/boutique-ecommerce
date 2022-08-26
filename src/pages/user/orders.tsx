@@ -12,7 +12,7 @@ const getFormattedStatus = (status: string): string => {
 };
 
 const OrdersPage = () => {
-	const { user, error } = useUser();
+	const { user } = useUser();
 	const [userOrders, setUserOrders] = useState<Array<UserOrderWithRelations> | undefined>();
 
 	// TODO: Orders should be sorted by time of creation or update
