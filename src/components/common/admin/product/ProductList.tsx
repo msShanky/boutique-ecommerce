@@ -1,8 +1,8 @@
-import { ProductTable } from "@/components/feature";
+import { ProductTable } from "@/components/common/admin";
 import { useGetProductsForAdminByCategoryNameQuery } from "@/reducer/breezeBaseApi";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { definitions } from "types/supabase";
-import ProductFloatingBar from "../ProductFloatingBar";
+import ProductFloatingBar from "./ProductFloatingBar";
 
 type ProductListProps = {
 	categories?: Array<definitions["product_category"]>;
@@ -13,7 +13,9 @@ type ProductListProps = {
 const ProductList: FunctionComponent<ProductListProps> = (props) => {
 	const { categories, toggleProductAdd, handleProductEdit } = props;
 	const [selectedCategory, setSelectedCategory] = useState<definitions["product_category"] | null>();
-	const { data: products } = useGetProductsForAdminByCategoryNameQuery(selectedCategory?.category as string);
+	const { data: products } = useGetProductsForAdminByCategoryNameQuery(selectedCategory?.category as string, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	const handleCategoryUpdate = (value: definitions["product_category"] | null) => {
 		setSelectedCategory(value);

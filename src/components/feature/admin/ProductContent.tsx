@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
-import { ProductForm } from "@/components/feature";
-import { ProductList } from "@/components/common/admin/product";
+import { ProductForm, ProductList } from "@/components/common/admin";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { ProductSuccess } from "@/components/common/admin";
 import { formatProductFormForUpdate } from "helpers/supabase-helper";
-import { definitions } from "types/supabase";
 
 const ProductContent = () => {
 	const [crudState, setCrudState] = useState<AdminCRUDContent>("read");
@@ -37,6 +35,7 @@ const ProductContent = () => {
 				.from("product")
 				.update(formatProductFormForUpdate(product))
 				.eq("code", activeProduct?.code);
+			console.log(" ---- PRODUCT EDIT ---- ");
 			if (error) {
 				setProductApiState("error");
 			} else if (data) {
@@ -45,14 +44,16 @@ const ProductContent = () => {
 		}
 	};
 
+	const shouldShowLoader = isLoading || productApiState === "in-progress";
+
 	return (
 		<>
-			{(isLoading || productApiState === "in-progress") && (
+			{shouldShowLoader && (
 				<div className={"w-full min-h-[85vh] relative bg-violet-light"}>
 					<LoadingOverlay visible={true} overlayBlur={2} />
 				</div>
 			)}
-			{crudState === "read" && (
+			{crudState === "read" && !shouldShowLoader && (
 				<ProductList
 					categories={categories?.body}
 					handleProductEdit={handleProductEdit}
@@ -61,6 +62,7 @@ const ProductContent = () => {
 			)}
 			{/* TODO: Display a success screen after creating a product */}
 			{(crudState === "create" || crudState === "update") &&
+				!shouldShowLoader &&
 				(productApiState === "success" ? (
 					<ProductSuccess
 						onCancel={() => {
