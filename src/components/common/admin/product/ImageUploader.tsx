@@ -5,8 +5,6 @@ import { IconCloudUpload, IconDownload, IconX } from "@tabler/icons";
 import React, { FunctionComponent, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 
-// TODO: Add props and their information
-
 type ImageUploaderProps = {
 	isDisabled: boolean;
 	handleImageSuccess: (images: string) => void;
@@ -30,9 +28,7 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 		const imageFile = files[0];
 		const fileExt = imageFile.type.split("/")[1];
 		const imageName = `assets/${formValues.code}/${nanoid()}.${fileExt}`;
-		const { data, error } = await supabaseClient.storage.from("product-image").upload(imageName, imageFile);
-		// console.log(data, "Data fetched from the API for file upload");
-		// console.log(error, "ERROR: File Upload");
+		const { data } = await supabaseClient.storage.from("product-image").upload(imageName, imageFile);
 		if (data) {
 			handleImageSuccess(data?.Key ?? "");
 		}

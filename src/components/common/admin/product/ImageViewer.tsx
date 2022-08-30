@@ -78,9 +78,9 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 							src={`${baseUrl}${image}`}
 							alt="Product Image"
 						/>
-						<Text className="text-ellipsis overflow-hidden text-sm w-8/12">{image.split("assets/")[1]}</Text>
+						<Text className="w-8/12 overflow-hidden text-sm text-ellipsis">{image.split("assets/")[1]}</Text>
 						<ActionIcon
-							className="bg-error bg-opacity-80 hover:bg-error hover:bg-opacity-40 text-white"
+							className="text-white bg-error bg-opacity-80 hover:bg-error hover:bg-opacity-40"
 							onClick={() => handleDelete(index)}
 						>
 							<IconTrash size={18} />

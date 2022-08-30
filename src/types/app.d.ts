@@ -27,6 +27,9 @@ type ProductVariants = {
 };
 
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
+type ProductPostBody = Omit<ProductWithRelations, "id">;
+
+type ProductVariantPost = Omit<import("../types/supabase").definitions["product_variant"], "id">;
 
 type ProductInformationProps = {
 	categoryName: string;

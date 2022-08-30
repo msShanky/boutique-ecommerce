@@ -11,7 +11,9 @@ export const getCategoryData = (categories: GetCategoryDataInput): Array<Product
 	});
 };
 
-export const formatProductFormForUpdate = (product: ProductWithRelations): definitions["product"] => {
+export const formatProductFormForUpdate = (
+	product: Omit<ProductWithRelations, "id">
+): Omit<definitions["product"], "id"> => {
 	const { category, variants, ...coreProduct } = product;
 	return coreProduct;
 };

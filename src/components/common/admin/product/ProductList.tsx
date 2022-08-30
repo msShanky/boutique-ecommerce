@@ -1,5 +1,5 @@
 import { ProductTable } from "@/components/common/admin";
-import { useGetProductsForAdminByCategoryNameQuery } from "@/reducer/breezeBaseApi";
+import { useLazyGetProductsForAdminByCategoryNameQuery } from "@/reducer/breezeBaseApi";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { definitions } from "types/supabase";
 import ProductFloatingBar from "./ProductFloatingBar";
@@ -7,15 +7,13 @@ import ProductFloatingBar from "./ProductFloatingBar";
 type ProductListProps = {
 	categories?: Array<definitions["product_category"]>;
 	toggleProductAdd: () => void;
-	handleProductEdit: (product: ProductWithRelations) => void;
+	toggleProductEdit: (product: ProductWithRelations) => void;
 };
 
 const ProductList: FunctionComponent<ProductListProps> = (props) => {
-	const { categories, toggleProductAdd, handleProductEdit } = props;
+	const { categories, toggleProductAdd, toggleProductEdit } = props;
 	const [selectedCategory, setSelectedCategory] = useState<definitions["product_category"] | null>();
-	const { data: products } = useGetProductsForAdminByCategoryNameQuery(selectedCategory?.category as string, {
-		refetchOnMountOrArgChange: true,
-	});
+	const [getProductsForAdmin, results] = useLazyGetProductsForAdminByCategoryNameQuery();
 
 	const handleCategoryUpdate = (value: definitions["product_category"] | null) => {
 		setSelectedCategory(value);
@@ -27,6 +25,12 @@ const ProductList: FunctionComponent<ProductListProps> = (props) => {
 		if (!_selectedCategory) return null;
 		handleCategoryUpdate(_selectedCategory);
 	};
+
+	useEffect(() => {
+		if (selectedCategory) {
+			getProductsForAdmin(selectedCategory.category as string);
+		}
+	}, [selectedCategory, getProductsForAdmin]);
 
 	useEffect(() => {
 		handleCategoryUpdate(categories?.[0] || null);
@@ -42,8 +46,11 @@ const ProductList: FunctionComponent<ProductListProps> = (props) => {
 					selectedCategory={selectedCategory?.id.toString() as string}
 				/>
 			</div>
-			{selectedCategory && (
-				<ProductTable products={products?.body as Array<ProductWithRelations>} handleProductEdit={handleProductEdit} />
+			{selectedCategory && results.data && (
+				<ProductTable
+					products={results.data?.body as Array<ProductWithRelations>}
+					toggleProductEdit={toggleProductEdit}
+				/>
 			)}
 		</div>
 	);
