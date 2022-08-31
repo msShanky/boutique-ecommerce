@@ -21,7 +21,6 @@ const OrdersPage = () => {
 			.from("user_order")
 			.select(`*, order_item(*, product(*), product_variant(*)), order_status(*)`);
 		if (!error) {
-			console.log(data);
 			setUserOrders(data);
 		}
 	};
@@ -57,9 +56,9 @@ const OrdersPage = () => {
 							return (
 								<div
 									key={`order_item_container_${(index + 9) * 50}`}
-									className="flex flex-col bg-violet-light w-4/6 self-center min-h-40 rounded-md shadow-md p-4 space-y-4"
+									className="flex flex-col self-center w-4/6 p-4 space-y-4 rounded-md shadow-md bg-violet-light min-h-40"
 								>
-									<div className="flex flex-row space-x-4 items-baseline">
+									<div className="flex flex-row items-baseline space-x-4">
 										<Title className="text-xl text-page">{getFormattedStatus(order_status.status as string)}</Title>
 										<Text>{dayjs(created_at).format(`YYYY-MM-DD`)}</Text>
 									</div>

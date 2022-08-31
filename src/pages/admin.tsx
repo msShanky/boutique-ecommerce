@@ -28,8 +28,6 @@ const Admin = () => {
 		return <SidePanelMenuLink item={item} key={item.label} isActive={isActive} handleMenuClick={handleMenuClick} />;
 	});
 
-	// TODO: Add the sidebar to manage multiple pages
-	// TODO: Manage pages orders, products, variants and other shit
 	return (
 		<AdminLayout>
 			<>

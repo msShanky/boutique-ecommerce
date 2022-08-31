@@ -12,7 +12,6 @@ const ProfilePage = () => {
 	const fetchUserProfile = async () => {
 		const { data, error } = await supabaseClient.from("profiles").select(`*`);
 		if (!error) {
-			console.log(data[0]);
 			setUserProfile(data[0]);
 		}
 	};
@@ -27,7 +26,7 @@ const ProfilePage = () => {
 	return (
 		<AppLayout>
 			<section className="container flex flex-col mx-auto my-20">
-				<div className="flex flex-col self-center items-center w-6/12 shadow-lg bg-violet-light h-96 rounded-xl p-4">
+				<div className="flex flex-col items-center self-center w-6/12 p-4 shadow-lg bg-violet-light h-96 rounded-xl">
 					{userProfile?.avatar_url ? (
 						<Avatar className="rounded-full" size={120} src={userProfile?.avatar_url as string} />
 					) : (

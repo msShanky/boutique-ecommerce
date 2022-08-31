@@ -4,10 +4,9 @@ import { useForm } from "@mantine/form";
 import { definitions } from "types/supabase";
 import { IconX } from "@tabler/icons";
 import { ImageUploader, ImageViewer, ProductDetailsForm, ProductVariant } from "@/components/common/admin";
-import { customAlphabet } from "nanoid";
 
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-const nanoid = customAlphabet("1234567890", 8);
+import { formatProductFormForUpdate } from "helpers/supabase-helper";
 
 type ProductFormProps = {
 	isAdd: boolean;
@@ -38,47 +37,59 @@ const getFormInitialState = (product: ProductWithRelations | undefined) => {
 const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 	const { isAdd, product, categories, handleCancel, handleSubmit } = props;
 	const [productFormState, setProductFormState] = useState<AdminProductFormView>("product-info");
-	const [productImages, setProductImages] = useState<Array<string>>([]);
+	const [productVariantDeleteState, setProductVariantDeleteState] = useState<ApiStatus>("idle");
 	// TODO: Add Form validation for all fields that has to be validated
 	const productForm = useForm({
 		initialValues: getFormInitialState(product),
 	});
-
-	const { setFieldValue, onSubmit, values } = productForm;
-
-	// TODO: Handle product variant
-	// TODO: Show the selling price in the form
-
-	const handleProductCodeGeneration = () => {
-		setFieldValue("code", parseInt(nanoid(), 10));
-	};
+	const { setFieldValue, onSubmit, values, removeListItem } = productForm;
 
 	const handleImageSuccess = (value: string) => {
-		setProductImages([...productImages, value]);
-		setFieldValue("images", [...productImages, value]);
+		// setProductImages([...productImages, value]);
+		setFieldValue("images", [...(values.images as Array<string>), value]);
 	};
 
 	// TODO: Update the product images array when deleting the product images
 	const handleImageDelete = async (index: number) => {
-		const localCopy = [...productImages];
-		const imageUrl = localCopy[index];
-		await supabaseClient.storage.from("product-images").remove([imageUrl]);
+		const localCopy = [...(values.images as string[])];
 		localCopy.splice(index, 1);
-		setProductImages(localCopy);
-		setFieldValue("images", productImages);
+		const imageUrl = values.images?.[index] as string;
+		removeListItem("images", index);
+		await supabaseClient.storage.from("product-images").remove([imageUrl]);
+		const { variants, images, ...coreProduct } = formatProductFormForUpdate(values);
+		await supabaseClient
+			.from("product")
+			.update({ ...coreProduct, images: localCopy })
+			.eq("code", values?.code);
+	};
+
+	const handleVariantDelete = async (index: number) => {
+		const localCopyVariants = values.variants ? [...values.variants] : [];
+		localCopyVariants.splice(index, 1);
+		setFieldValue(`variants`, localCopyVariants);
+		const variantToDelete = values?.variants?.[index];
+		console.log("The variant to delete is", variantToDelete);
+		if (!variantToDelete || !variantToDelete.sku) return;
+
+		setProductVariantDeleteState("in-progress");
+		const { data, error } = await supabaseClient.from("product_variant").delete().eq("id", variantToDelete.id);
+		if (error) {
+			setProductVariantDeleteState("error");
+		} else if (data) {
+			setProductVariantDeleteState("success");
+		}
 	};
 
 	const handleFormCancel = async () => {
-		await supabaseClient.storage.from("product-images").remove(productImages);
-		handleCancel();
+		if (values.images) {
+			await supabaseClient.storage.from("product-images").remove(values.images as string[]);
+			handleCancel();
+		}
 	};
 
-	useEffect(() => {
-		setProductImages((product?.images as string[]) ?? []);
-	}, [product]);
-
-	console.log(" +++++++++ PRODUCT ", product);
-	console.log(" +++++++++ FORM VALUES ==========> ", values);
+	// useEffect(() => {
+	// 	setProductImages((product?.images as string[]) ?? []);
+	// }, [product]);
 
 	return (
 		<form className="grid grid-cols-2 gap-5" onSubmit={onSubmit((values) => handleSubmit(values))}>
@@ -106,19 +117,14 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 					]}
 				/>
 				{productFormState === "product-info" && (
-					<ProductDetailsForm
-						productForm={productForm}
-						handleCodeGeneration={handleProductCodeGeneration}
-						isAdd={isAdd}
-						categories={categories}
-					/>
+					<ProductDetailsForm productForm={productForm} isAdd={isAdd} categories={categories} />
 				)}
 				{productFormState === "product-variant" && (
 					<ProductVariant
 						productForm={productForm}
-						isAdd={isAdd}
 						variants={product?.variants as Array<ProductVariantPost>}
 						product={values}
+						handleVariantDelete={handleVariantDelete}
 					/>
 				)}
 			</section>

@@ -1,6 +1,7 @@
-import { ActionIcon, Button, Image, Modal, Text, Title } from "@mantine/core";
+import { ActionIcon, Image, Modal, Text, Title } from "@mantine/core";
 import { IconTrash } from "@tabler/icons";
 import React, { FunctionComponent, useState } from "react";
+import { DeleteWarningModal } from "@/components/common/admin/warning";
 
 type ImageViewerProps = {
 	productImages: Array<string>;
@@ -28,40 +29,12 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = (props) => {
 
 	return (
 		<div className="h-[40vh] overflow-scroll scroll-smooth scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
-			<Modal
-				transition="slide-left"
-				transitionDuration={200}
-				transitionTimingFunction="ease-in-out"
-				closeOnClickOutside={false}
-				closeOnEscape={false}
-				withCloseButton={false}
-				centered
+			<DeleteWarningModal
+				modelType="product"
+				onDelete={deleteUserConfirmation}
 				opened={opened}
-				onClose={() => setOpened(false)}
-				title="Image Delete Warning !!!"
-				classNames={{
-					title: "text-error",
-				}}
-			>
-				<div className="">
-					<Title className="text-base font-bold text-page">Are you sure you would want to delete this image ?</Title>
-					<Text className="mt-4 text-sm text-page">This action is not reversible</Text>
-					<div className="flex justify-center mt-12 space-x-10">
-						<Button
-							className="text-black bg-violet-light border-violet hover:bg-transparent"
-							onClick={() => setOpened(false)}
-						>
-							Cancel
-						</Button>
-						<Button
-							onClick={deleteUserConfirmation}
-							className=" bg-error bg-opacity-80 hover:bg-transparent hover:border-error hover:border hover:text-error"
-						>
-							Confirm
-						</Button>
-					</div>
-				</div>
-			</Modal>
+				toggleOpen={setOpened}
+			/>
 			{/* Product Images should be draggable so the priority of the cover image changes */}
 			{productImages.map((image, index) => {
 				return (

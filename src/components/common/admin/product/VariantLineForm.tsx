@@ -1,25 +1,21 @@
-import { Button, NumberInput, TextInput } from "@mantine/core";
+import { ActionIcon, Button, NumberInput, TextInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import { IconDice6 } from "@tabler/icons";
+import { IconDice6, IconTrash } from "@tabler/icons";
 import React, { ReactElement } from "react";
-import { definitions } from "types/supabase";
 
 type VariantLineFormProps = {
 	productVariantForm: UseFormReturnType<ProductPostBody>;
-	isAdd: boolean;
 	handleCodeGeneration: () => void;
-	// variant: AdminFormVariant;
 	index: number;
+	handleDelete: () => void;
 };
 
 const VariantLineForm = (props: VariantLineFormProps): ReactElement => {
-	const { isAdd, productVariantForm, handleCodeGeneration, index } = props;
-	const { values, getInputProps } = productVariantForm;
-
-	const lineValue = values.variants?.[index];
+	const { productVariantForm, handleCodeGeneration, index, handleDelete } = props;
+	const { getInputProps } = productVariantForm;
 
 	return (
-		<div className="flex flex-row justify-between gap-4">
+		<div className="flex flex-row items-center justify-between gap-4">
 			<TextInput
 				label="SKU"
 				className="w-5/12"
@@ -42,7 +38,14 @@ const VariantLineForm = (props: VariantLineFormProps): ReactElement => {
 				{...getInputProps(`variants.${index}.sku`)}
 			/>
 			<TextInput placeholder="L" label="Product Size" required {...getInputProps(`variants.${index}.size`)} />
+			{/* FIXME: The count is not populated when editing, get the values from API */}
 			<NumberInput placeholder="0" label="Inventory" required {...getInputProps(`variants.${index}.inventory_count`)} />
+			<ActionIcon
+				className="mt-4 text-white bg-error bg-opacity-80 hover:bg-error hover:bg-opacity-40 "
+				onClick={handleDelete}
+			>
+				<IconTrash size={18} />
+			</ActionIcon>
 		</div>
 	);
 };

@@ -2,6 +2,8 @@ import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import React, { FunctionComponent, MouseEvent } from "react";
 import { IconHeart } from "@tabler/icons";
+import { getImageUrl } from "helpers/supabase-helper";
+import { getSellingPrice } from "helpers/price-calculator";
 
 type ProductCardProps = {
 	product: ProductWithRelations;
@@ -20,10 +22,6 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 		handleWishList();
 	};
 
-	const _mrp = msrp as number;
-	const discountPrice = _mrp * ((product_discount as number) / 100);
-	const productPrice = _mrp - parseInt(discountPrice?.toFixed(), 10);
-
 	return (
 		<Card onClick={handleProductRedirection} ref={ref} className="relative shadow-lg w-72 hover:cursor-pointer group">
 			<Card.Section className="h-64 bg-violet-light">
@@ -32,7 +30,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 					classNames={{
 						image: "object-top",
 					}}
-					src={images ? (images[0] as string) : ""}
+					src={images ? getImageUrl(images?.[0]) : ""}
 					alt={`PRODUCT_${id}`}
 					fit="cover"
 				/>
@@ -67,7 +65,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				)}
 			</div>
 			<div className="flex items-center mt-6 space-x-4">
-				<Text className="font-sans text-base text-page">Rs. {productPrice}</Text>
+				<Text className="font-sans text-base text-page">Rs. {getSellingPrice(product)}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
 				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
 			</div>

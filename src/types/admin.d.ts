@@ -29,3 +29,5 @@ type AdminFormVariant = {
 	size: string;
 	inventory_count: number | null;
 };
+
+type DeleteWarningModalTypes = "product" | "variant";

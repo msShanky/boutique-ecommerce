@@ -21,12 +21,10 @@ const Product: NextPage = () => {
 	};
 
 	const handleWishList = async (product: ProductWithRelations) => {
-		console.log("THE PRODUCT IS ADDED TO WISHLIST", product);
 		if (!user) return;
 		// TODO: Handle the loader for the user_wishlist
 		const postBody = { product_id: product.id, user_id: user.id };
-		const { data, error } = await supabaseClient.from("user_wishlist").insert([postBody]);
-		console.log("THE PRODUCT HAS BEEN WHITELISTED", data);
+		const { data } = await supabaseClient.from("user_wishlist").insert([postBody]);
 	};
 
 	return (

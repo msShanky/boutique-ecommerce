@@ -4,17 +4,24 @@ import { getCategoryData } from "helpers/supabase-helper";
 import { getSellingPriceFromDiscount } from "helpers/price-calculator";
 import { UseFormReturnType } from "@mantine/form";
 import { definitions } from "types/supabase";
+import { customAlphabet } from "nanoid";
+const nanoid = customAlphabet("1234567890", 8);
 
 type ProductDetailsFormProps = {
 	productForm: UseFormReturnType<ProductPostBody>;
 	isAdd: boolean;
-	handleCodeGeneration: () => void;
 	categories?: Array<definitions["product_category"]>;
 };
 
 const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) => {
-	const { productForm, isAdd, categories, handleCodeGeneration } = props;
-	const { values, getInputProps } = productForm;
+	const { productForm, isAdd, categories } = props;
+	const { values, getInputProps, setFieldValue } = productForm;
+
+	const categoryList = getCategoryData(categories);
+
+	const handleCodeGeneration = () => {
+		setFieldValue("code", parseInt(nanoid(), 10));
+	};
 
 	return (
 		<>
@@ -49,13 +56,15 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 			/>
 			<Textarea placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
 			<div className="flex items-center justify-between gap-4">
+				{/* FIXME: Category id is not changing when selecting new category from dropdown */}
 				<Select
 					className="inline-block w-full"
 					label="Category"
 					placeholder="Select a category"
 					required
-					{...getInputProps("category_id")}
-					data={getCategoryData(categories)}
+					value={values.category_id?.toString()}
+					onChange={(event) => setFieldValue("category_id", parseInt(event as string, 10))}
+					data={categoryList}
 				/>
 			</div>
 			<div className="flex items-end justify-between gap-4">

@@ -10,9 +10,13 @@ const AdminContent: FunctionComponent<AdminContentProps> = (props) => {
 
 	const contentMapping: Record<AdminPageContent, ReactElement> = {
 		product: <ProductContent />,
+		// TODO: Manage the orders for the admin
 		order: <p>Orders Page</p>,
+		// TODO: Manage the reports for the admin
 		report: <p>Report Page</p>,
+		// TODO: Manage the dashboard for the admin
 		dashboard: <p>Dashboard Page</p>,
+		// TODO: Manage the category for the admin
 		category: <p>Category Page</p>,
 	};
 

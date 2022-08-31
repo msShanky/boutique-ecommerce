@@ -6,7 +6,7 @@ import ProductSuccess from "./ProductSuccess";
 type ProductManagerProps = {
 	productApiState: ApiStatus;
 	handleCancel: () => void;
-	handleProductUpdate: (product: Omit<ProductWithRelations, "id">) => void;
+	handleProductUpdate: (product: ProductPostBody) => void;
 	crudState: AdminCRUDContent;
 	activeProduct: ProductWithRelations;
 	categories?: Array<definitions["product_category"]>;
@@ -15,9 +15,9 @@ type ProductManagerProps = {
 const ProductManager: FunctionComponent<ProductManagerProps> = (props) => {
 	const { productApiState, handleCancel, handleProductUpdate, crudState, activeProduct, categories } = props;
 
-	if (productApiState === "success") return <ProductSuccess onCancel={handleCancel} />;
+	if (productApiState === "success") return <ProductSuccess isAdd={crudState === "create"} onCancel={handleCancel} />;
 
-	return (		
+	return (
 		<ProductForm
 			isAdd={crudState === "create"}
 			product={activeProduct}

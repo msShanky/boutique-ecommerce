@@ -18,7 +18,6 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 
 	// TODO: Upload the product image to the desired folder in supabase
 	const handleFileUpload = async (files: File[]) => {
-		console.log(" File has been uploaded  ", files);
 		setLoading(true);
 		if (!formValues.code) {
 			setLoading(false);

@@ -12,7 +12,8 @@ const columns = [
 	{ value: "title", label: "Product" },
 	{ value: "code", label: "Product Code" },
 	{ value: "subtitle", label: "Product Subtitle" },
-	{ value: "msrp", label: "MSRP" },
+	{ value: "msrp", label: "MRP" },
+	{ value: "sellingPrice", label: "Price" },
 	{ value: "discount", label: "Product Discount" },
 	{ value: "actions", label: "Actions" },
 ];
