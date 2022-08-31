@@ -657,6 +657,7 @@ export interface paths {
           sku?: parameters["rowFilter.product_variant.sku"];
           size?: parameters["rowFilter.product_variant.size"];
           product_id?: parameters["rowFilter.product_variant.product_id"];
+          inventory_count?: parameters["rowFilter.product_variant.inventory_count"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -712,6 +713,7 @@ export interface paths {
           sku?: parameters["rowFilter.product_variant.sku"];
           size?: parameters["rowFilter.product_variant.size"];
           product_id?: parameters["rowFilter.product_variant.product_id"];
+          inventory_count?: parameters["rowFilter.product_variant.inventory_count"];
         };
         header: {
           /** Preference */
@@ -731,6 +733,7 @@ export interface paths {
           sku?: parameters["rowFilter.product_variant.sku"];
           size?: parameters["rowFilter.product_variant.size"];
           product_id?: parameters["rowFilter.product_variant.product_id"];
+          inventory_count?: parameters["rowFilter.product_variant.inventory_count"];
         };
         body: {
           /** product_variant */
@@ -1236,6 +1239,8 @@ export interface definitions {
      * This is a Foreign Key to `product.id`.<fk table='product' column='id'/>
      */
     product_id?: number;
+    /** Format: bigint */
+    inventory_count?: number;
   };
   /** @description manages the order items for a specific order */
   order_item: {
@@ -1469,6 +1474,8 @@ export interface parameters {
   "rowFilter.product_variant.size": string;
   /** Format: bigint */
   "rowFilter.product_variant.product_id": string;
+  /** Format: bigint */
+  "rowFilter.product_variant.inventory_count": string;
   /** @description order_item */
   "body.order_item": definitions["order_item"];
   /** Format: bigint */

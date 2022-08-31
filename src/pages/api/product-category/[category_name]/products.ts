@@ -6,12 +6,14 @@ import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 const getProductsForCategory = async (
 	categoryId: number,
 	isAdmin: boolean
-): Promise<PostgrestResponse<definitions["product"]>> => {	
+): Promise<PostgrestResponse<definitions["product"]>> => {
 	const adminQuery = `*,`;
 	const userQuery = `id,code,images,category_id,msrp,title,sub_title,product_discount,`;
+	const adminVariantsInventory = `product_variant(id,sku,size,inventory_count)`;
+	const userVariants = `product_variant(id,sku,size,inventory_count)`;
 	const baseQuery = `${isAdmin ? adminQuery : userQuery}
 	category:category_id (id,category),
-	variants: product_variant(id,sku,size)`;
+	variants: ${isAdmin ? adminVariantsInventory : userVariants}`;
 	const productsForCategory = await supabaseClient
 		.from<definitions["product"]>("product")
 		.select(baseQuery)
@@ -32,7 +34,6 @@ const getCategoryIdByName = async (category_name: string) => {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "GET") {
 		const { category_name, isAdmin } = req.query;
-		console.log(" CATEGORY_NAME ", category_name)
 		const { data: categoryData } = await getCategoryIdByName(category_name as string);
 		const _categoryId = categoryData ? categoryData[0].id : undefined;
 		if (!_categoryId) res.status(404).send({ message: "Category not found" });

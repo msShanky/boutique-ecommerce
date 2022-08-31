@@ -47,6 +47,7 @@ export const cartSlice = createSlice({
 				state.products[existingIndex].quantity = state.products[existingIndex].quantity - 1;
 				return;
 			} else {
+				// TODO: Handle cart warning if the quantity is less than 0
 				console.log("Throw a warning if it's less than 0");
 			}
 		},

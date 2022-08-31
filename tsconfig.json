@@ -18,7 +18,8 @@
 		"paths": {
 			"@/components/*": ["components/*"],
 			"@/lib/*": ["lib/*"],
-			"@/reducer/*": ["reducer/*"]
+			"@/reducer/*": ["reducer/*"],
+			"@/copy/*": ["copy/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

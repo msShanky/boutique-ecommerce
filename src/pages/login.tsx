@@ -1,17 +1,11 @@
-import React, { MouseEvent, useState } from "react";
-import { useRouter } from "next/router";
+import React, { MouseEvent } from "react";
 import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-// import { signInWithGoogle } from "../utils/auth";
-// import { supabase } from "../utils/supabaseClient";
 
 const Login = () => {
-	const router = useRouter();
-
 	const handleGoogleLogin = async (event: MouseEvent) => {
-		console.log("THE GOOGLE LOGIN IS TRIGGERED", event);
 		try {
 			const { error } = await supabaseClient.auth.signIn({ provider: "google" });
 			if (error) throw error;
@@ -20,7 +14,9 @@ const Login = () => {
 		}
 	};
 
+	// TODO: Handle email login
 	const handleEmailLogin = () => {};
+	// TODO: Handle email sign up
 	const handleEmailSignUp = () => {};
 
 	const handleEmailEvent = () => {};

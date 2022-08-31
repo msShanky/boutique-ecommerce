@@ -31,6 +31,7 @@ export const {
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
 	useGetProductsForAdminByCategoryNameQuery,
+	useLazyGetProductsForAdminByCategoryNameQuery,
 	useGetProductsByCodeQuery,
 	useCheckoutProductMutation,
 } = breezeBaseApi;

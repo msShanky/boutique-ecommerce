@@ -46,7 +46,6 @@ const Home: NextPage = () => {
 
 	useEffect(() => {
 		if (shouldRedirect && !isWaitingForSignIn) {
-			console.log("Router state after login successful", router);
 			router.replace(router.pathname, undefined);
 		}
 	}, [shouldRedirect, router, isWaitingForSignIn]);

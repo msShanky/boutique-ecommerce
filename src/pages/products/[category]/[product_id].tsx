@@ -10,11 +10,8 @@ import AppLayout from "../../../components/layout/AppLayout";
 import { useGetProductsByCodeQuery } from "../../../reducer/breezeBaseApi";
 import { addProductToCart } from "../../../reducer/cart";
 import { definitions } from "../../../types/supabase";
-
-const breadcrumbs = [
-	{ link: "/", label: "Home" },
-	{ link: "/products", label: "Categories" },
-];
+import { getSellingPrice } from "helpers/price-calculator";
+import { getImageUrl } from "helpers/supabase-helper";
 
 const Product: NextPage = () => {
 	const dispatch = useAppDispatch();
@@ -23,7 +20,6 @@ const Product: NextPage = () => {
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
 	const { category, product_id } = router.query;
-
 	const { isLoading, data, isSuccess } = useGetProductsByCodeQuery({
 		categoryName: category as string,
 		productCode: product_id as string,
@@ -31,9 +27,9 @@ const Product: NextPage = () => {
 
 	const product = data?.body[0];
 
-	const _mrp = product?.msrp as number;
-	const discountPrice = _mrp * ((product?.product_discount as number) / 100);
-	const productPrice = _mrp - parseInt(discountPrice?.toFixed(), 10);
+	// const _mrp = product?.msrp as number;
+	// const discountPrice = _mrp * ((product?.product_discount as number) / 100);
+	// const productPrice = _mrp - parseInt(discountPrice?.toFixed(), 10);
 
 	const handleVariantSelection = (variant: definitions["product_variant"]) => {
 		setVariant(variant);
@@ -80,7 +76,7 @@ const Product: NextPage = () => {
 												image: "hover:scale-125 delay-75 transition-transform ease-in-out",
 											}}
 											key={`Product_image_${index + 5}`}
-											src={image as string}
+											src={getImageUrl(image as string)}
 											alt={`product_image_${index + 1}`}
 										/>
 									);
@@ -95,7 +91,9 @@ const Product: NextPage = () => {
 							<Divider my="md" />
 							{/* Price Section */}
 							<div className="flex items-center mt-8 space-x-4">
-								<Text className="font-sans text-2xl text-page">Rs. {productPrice}</Text>
+								<Text className="font-sans text-2xl text-page">
+									Rs. {getSellingPrice(product as ProductWithRelations)}
+								</Text>
 								<Text className="font-sans text-xl line-through text-pink">Rs. {product?.msrp}</Text>
 								<Text className="font-sans text-xl text-violet">{`(${product?.product_discount}% OFF)`}</Text>
 							</div>

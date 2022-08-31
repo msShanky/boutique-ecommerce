@@ -17,47 +17,6 @@ const breezeTheme: Partial<MantineTheme> = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-	const router = useRouter();
-	// const [authenticatedState, setAuthenticatedState] = useState("not-authenticated");
-
-	// async function checkUser() {
-	// 	const user = await supabase.auth.user();
-	// 	if (user) {
-	// 		setAuthenticatedState("authenticated");
-	// 	}
-	// }
-
-	// async function handleAuthChange(event: AuthChangeEvent, session: Session | null) {
-	// 	await fetch("/api/auth/user", {
-	// 		method: "POST",
-	// 		headers: new Headers({ "Content-Type": "application/json" }),
-	// 		credentials: "same-origin",
-	// 		body: JSON.stringify({ event, session }),
-	// 	});
-	// }
-
-	// supabase.auth.onAuthStateChange((event, session) => {
-	// 	console.log("THE EVENT CHANGED FOR AUTH", event);
-	// 	console.log("THE SESSION VALUE AVAILABLE IS", session);
-	// });
-
-	// useEffect(() => {
-	// 	const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-	// 		handleAuthChange(event, session);
-	// 		if (event === "SIGNED_IN") {
-	// 			setAuthenticatedState("authenticated");
-	// 			router.push("/");
-	// 		}
-	// 		if (event === "SIGNED_OUT") {
-	// 			setAuthenticatedState("not-authenticated");
-	// 		}
-	// 	});
-	// 	checkUser();
-	// 	return () => {
-	// 		authListener?.unsubscribe();
-	// 	};
-	// }, [router]);
-
 	return (
 		<>
 			<UserProvider supabaseClient={supabaseClient}>
@@ -72,13 +31,5 @@ function MyApp({ Component, pageProps }: AppProps) {
 		</>
 	);
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-// 	const session = supabaseClient.auth.session();
-// 	console.log(session, "SUPABASE SESSIOn");
-// 	return {
-// 		props: {}, // will be passed to the page component as props
-// 	};
-// };
 
 export default MyApp;

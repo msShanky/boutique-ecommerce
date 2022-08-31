@@ -4,7 +4,7 @@ import React, { FunctionComponent } from "react";
 
 type ProductTableProps = {
 	products: Array<ProductWithRelations>;
-	handleProductEdit: (product: ProductWithRelations) => void;
+	toggleProductEdit: (product: ProductWithRelations) => void;
 };
 
 const columns = [
@@ -12,17 +12,18 @@ const columns = [
 	{ value: "title", label: "Product" },
 	{ value: "code", label: "Product Code" },
 	{ value: "subtitle", label: "Product Subtitle" },
-	{ value: "msrp", label: "MSRP" },
+	{ value: "msrp", label: "MRP" },
+	{ value: "sellingPrice", label: "Price" },
 	{ value: "discount", label: "Product Discount" },
 	{ value: "actions", label: "Actions" },
 ];
 
 const ProductTable: FunctionComponent<ProductTableProps> = (props) => {
-	const { products, handleProductEdit } = props;
+	const { products, toggleProductEdit } = props;
 
 	const rows = products?.map((product) => {
 		const key = `PRODUCT_ROW_${product.code}`;
-		return <ProductRow key={key} product={product} handleProductEdit={handleProductEdit} />;
+		return <ProductRow key={key} product={product} handleProductEdit={toggleProductEdit} />;
 	});
 
 	return (
