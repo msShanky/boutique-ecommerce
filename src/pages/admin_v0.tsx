@@ -32,7 +32,7 @@ const Admin = () => {
 		<AdminLayout>
 			<>
 				<Head>
-					<title>Breeze Boutique | Admin</title>
+					<title>Breeze Boutique | Admin FROM ADMIN TSX</title>
 				</Head>
 				<main className="container flex flex-row m-10 mx-auto space-x-10">
 					<Navbar className="border-r-2 bg-violet-light border-violet" height={840} width={{ sm: 250 }} p="md">

@@ -7,7 +7,10 @@ import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 const Login = () => {
 	const handleGoogleLogin = async (event: MouseEvent) => {
 		try {
-			const { error } = await supabaseClient.auth.signIn({ provider: "google" });
+			const { error } = await supabaseClient.auth.signIn(
+				{ provider: "google" },
+				{ redirectTo: window.location.origin }
+			);
 			if (error) throw error;
 		} catch (error) {
 			console.log("there is an error with google signIn", error);

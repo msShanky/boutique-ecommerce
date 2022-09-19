@@ -22,6 +22,7 @@ type AdminPanelLink = {
 	content: AdminPageContent;
 	label: string;
 	icon: TablerIcon;
+	link: string;
 };
 
 type AdminFormVariant = {
