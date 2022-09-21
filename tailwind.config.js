@@ -13,6 +13,7 @@ module.exports = {
 				"card-highlight": "#2F1AC4",
 				page: "#151875",
 				success: "#19D16F",
+				error: "#ff3900",
 			},
 		},
 		fontFamily: {
@@ -26,6 +27,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("tailwind-scrollbar")],
 };
-

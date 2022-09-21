@@ -17,7 +17,6 @@ type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const WishListPage: NextPage<PageProps> = (props) => {
 	const { user } = props;
-	console.log("User object received is", user);
 	const router = useRouter();
 	const [isLoading, setLoading] = useState(false);
 	const [wishlistProducts, setWishListProducts] = useState<Array<UserWishListItem> | null>();
@@ -28,7 +27,6 @@ const WishListPage: NextPage<PageProps> = (props) => {
 			.select(`id,user_id,product_id,product(id,code,images,category_id,msrp,title,sub_title,product_discount,
 			category:category_id (id,category),
 			variants: product_variant(id,sku,size))`);
-		console.log("The data fetched for wishlist from user", response);
 		setLoading(false);
 		setWishListProducts(response.data);
 	};
@@ -54,8 +52,6 @@ const WishListPage: NextPage<PageProps> = (props) => {
 		router.push(productRoute);
 	};
 
-	console.log(" Wishlist Products ", wishlistProducts);
-
 	return (
 		<AppLayout>
 			<>
@@ -74,9 +70,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 					{wishlistProducts && wishlistProducts.length > 0 && (
 						<section className="container flex flex-wrap gap-10 mx-auto">
 							{wishlistProducts.map((wishlistItem) => {
-								console.log(wishlistItem, "ITEM FOR WISH LIST CARD");
 								const { product } = wishlistItem;
-								// return <p >{wishlistItem.id}</p>;
 								return (
 									<WishListCard
 										key={`${wishlistItem.id}_WISHLIST_ITEM`}

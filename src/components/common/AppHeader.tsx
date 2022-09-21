@@ -1,12 +1,17 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import AppNavigation from "./AppNavigation";
 import HeaderHighlightBar from "./HeaderHighlightBar";
 
-const AppHeader = () => {
+type AppHeaderProps = {
+	isAdmin?: boolean;
+};
+
+const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
+	const { isAdmin } = props;
 	return (
-		<nav className="w-full mx-auto h-28">
+		<nav className={`w-full mx-auto ${isAdmin ? "h-14" : "h-28"}`}>
 			<HeaderHighlightBar />
-			<AppNavigation />
+			{!isAdmin && <AppNavigation />}
 		</nav>
 	);
 };
