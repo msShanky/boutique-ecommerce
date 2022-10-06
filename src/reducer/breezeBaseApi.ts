@@ -1,3 +1,4 @@
+import { OrderData } from "@/components/common/admin/order/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { definitions } from "../types/supabase";
 
@@ -39,6 +40,28 @@ export const breezeBaseApi = createApi({
         body: body,
       }),
     }),
+    getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, void>({
+      query: () => `orders`,
+    }),
+    getOrderStatus: builder.query<
+      SupaBaseResponse<Array<definitions["order_status"]>>,
+      void
+    >({
+      query: () => `orders/order-status`,
+    }),
+    getOrderItemsByOrderId: builder.query<
+      SupaBaseResponse<Array<OrderItemWithRelations>>,
+      string
+    >({
+      query: (id: string) => `orders/order-items/${id}`,
+    }),
+    setOrderStatus: builder.mutation<any, definitions["user_order"]>({
+      query: ({ id, ...orderData }) => ({
+        url: `/orders/${id}`,
+        method: "PATCH",
+        body: orderData,
+      }),
+    }),
   }),
 });
 
@@ -50,4 +73,8 @@ export const {
   useLazyGetProductsForAdminByCategoryNameQuery,
   useGetProductsByCodeQuery,
   useCheckoutProductMutation,
+  useLazyGetOrdersQuery,
+  useGetOrderStatusQuery,
+  useGetOrderItemsByOrderIdQuery,
+  useSetOrderStatusMutation,
 } = breezeBaseApi;

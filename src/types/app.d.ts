@@ -71,7 +71,9 @@ type CheckoutPostBody = {
 
 type OrderItemWithRelations =
   import("../types/supabase").definitions["order_item"] & {
-    product: import("../types/supabase").definitions["product"];
+    product: import("../types/supabase").definitions["product"] & {
+      category: import("../types/supabase").definitions["product_category"];
+    };
     product_variant: import("../types/supabase").definitions["product_variant"];
   };
 

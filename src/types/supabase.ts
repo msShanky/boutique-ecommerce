@@ -337,6 +337,7 @@ export interface paths {
           id?: parameters["rowFilter.order_status.id"];
           status?: parameters["rowFilter.order_status.status"];
           created_at?: parameters["rowFilter.order_status.created_at"];
+          status_text?: parameters["rowFilter.order_status.status_text"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -390,6 +391,7 @@ export interface paths {
           id?: parameters["rowFilter.order_status.id"];
           status?: parameters["rowFilter.order_status.status"];
           created_at?: parameters["rowFilter.order_status.created_at"];
+          status_text?: parameters["rowFilter.order_status.status_text"];
         };
         header: {
           /** Preference */
@@ -407,6 +409,7 @@ export interface paths {
           id?: parameters["rowFilter.order_status.id"];
           status?: parameters["rowFilter.order_status.status"];
           created_at?: parameters["rowFilter.order_status.created_at"];
+          status_text?: parameters["rowFilter.order_status.status_text"];
         };
         body: {
           /** order_status */
@@ -1155,6 +1158,8 @@ export interface definitions {
      * @default now()
      */
     created_at?: string;
+    /** Format: text */
+    status_text?: string;
   };
   /** @description Maintains the product information of breeze */
   product: {
@@ -1418,6 +1423,8 @@ export interface parameters {
   "rowFilter.order_status.status": string;
   /** Format: timestamp with time zone */
   "rowFilter.order_status.created_at": string;
+   /** Format: text */
+  "rowFilter.order_status.status_text": string;
   /** @description product */
   "body.product": definitions["product"];
   /** Format: bigint */
