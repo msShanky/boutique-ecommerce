@@ -1,7 +1,7 @@
 import { Card, Image, Text, Title } from "@mantine/core";
-import { useHover } from "@mantine/hooks";
 import React, { FunctionComponent, MouseEvent } from "react";
 import { Button } from "@mantine/core";
+import { getImageUrl } from "helpers/supabase-helper";
 
 type WishListCardProps = {
 	product: ProductWithRelations;
@@ -25,7 +25,7 @@ const WishListCard: FunctionComponent<WishListCardProps> = (props) => {
 					classNames={{
 						image: "object-top",
 					}}
-					src={images ? (images[0] as string) : ""}
+					src={getImageUrl(images?.length ? (images[0] as string) : "")}
 					alt={`PRODUCT_${id}`}
 					fit="cover"
 				/>

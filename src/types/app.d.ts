@@ -41,7 +41,7 @@ type ProductCartType = {
 	variant: import("../types/supabase").definitions["product_variant"];
 };
 
-type UserWishListItem = import("../types/supabase").definitions["product_variant"] & {
+type UserWishListItem = import("../types/supabase").definitions["user_wishlist"] & {
 	product: ProductWithRelations;
 };
 

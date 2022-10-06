@@ -41,6 +41,9 @@ export const breezeBaseApi = createApi({
 				body: orderData,
 			}),
 		}),
+		getUserWishlist: builder.query<SupaBaseResponse<Array<UserWishListItem>>, string>({
+			query: (id: string) => `wishlist/${id}`
+		})
 	}),
 });
 
@@ -54,5 +57,6 @@ export const {
 	useLazyGetOrdersQuery,
 	useGetOrderStatusQuery,
 	useGetOrderItemsByOrderIdQuery,
-	useSetOrderStatusMutation
+	useSetOrderStatusMutation,
+	useLazyGetUserWishlistQuery
 } = breezeBaseApi;
