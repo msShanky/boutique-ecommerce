@@ -1,5 +1,6 @@
 import { Button, Image, Table, Text } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons";
+import { getImageUrl } from "helpers/supabase-helper";
 import React from "react";
 import { increaseQuantity, decreaseQuantity } from "reducer/cart";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
@@ -13,7 +14,7 @@ const CartTable = () => {
 		const { product, variant, quantity } = productState;
 		const sellingPrice = getSellingPrice(product);
 		const { id, images } = product;
-		const baseImage = images && images.length > 0 ? (images[0] as string) : "";
+		const baseImage = getImageUrl(images && images.length > 0 ? (images[0] as string) : "");
 
 		const handleQuantityUpdate = () => {};
 
