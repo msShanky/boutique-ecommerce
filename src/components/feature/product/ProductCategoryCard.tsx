@@ -1,4 +1,5 @@
 import { Card, Image, Title } from "@mantine/core";
+import { getImageUrl } from "helpers/supabase-helper";
 import React, { FunctionComponent } from "react";
 import { definitions } from "../../../types/supabase";
 
@@ -23,7 +24,7 @@ const ProductCategoryCard: FunctionComponent<ProductCategoryCardProps> = (props)
 					}}
 					height={250}
 					fit="cover"
-					src={category_image}
+					src={getImageUrl(category_image)}
 					alt="product-category"
 				/>
 			</Card.Section>
