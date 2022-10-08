@@ -6,6 +6,8 @@ import { useClickOutside } from "@mantine/hooks";
 
 import UserAvatar from "./UserAvatar";
 import Link from "next/link";
+import { persistor } from "app/store";
+import Router, { useRouter } from "next/router";
 
 type UserMenuProps = {
 	user: User;
@@ -17,6 +19,12 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 	const { user } = props;
 	const [opened, setOpened] = useState(false);
 	const ref = useClickOutside(() => setOpened(false));
+	const router = useRouter();
+
+	const handleLogout = () => {
+		persistor.purge();
+		router.push('/api/auth/logout')
+	}
 
 	return (
 		<div className="" ref={ref}>
@@ -39,11 +47,9 @@ const UserMenu: FunctionComponent<UserMenuProps> = (props) => {
 						<Menu.Item icon={<IconUser size={14} />}>Profile</Menu.Item>
 					</Link>
 					<Menu.Divider />
-					<Link href="/api/auth/logout" passHref>
-						<Menu.Item color="red" icon={<IconLogout size={14} />}>
-							Log Out
-						</Menu.Item>
-					</Link>
+					<Menu.Item color="red" onClick={handleLogout} icon={<IconLogout size={14} />}>
+						Log Out
+					</Menu.Item>
 				</Menu.Dropdown>
 			</Menu>
 		</div>

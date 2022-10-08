@@ -36,7 +36,7 @@ const Product: NextPage = () => {
 				)}
 				{isSuccess && (
 					<section className="container flex flex-wrap gap-10 mx-auto my-20">
-						{data?.body.map((categoryData, index) => {
+						{data?.body?.map((categoryData, index) => {
 							return (
 								<ProductCategoryCard
 									handleCardClick={() => handleCategoryRedirection(categoryData)}

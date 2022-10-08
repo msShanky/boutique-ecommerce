@@ -11,6 +11,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { clearCart } from "reducer/cart";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 
 const Checkout: NextPage = () => {
 	const { products } = useAppSelector((state) => state.cart);
@@ -75,3 +76,5 @@ const Checkout: NextPage = () => {
 };
 
 export default Checkout;
+
+export const getServerSideProps = withPageAuth({ redirectTo: "/login" });

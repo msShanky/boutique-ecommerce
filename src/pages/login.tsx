@@ -3,8 +3,10 @@ import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 
 const Login = () => {
+	const router = useRouter();
 	const handleGoogleLogin = async (event: MouseEvent) => {
 		try {
 			const { error } = await supabaseClient.auth.signIn(
