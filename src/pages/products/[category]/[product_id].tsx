@@ -59,6 +59,42 @@ const Product: NextPage = () => {
 		});
 	};
 
+	const renderImages = (product: ProductWithRelations, withCarousel?: boolean) => {
+
+		const ProductImage = ({ src }: { src: string }) => (
+			<Image
+				className="w-[49%] object-top"
+				height={680}
+				radius="md"
+				fit="contain"
+				classNames={{
+					imageWrapper: "overflow-hidden",
+					image: "hover:scale-125 delay-75 transition-transform ease-in-out",
+				}}
+				src={getImageUrl(src)}
+				alt={`product_image_`}
+			/>
+		)
+
+		return withCarousel
+			? (
+				<Carousel slideSize="70%" height={680} slideGap="sm" controlsOffset="xs" controlSize={20}>
+					{product?.images?.map((image, index) => {
+						return (
+							<Carousel.Slide key={`Product_image_${index + 5}`}>
+								<ProductImage src={image as string} />
+							</Carousel.Slide>
+						);
+					})}
+				</Carousel>
+			)
+			: product?.images?.map((image, index) => {
+				return (
+					<ProductImage key={`Product_image_${index + 5}`} src={image as string} />
+				);
+			})
+	}
+
 	return (
 		<AppLayout>
 			<>
@@ -74,27 +110,7 @@ const Product: NextPage = () => {
 					<section className="container flex flex-wrap mx-auto my-20">
 						<div className="w-8/12 p-1">
 							<div className="relative flex flex-wrap gap-5 overflow-hidden ">
-								<Carousel slideSize="70%" height={680} slideGap="sm" controlsOffset="xs" controlSize={20} loop>
-
-									{product?.images?.map((image, index) => {
-										return (
-											<Carousel.Slide key={`Product_image_${index + 5}`}>
-												<Image
-													className="w-[49%] object-top"
-													height={680}
-													radius="md"
-													fit="contain"
-													classNames={{
-														imageWrapper: "overflow-hidden",
-														image: "hover:scale-125 delay-75 transition-transform ease-in-out",
-													}}
-													src={getImageUrl(image as string)}
-													alt={`product_image_${index + 1}`}
-												/>
-											</Carousel.Slide>
-										);
-									})}
-								</Carousel>
+								{renderImages(product as ProductWithRelations, !!(product?.images?.length as number > 2))}
 							</div>
 						</div>
 						<div className="w-4/12 px-4 py-2">
