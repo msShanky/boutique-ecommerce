@@ -14,6 +14,7 @@ import { definitions } from "../../../types/supabase";
 import { getSellingPrice } from "helpers/price-calculator";
 import { getImageUrl } from "helpers/supabase-helper";
 import { useWishlist } from "hooks";
+import { Carousel } from "@mantine/carousel";
 
 const Product: NextPage = () => {
 	const dispatch = useAppDispatch();
@@ -73,22 +74,27 @@ const Product: NextPage = () => {
 					<section className="container flex flex-wrap mx-auto my-20">
 						<div className="w-8/12 p-1">
 							<div className="relative flex flex-wrap gap-5 overflow-hidden ">
-								{product?.images?.map((image, index) => {
-									return (
-										<Image
-											className="w-[49%] object-top"
-											height={680}
-											radius="md"
-											classNames={{
-												imageWrapper: "overflow-hidden",
-												image: "hover:scale-125 delay-75 transition-transform ease-in-out",
-											}}
-											key={`Product_image_${index + 5}`}
-											src={getImageUrl(image as string)}
-											alt={`product_image_${index + 1}`}
-										/>
-									);
-								})}
+								<Carousel slideSize="70%" height={680} slideGap="sm" controlsOffset="xs" controlSize={20} loop>
+
+									{product?.images?.map((image, index) => {
+										return (
+											<Carousel.Slide key={`Product_image_${index + 5}`}>
+												<Image
+													className="w-[49%] object-top"
+													height={680}
+													radius="md"
+													fit="contain"
+													classNames={{
+														imageWrapper: "overflow-hidden",
+														image: "hover:scale-125 delay-75 transition-transform ease-in-out",
+													}}
+													src={getImageUrl(image as string)}
+													alt={`product_image_${index + 1}`}
+												/>
+											</Carousel.Slide>
+										);
+									})}
+								</Carousel>
 							</div>
 						</div>
 						<div className="w-4/12 px-4 py-2">
