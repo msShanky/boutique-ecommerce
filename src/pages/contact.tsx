@@ -78,14 +78,15 @@ function ContactUs() {
                 <Head>
                     <title>Breeze Boutique | Contact Us</title>
                 </Head>
-                    <div className={`bg-gradient-to-r from-violet to-violet-light ${classes.wrapper}`}>
+                <AppSection>
+                    <div className={`w-full bg-gradient-to-r from-violet to-violet-light ${classes.wrapper}`}>
                         <SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
                             <div>
                                 <Title className="text-white leading-none">Contact us</Title>
                                 <Text className={`text-white ${classes.description}`} mt="sm" mb={30}>
                                     Leave your email and we will get back to you within 24 hours
                                 </Text>
-                                <ContactInfo  />
+                                <ContactInfo />
                                 <Group mt="xl">{icons}</Group>
                             </div>
                             <div className={classes.form}>
@@ -116,6 +117,8 @@ function ContactUs() {
                             </div>
                         </SimpleGrid>
                     </div>
+                </AppSection>
+
             </>
         </AppLayout>
     );

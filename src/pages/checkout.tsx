@@ -77,4 +77,4 @@ const Checkout: NextPage = () => {
 
 export default Checkout;
 
-export const getServerSideProps = withPageAuth({ redirectTo: "/login" });
+export const getServerSideProps = withPageAuth({ redirectTo: "/login?referrer=checkout" });
