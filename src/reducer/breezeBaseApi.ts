@@ -48,6 +48,7 @@ export const breezeBaseApi = createApi({
 });
 
 export const {
+  	useLazyGetProductCategoriesQuery,
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
 	useGetProductsForAdminByCategoryNameQuery,

@@ -4,13 +4,15 @@ import React, { FunctionComponent } from "react";
 import { definitions } from "../../../types/supabase";
 
 type ProductCategoryCardProps = {
-	categoryProp: definitions["product_category"];
-	handleCardClick: () => void;
+  categoryProp: definitions["product_category"];
+  handleCardClick: () => void;
 };
 
-const ProductCategoryCard: FunctionComponent<ProductCategoryCardProps> = (props) => {
-	const { categoryProp, handleCardClick } = props;
-	const { category, category_image } = categoryProp;
+const ProductCategoryCard: FunctionComponent<ProductCategoryCardProps> = (
+  props
+) => {
+  const { categoryProp, handleCardClick } = props;
+  const { category, category_image } = categoryProp;
 
 	return (
 		<Card
