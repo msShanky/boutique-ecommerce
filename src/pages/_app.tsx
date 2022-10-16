@@ -2,7 +2,8 @@ import "../styles/globals.css";
 import { MantineProvider, MantineTheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import type { AppProps } from "next/app";
-import { store } from "../app/store";
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from "../app/store";
 import { Provider } from "react-redux";
 import { UserProvider, useUser } from "@supabase/auth-helpers-react";
 import { AuthProvider } from "@/lib/auth";
@@ -21,11 +22,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<>
 			<UserProvider supabaseClient={supabaseClient}>
 				<Provider store={store}>
-					<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
-						<NotificationsProvider position="bottom-right">
-							<Component {...pageProps} />
-						</NotificationsProvider>
-					</MantineProvider>
+					<PersistGate loading={null} persistor={persistor}>
+						<MantineProvider withGlobalStyles withNormalizeCSS theme={breezeTheme}>
+							<NotificationsProvider position="bottom-right">
+								<Component {...pageProps} />
+							</NotificationsProvider>
+						</MantineProvider>
+					</PersistGate>
 				</Provider>
 			</UserProvider>
 		</>
