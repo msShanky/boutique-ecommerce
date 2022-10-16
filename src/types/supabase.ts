@@ -20,9 +20,11 @@ export interface paths {
           created_at?: parameters["rowFilter.user_order.created_at"];
           code?: parameters["rowFilter.user_order.code"];
           status_id?: parameters["rowFilter.user_order.status_id"];
-          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
           shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
           user_id?: parameters["rowFilter.user_order.user_id"];
+          razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
+          razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
+          razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -77,9 +79,11 @@ export interface paths {
           created_at?: parameters["rowFilter.user_order.created_at"];
           code?: parameters["rowFilter.user_order.code"];
           status_id?: parameters["rowFilter.user_order.status_id"];
-          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
           shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
           user_id?: parameters["rowFilter.user_order.user_id"];
+          razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
+          razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
+          razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
         };
         header: {
           /** Preference */
@@ -98,9 +102,11 @@ export interface paths {
           created_at?: parameters["rowFilter.user_order.created_at"];
           code?: parameters["rowFilter.user_order.code"];
           status_id?: parameters["rowFilter.user_order.status_id"];
-          payment_ref?: parameters["rowFilter.user_order.payment_ref"];
           shipment_ref?: parameters["rowFilter.user_order.shipment_ref"];
           user_id?: parameters["rowFilter.user_order.user_id"];
+          razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
+          razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
+          razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
         };
         body: {
           /** user_order */
@@ -1084,11 +1090,15 @@ export interface definitions {
      */
     status_id?: number;
     /** Format: text */
-    payment_ref?: string;
-    /** Format: text */
     shipment_ref?: string;
     /** Format: uuid */
     user_id?: string;
+    /** Format: character varying */
+    razorpay_order_id?: string;
+    /** Format: character varying */
+    razorpay_payment_id?: string;
+    /** Format: character varying */
+    razorpay_signature?: string;
   };
   /** @description Contains the user shipping information for each instance created */
   user_shipping_address: {
@@ -1376,11 +1386,15 @@ export interface parameters {
   /** Format: bigint */
   "rowFilter.user_order.status_id": string;
   /** Format: text */
-  "rowFilter.user_order.payment_ref": string;
-  /** Format: text */
   "rowFilter.user_order.shipment_ref": string;
   /** Format: uuid */
   "rowFilter.user_order.user_id": string;
+  /** Format: character varying */
+  "rowFilter.user_order.razorpay_order_id": string;
+  /** Format: character varying */
+  "rowFilter.user_order.razorpay_payment_id": string;
+  /** Format: character varying */
+  "rowFilter.user_order.razorpay_signature": string;
   /** @description user_shipping_address */
   "body.user_shipping_address": definitions["user_shipping_address"];
   /** Format: bigint */
@@ -1423,7 +1437,7 @@ export interface parameters {
   "rowFilter.order_status.status": string;
   /** Format: timestamp with time zone */
   "rowFilter.order_status.created_at": string;
-   /** Format: text */
+  /** Format: text */
   "rowFilter.order_status.status_text": string;
   /** @description product */
   "body.product": definitions["product"];

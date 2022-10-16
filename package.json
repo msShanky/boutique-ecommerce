@@ -42,6 +42,7 @@
 		"razorpay": "^2.8.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-razorpay": "^1.1.5",
 		"react-redux": "^8.0.2",
 		"redux-persist": "^6.0.0",
 		"tabler-icons-react": "^1.55.0",

@@ -2,24 +2,27 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuth, supabaseServerClient } from "@supabase/auth-helpers-nextjs";
 import { nanoid } from "@reduxjs/toolkit";
 import Razorpay from "razorpay";
+import { definitions } from "types/supabase";
 
 interface ExtendedApiRequest extends NextApiRequest {
 	body: CheckoutPostBody;
 }
 
-// const instance = new Razorpay({ key_id: "rzp_test_xieC6kdiO45yJN", key_secret: "eAfWqg0glMuqEGJIHcErjnKL" });
+const instance = new Razorpay({ key_id: "rzp_test_xieC6kdiO45yJN", key_secret: "eAfWqg0glMuqEGJIHcErjnKL" });
 
-// const createRazorPayOrder = () => {
-// 	const options = {
-// 		amount: 6400,
-// 		currency: "INR",
-// 		receipt: "order_rcptid_11",
-// 	};
-// 	instance.orders.create(options, function (err: any, order: any) {
-// 		console.log(order);
-// 		return order;
-// 	});
-// };
+const getCartTotalPrice = (products: Array<CartProduct>) => {
+	let totalValue = 0;
+	products.forEach((stateValue) => {
+		const { product, quantity } = stateValue;
+		const mrp = product.msrp as number;
+		const discountPrice = mrp * ((product.product_discount as number) / 100);
+		const productPrice = mrp - parseInt(discountPrice?.toFixed(), 10);
+		const productTotalPrice = quantity * productPrice;
+		totalValue = productTotalPrice + totalValue;
+	});
+	console.log(" TOTAL VALUE TO BE PAID IS ===> ", totalValue);
+	return totalValue;
+};
 
 const generateOrderItemsBody = (orderId: number, cartProduct: CartProduct) => {
 	const { product, variant, quantity } = cartProduct;
@@ -36,12 +39,12 @@ const generateOrderItemsBody = (orderId: number, cartProduct: CartProduct) => {
 export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest, res: NextApiResponse) {
 	if (req.method === "POST") {
 		const body = req.body;
-		const orderPostBody = {
+		const orderPostBody: Partial<definitions["user_order"]> = {
 			code: nanoid(),
 			status_id: 1,
-			payment_ref: "",
 			shipment_ref: "",
 			user_id: body.user_id,
+			...body.payment,
 		};
 		const shippingAddressBody = {
 			user_id: body.user_id,
@@ -50,9 +53,6 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 
 		// console.log(" THE ORDER CREATION FOR THE CHECKOUT IS ", orderPostBody, " \n \n ");
 		// console.log(" THE shippingAddressBody ", shippingAddressBody);
-
-		// const orderInfo = createRazorPayOrder();
-		// console.log(" The order info ===> ", orderInfo);
 
 		try {
 			const { data: order, error } = await supabaseServerClient({ req, res }).from("user_order").insert(orderPostBody);

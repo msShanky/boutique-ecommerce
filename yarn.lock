@@ -2926,6 +2926,11 @@ react-property@2.0.0:
   resolved "https://registry.yarnpkg.com/react-property/-/react-property-2.0.0.tgz#2156ba9d85fa4741faf1918b38efc1eae3c6a136"
   integrity sha512-kzmNjIgU32mO4mmH5+iUyrqlpFQhF8K2k7eZ4fdLSOPFrD1XgEuSBv9LDEgxRXTMBqMd8ppT0x6TIzqE5pdGdw==
 
+react-razorpay@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-razorpay/-/react-razorpay-1.1.5.tgz#450324a9ee7f08c3605ac1c8af32878dcb15496a"
+  integrity sha512-jYDGW7k71qyANELOoa8JMgZjdGl1UiqqH/QbmkREl1q2nk7E+W8nyMdvD6ukXm/MPZJxTFoYljBFOJb8zydwTg==
+
 react-redux@^8.0.2:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.4.tgz#80c31dffa8af9526967c4267022ae1525ff0e36a"

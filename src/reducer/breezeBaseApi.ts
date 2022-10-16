@@ -18,6 +18,13 @@ export const breezeBaseApi = createApi({
 		getProductsByCode: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, ProductInformationProps>({
 			query: (props: ProductInformationProps) => `products/${props.categoryName}/${props.productCode}`,
 		}),
+		initiatePayment: builder.mutation<RazorpayOrderResponse, PaymentOrderPostBody>({
+			query: (body) => ({
+				url: "/payment/initiate",
+				method: "POST",
+				body: body,
+			}),
+		}),
 		checkoutProduct: builder.mutation<any, CheckoutPostBody>({
 			query: (body) => ({
 				url: "/checkout",
@@ -60,4 +67,5 @@ export const {
 	useGetOrderItemsByOrderIdQuery,
 	useSetOrderStatusMutation,
 	useLazyGetUserWishlistQuery,
+	useInitiatePaymentMutation
 } = breezeBaseApi;
