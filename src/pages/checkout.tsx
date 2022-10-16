@@ -17,7 +17,7 @@ const Checkout: NextPage = () => {
 	const { products } = useAppSelector((state) => state.cart);
 	const dispatch = useAppDispatch();
 	const { user } = useUser();
-	const [checkoutCart, { isLoading, data, isSuccess }] = useCheckoutProductMutation();
+	const [checkoutCart, { isLoading, isSuccess }] = useCheckoutProductMutation();
 
 	const handleCheckout = (formValues: CheckoutFormValue) => {
 		checkoutCart({ products, shipping_address: formValues, user_id: user?.id });
@@ -50,21 +50,21 @@ const Checkout: NextPage = () => {
 							</div>
 						)}
 						{products.length > 0 && !isSuccess && (
-							<div className="flex flex-row items-start justify-center w-full gap-10 relative">
+							<div className="relative flex flex-row items-start justify-center w-full gap-10">
 								<CheckoutForm handleCheckout={handleCheckout} isLoading={isLoading} user={user} />
 								<CartTotal />
 							</div>
 						)}
 						{isSuccess && (
-							<div className="flex flex-col items-center justify-center select-none space-y-8 w-3/5 text-center">
-								<Image src="/images/success_icon.svg" alt="Cart Success Icon" />
+							<div className="flex flex-col items-center justify-center w-3/5 space-y-8 text-center select-none">
+								<Image fit="contain" src="/images/success_icon.svg" alt="Cart Success Icon" />
 								<Title className="text-4xl font-bold text-page">Your Order Is Completed!</Title>
 								<Text className="text-base font-semibold text-violet-subtext">
 									Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You
 									will receive an email confirmation when your order is completed.
 								</Text>
 								<Link href="/products" passHref>
-									<Button className="border-none bg-pink text-white hover:bg-violet">Continue Shopping</Button>
+									<Button className="text-white border-none bg-pink hover:bg-violet">Continue Shopping</Button>
 								</Link>
 							</div>
 						)}

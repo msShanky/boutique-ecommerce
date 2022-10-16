@@ -1,10 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuth, supabaseServerClient } from "@supabase/auth-helpers-nextjs";
 import { nanoid } from "@reduxjs/toolkit";
+import Razorpay from "razorpay";
 
 interface ExtendedApiRequest extends NextApiRequest {
 	body: CheckoutPostBody;
 }
+
+// const instance = new Razorpay({ key_id: "rzp_test_xieC6kdiO45yJN", key_secret: "eAfWqg0glMuqEGJIHcErjnKL" });
+
+// const createRazorPayOrder = () => {
+// 	const options = {
+// 		amount: 6400,
+// 		currency: "INR",
+// 		receipt: "order_rcptid_11",
+// 	};
+// 	instance.orders.create(options, function (err: any, order: any) {
+// 		console.log(order);
+// 		return order;
+// 	});
+// };
 
 const generateOrderItemsBody = (orderId: number, cartProduct: CartProduct) => {
 	const { product, variant, quantity } = cartProduct;
@@ -33,8 +48,13 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 			...body.shipping_address,
 		};
 
+		// console.log(" THE ORDER CREATION FOR THE CHECKOUT IS ", orderPostBody, " \n \n ");
+		// console.log(" THE shippingAddressBody ", shippingAddressBody);
+
+		// const orderInfo = createRazorPayOrder();
+		// console.log(" The order info ===> ", orderInfo);
+
 		try {
-			// TODO: Create a new order
 			const { data: order, error } = await supabaseServerClient({ req, res }).from("user_order").insert(orderPostBody);
 			if (!order || order?.length <= 0 || error) {
 				return res.status(500).json({ message: "Order was not created", error });
