@@ -22,12 +22,10 @@ const getCartTotalPrice = (products: Array<CartProduct>) => {
 	return totalValue;
 };
 
-// TODO: Form the correct post body to accept the payment as per the selling price of the item and quantity
 const createRazorPayOrder = async (refId: string, products: Array<CartProduct>) => {
 	const options = {
 		amount: `${getCartTotalPrice(products)}00`,
 		currency: "INR",
-		// TODO: This has to be a reference to the current order_id generated
 		receipt: refId,
 	};
 	return await instance.orders.create(options);
