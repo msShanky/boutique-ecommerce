@@ -16,7 +16,7 @@ interface OrderEditProps {
 
 const OrderEdit = (props: OrderEditProps) => {
   const { isLoading, isSuccess, isError, onSubmit, onError, orderDetails } = props
-  const { id: order_id, payment_ref, shipment_ref, status: { id: status_id } } = orderDetails
+  const { id: order_id, shipment_ref, status: { id: status_id } } = orderDetails
 
   const orderStatusOptions = useOrderStatus();
 
@@ -25,7 +25,6 @@ const OrderEdit = (props: OrderEditProps) => {
       status_id,
       id: order_id,
       shipment_ref,
-      payment_ref
     },
   });
 
@@ -51,11 +50,11 @@ const OrderEdit = (props: OrderEditProps) => {
       <Divider my="sm" />
 
       <form className="mt-4 space-y-4" onSubmit={orderEditForm.onSubmit(onSubmit, onError)}>
-        <TextInput
+        {/* <TextInput
           {...orderEditForm.getInputProps("payment_ref")}
           label="Payment Reference"
           styles={InputStyles}
-        />
+        /> */}
         <TextInput
           {...orderEditForm.getInputProps("shipment_ref")}
           label="Shipment Reference"

@@ -18,6 +18,13 @@ export const breezeBaseApi = createApi({
 		getProductsByCode: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, ProductInformationProps>({
 			query: (props: ProductInformationProps) => `products/${props.categoryName}/${props.productCode}`,
 		}),
+		initiatePayment: builder.mutation<RazorpayOrderResponse, PaymentOrderPostBody>({
+			query: (body) => ({
+				url: "/payment/initiate",
+				method: "POST",
+				body: body,
+			}),
+		}),
 		checkoutProduct: builder.mutation<any, CheckoutPostBody>({
 			query: (body) => ({
 				url: "/checkout",
@@ -26,15 +33,15 @@ export const breezeBaseApi = createApi({
 			}),
 		}),
 		getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, void>({
-			query: () => `orders`
+			query: () => `orders`,
 		}),
-		getOrderStatus: builder.query<SupaBaseResponse<Array<definitions['order_status']>>, void>({
-			query: () => `orders/order-status`
+		getOrderStatus: builder.query<SupaBaseResponse<Array<definitions["order_status"]>>, void>({
+			query: () => `orders/order-status`,
 		}),
 		getOrderItemsByOrderId: builder.query<SupaBaseResponse<Array<OrderItemWithRelations>>, string>({
-			query: (id: string) => `orders/order-items/${id}`
+			query: (id: string) => `orders/order-items/${id}`,
 		}),
-		setOrderStatus: builder.mutation<any, definitions['user_order']>({
+		setOrderStatus: builder.mutation<any, definitions["user_order"]>({
 			query: ({ id, ...orderData }) => ({
 				url: `/orders/${id}`,
 				method: "PATCH",
@@ -42,13 +49,13 @@ export const breezeBaseApi = createApi({
 			}),
 		}),
 		getUserWishlist: builder.query<SupaBaseResponse<Array<UserWishListItem>>, string>({
-			query: (id: string) => `wishlist/${id}`
-		})
+			query: (id: string) => `wishlist/${id}`,
+		}),
 	}),
 });
 
 export const {
-  	useLazyGetProductCategoriesQuery,
+	useLazyGetProductCategoriesQuery,
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
 	useGetProductsForAdminByCategoryNameQuery,
@@ -59,5 +66,6 @@ export const {
 	useGetOrderStatusQuery,
 	useGetOrderItemsByOrderIdQuery,
 	useSetOrderStatusMutation,
-	useLazyGetUserWishlistQuery
+	useLazyGetUserWishlistQuery,
+	useInitiatePaymentMutation
 } = breezeBaseApi;

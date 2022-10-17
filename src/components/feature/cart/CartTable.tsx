@@ -1,4 +1,5 @@
 import { Button, Image, Table, Text } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { IconMinus, IconPlus } from "@tabler/icons";
 import { getImageUrl } from "helpers/supabase-helper";
 import React from "react";
@@ -16,7 +17,17 @@ const CartTable = () => {
 		const { id, images } = product;
 		const baseImage = getImageUrl(images && images.length > 0 ? (images[0] as string) : "");
 
-		const handleQuantityUpdate = () => {};
+		const handleQuantityDecrease = () => {
+			if (quantity > 1) {
+				dispatch(decreaseQuantity(productState));
+				return;
+			}
+			/* TODO: If quantity is less than zero then remove the product from cart */
+			showNotification({
+				title: "Default notification",
+				message: "Hey there, your code is awesome! 🤥",
+			});
+		};
 
 		return (
 			<tr key={`PRODUCT_${id}_suffix_${(index + 5) * 255}_`}>
@@ -28,15 +39,13 @@ const CartTable = () => {
 					</div>
 				</td>
 				<td>{sellingPrice}</td>
-				{/* TODO: Quantity should be adjustable */}
-				{/* TODO: If quantity is less than zero then remove the product from cart */}
 				<td>
 					<Button.Group className="flex items-center">
-						<Button onClick={() => dispatch(decreaseQuantity(productState))} variant="default">
+						<Button onClick={handleQuantityDecrease} variant="default">
 							<IconMinus size="15" />
 						</Button>
-						<div className="border w-12 h-9 flex items-center justify-center">
-							<Text className=" text-center align-middle ">{quantity}</Text>
+						<div className="flex items-center justify-center w-12 border h-9">
+							<Text className="text-center align-middle ">{quantity}</Text>
 						</div>
 						<Button onClick={() => dispatch(increaseQuantity(productState))} variant="default">
 							<IconPlus size="15" />

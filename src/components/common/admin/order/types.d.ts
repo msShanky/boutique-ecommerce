@@ -3,7 +3,7 @@ import { definitions } from "types/supabase"
 interface OrderEditFormValues {
     status_id: number
     id: number
-    payment_ref: string | undefined;
+    // payment_ref: string | undefined;
     shipment_ref: string | undefined;
 }
 

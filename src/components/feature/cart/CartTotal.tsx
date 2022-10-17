@@ -16,7 +16,7 @@ const CartTotal = () => {
 
 	return (
 		<section className="flex flex-col items-center w-5/12 space-y-8">
-			<Title className="text-xl font-bold text-highlight-dark-blue">Cart Total</Title>
+			{/* <Title className="text-xl font-bold text-highlight-dark-blue">Cart Total</Title> */}
 			<div className="w-full p-8 space-y-12 bg-violet-light h-72">
 				<div className="flex flex-row items-center justify-between border-b-2 border-b-violet-light">
 					<Title className="flex items-center space-x-4 text-lg font-semibold">Sub Totals:</Title>
