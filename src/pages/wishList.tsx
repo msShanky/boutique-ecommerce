@@ -35,7 +35,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 			setLoading(true);
 			getUserWishlist(user.id)
 		}
-	}, [user?.id]);
+	}, [getUserWishlist, user.id]);
 
 	const handleAddToCart = (event: MouseEvent<HTMLButtonElement>, product: ProductWithRelations) => {
 		// TODO: Handle Variant selection before adding the product to cart
