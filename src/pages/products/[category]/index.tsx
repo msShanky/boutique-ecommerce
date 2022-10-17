@@ -1,30 +1,25 @@
 import { Loader } from "@mantine/core";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
+import { useWishlist } from "hooks";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
 import ProductCard from "../../../components/feature/product/ProductCard";
 import AppLayout from "../../../components/layout/AppLayout";
-import { useGetProductsByCategoryNameQuery } from "../../../reducer/breezeBaseApi";
+import { useGetProductsByCategoryNameQuery, useLazyGetUserWishlistQuery } from "../../../reducer/breezeBaseApi";
 
 const Product: NextPage = () => {
 	const router = useRouter();
 	const { user } = useUser();
 	const { category } = router.query;
 	const { isLoading, data, isSuccess } = useGetProductsByCategoryNameQuery(category as string);
+	const { wishlist, handleWishlist } = useWishlist(user?.id)
+
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const productRoute = product.code;
 		router.push(`${router.asPath}/${productRoute}`);
-	};
-
-	const handleWishList = async (product: ProductWithRelations) => {
-		if (!user) return;
-		// TODO: Handle the loader for the user_wishlist
-		const postBody = { product_id: product.id, user_id: user.id };
-		const { data } = await supabaseClient.from("user_wishlist").insert([postBody]);
 	};
 
 	return (
@@ -42,11 +37,13 @@ const Product: NextPage = () => {
 					<section className="container flex flex-wrap gap-10 mx-auto my-20">
 						{data?.body &&
 							data?.body.map((product) => {
+								const isWishlisted = wishlist.includes(product.id)
 								return (
 									<ProductCard
 										handleProductRedirection={() => handleProductRedirection(product)}
-										handleWishList={() => handleWishList(product)}
+										handleWishList={() => handleWishlist(product)}
 										product={product}
+										isWishlisted={isWishlisted}
 										key={product.id}
 									/>
 								);

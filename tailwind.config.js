@@ -15,6 +15,9 @@ module.exports = {
 				success: "#19D16F",
 				error: "#ff3900",
 			},
+			minWidth: {
+				14: "3.5rem"
+			}
 		},
 		fontFamily: {
 			sans: ["Josefin Sans", "sans-serif"],

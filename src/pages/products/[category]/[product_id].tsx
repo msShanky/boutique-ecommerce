@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useUser } from "@supabase/auth-helpers-react";
 import { IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppDispatch } from "../../../app/hooks";
 import AppLayout from "../../../components/layout/AppLayout";
@@ -12,9 +13,12 @@ import { addProductToCart } from "../../../reducer/cart";
 import { definitions } from "../../../types/supabase";
 import { getSellingPrice } from "helpers/price-calculator";
 import { getImageUrl } from "helpers/supabase-helper";
+import { useWishlist } from "hooks";
+import { Carousel } from "@mantine/carousel";
 
 const Product: NextPage = () => {
 	const dispatch = useAppDispatch();
+	const { user } = useUser();
 	const router = useRouter();
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
@@ -25,7 +29,12 @@ const Product: NextPage = () => {
 		productCode: product_id as string,
 	});
 
+	const { wishlist, handleWishlist } = useWishlist(user?.id)
+
+
 	const product = data?.body[0];
+
+	const isWishlisted = wishlist.includes(product?.id || 0)
 
 	// const _mrp = product?.msrp as number;
 	// const discountPrice = _mrp * ((product?.product_discount as number) / 100);
@@ -50,6 +59,42 @@ const Product: NextPage = () => {
 		});
 	};
 
+	const renderImages = (product: ProductWithRelations, withCarousel?: boolean) => {
+
+		const ProductImage = ({ src }: { src: string }) => (
+			<Image
+				className="w-[49%] object-top"
+				height={680}
+				radius="md"
+				fit="contain"
+				classNames={{
+					imageWrapper: "overflow-hidden",
+					image: "hover:scale-125 delay-75 transition-transform ease-in-out",
+				}}
+				src={getImageUrl(src)}
+				alt={`product_image_`}
+			/>
+		)
+
+		return withCarousel
+			? (
+				<Carousel slideSize="70%" height={680} slideGap="sm" controlsOffset="xs" controlSize={20}>
+					{product?.images?.map((image, index) => {
+						return (
+							<Carousel.Slide key={`Product_image_${index + 5}`}>
+								<ProductImage src={image as string} />
+							</Carousel.Slide>
+						);
+					})}
+				</Carousel>
+			)
+			: product?.images?.map((image, index) => {
+				return (
+					<ProductImage key={`Product_image_${index + 5}`} src={image as string} />
+				);
+			})
+	}
+
 	return (
 		<AppLayout>
 			<>
@@ -65,22 +110,7 @@ const Product: NextPage = () => {
 					<section className="container flex flex-wrap mx-auto my-20">
 						<div className="w-8/12 p-1">
 							<div className="relative flex flex-wrap gap-5 overflow-hidden ">
-								{product?.images?.map((image, index) => {
-									return (
-										<Image
-											className="w-[49%] object-top"
-											height={680}
-											radius="md"
-											classNames={{
-												imageWrapper: "overflow-hidden",
-												image: "hover:scale-125 delay-75 transition-transform ease-in-out",
-											}}
-											key={`Product_image_${index + 5}`}
-											src={getImageUrl(image as string)}
-											alt={`product_image_${index + 1}`}
-										/>
-									);
-								})}
+								{renderImages(product as ProductWithRelations, !!(product?.images?.length as number > 2))}
 							</div>
 						</div>
 						<div className="w-4/12 px-4 py-2">
@@ -109,9 +139,8 @@ const Product: NextPage = () => {
 											<Button
 												key={variantKey}
 												onClick={() => handleVariantSelection(variant)}
-												className={`rounded-full w-14 h-14 border-pink  hover:bg-pink hover:text-white ${
-													isSelected ? "bg-pink text-white" : "text-pink"
-												}`}
+												className={`rounded-full min-w-14 h-14 border-pink  hover:bg-pink hover:text-white ${isSelected ? "bg-pink text-white" : "text-pink"
+													}`}
 											>
 												{variant.size}
 											</Button>
@@ -121,7 +150,7 @@ const Product: NextPage = () => {
 								{cartErrorState && <p className="font-sans text-red-600">Please select a size</p>}
 							</div>
 							{/* Button Section */}
-							<div className="flex justify-between w-full mt-12">
+							<div className="min-w-14 flex justify-between w-full mt-12">
 								<Button
 									classNames={{ label: "space-x-2" }}
 									className="flex justify-center w-64 h-12 items-top bg-pink hover:bg-opacity-80 hover:bg-pink"
@@ -134,12 +163,13 @@ const Product: NextPage = () => {
 								</Button>
 								<Button
 									classNames={{ label: "space-x-2" }}
-									className="w-48 h-12 border-2 border-violet text-violet hover:bg-transparent hover:border-black hover:text-black"
+									className={`w-48 h-12 border-2 border-violet text-violet hover:bg-transparent hover:border-black hover:text-black ${isWishlisted && "bg-violet text-white"}`}
+									onClick={() => product && handleWishlist(product)}
 								>
 									<div>
 										<IconHeart size={20} />
 									</div>
-									<Text>Wishlist</Text>
+									<Text>{isWishlisted ? 'Wishlisted' : 'Wishlist'}</Text>
 								</Button>
 							</div>
 						</div>

@@ -26,9 +26,10 @@ type ProductVariants = {
 	category?: import("../types/supabase").definitions["product_category"];
 };
 
+type ProductCategory = import("../types/supabase").definitions["product_category"];
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
 type ProductPostBody = Omit<ProductWithRelations, "id">;
-
+type CategoryPostBody = Omit<ProductCategory, "id" | "created_at">;
 type ProductVariantPost = Omit<import("../types/supabase").definitions["product_variant"], "id">;
 
 type ProductInformationProps = {
@@ -41,7 +42,7 @@ type ProductCartType = {
 	variant: import("../types/supabase").definitions["product_variant"];
 };
 
-type UserWishListItem = import("../types/supabase").definitions["product_variant"] & {
+type UserWishListItem = import("../types/supabase").definitions["user_wishlist"] & {
 	product: ProductWithRelations;
 };
 
@@ -56,18 +57,60 @@ type CheckoutFormValue = {
 	pin_code: string;
 };
 
-type CheckoutPostBody = {
+type PaymentOrderPostBody = {
 	products: Array<CartProduct>;
 	shipping_address: CheckoutFormValue;
 	user_id?: string;
 };
 
+type CheckoutPostBody = {
+	products: Array<CartProduct>;
+	shipping_address: CheckoutFormValue;
+	payment: RazorPaySuccess;
+	user_id?: string;
+};
+
 type OrderItemWithRelations = import("../types/supabase").definitions["order_item"] & {
-	product: import("../types/supabase").definitions["product"];
+	product: import("../types/supabase").definitions["product"] & {
+		category: import("../types/supabase").definitions["product_category"];
+	};
 	product_variant: import("../types/supabase").definitions["product_variant"];
 };
 
 type UserOrderWithRelations = import("../types/supabase").definitions["user_order"] & {
 	order_item: Array<OrderItemWithRelations>;
 	order_status: import("../types/supabase").definitions["order_status"];
+};
+
+type RazorpayOrderResponse = {
+	id: string;
+	entity: string;
+	amount: number;
+	amount_paid: number;
+	amount_due: number;
+	currency: string;
+	receipt: string;
+	status: string;
+	notes: Array<string>;
+	created_at: number;
+};
+
+type RazorPayError = {
+	error: {
+		code: any;
+		description: any;
+		source: any;
+		step: any;
+		reason: any;
+		metadata: {
+			order_id: string;
+			payment_id: string;
+		};
+	};
+};
+
+type RazorPaySuccess = {
+	razorpay_order_id: string;
+	razorpay_payment_id: string;
+	razorpay_signature: string;
 };

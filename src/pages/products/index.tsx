@@ -1,22 +1,18 @@
-import { Breadcrumbs, Loader, Title } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import ProductCategoryCard from "../../components/feature/product/ProductCategoryCard";
 import AppLayout from "../../components/layout/AppLayout";
 import { useGetProductCategoriesQuery } from "../../reducer/breezeBaseApi";
 import { definitions } from "../../types/supabase";
 
-// const breadcrumbs = [
-// 	{ link: "/", label: "Home" },
-// 	{ link: "/products", label: "Categories" },
-// ];
-
 const Product: NextPage = () => {
 	const router = useRouter();
 
 	const { isLoading, data, isSuccess } = useGetProductCategoriesQuery();
+
+	console.log(" API STATUS ===> ", isLoading, data, isSuccess);
 
 	const handleCategoryRedirection = (category: definitions["product_category"]) => {
 		const categoryRoute = `/products/${category.category?.toLowerCase()}`;
@@ -36,7 +32,7 @@ const Product: NextPage = () => {
 				)}
 				{isSuccess && (
 					<section className="container flex flex-wrap gap-10 mx-auto my-20">
-						{data?.body.map((categoryData, index) => {
+						{data?.body?.map((categoryData, index) => {
 							return (
 								<ProductCategoryCard
 									handleCardClick={() => handleCategoryRedirection(categoryData)}

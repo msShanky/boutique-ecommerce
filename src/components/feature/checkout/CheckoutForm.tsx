@@ -1,8 +1,9 @@
 import { Button, LoadingOverlay, Text, TextInput, Title } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
 import React, { FunctionComponent } from "react";
+import { z } from "zod";
 
 type CheckoutFormProps = {
 	handleCheckout: (value: CheckoutFormValue) => void;
@@ -10,9 +11,30 @@ type CheckoutFormProps = {
 	user: User | null;
 };
 
+const schema = z.object({
+	phone_number: z
+		.string()
+		.min(10, { message: "Phone number should be 10 digits" })
+		.max(10, { message: "Phone number should be 10 digits" }),
+	first_name: z
+		.string()
+		.min(2, { message: "First name should be greater than 2 characters" })
+		.max(50, { message: "First name should be less than 50 characters" }),
+	address: z
+		.string()
+		.min(10, { message: "Address should be greater than 10 characters" })
+		.max(250, { message: "Address should be less than 250 characters" }),
+	pin_code: z
+		.string()
+		.min(6, { message: "Pin code should be 6 digits" })
+		.max(6, { message: "Pin code should be 6 digits" }),
+});
+
 const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const { handleCheckout, isLoading, user } = props;
-	const userCheckoutForm = useForm<CheckoutFormValue>({
+	const { getInputProps, isValid, onSubmit, errors } = useForm<CheckoutFormValue>({
+		validate: zodResolver(schema),
+		validateInputOnBlur: true,
 		initialValues: {
 			phone_number: "",
 			first_name: "",
@@ -28,11 +50,16 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	// TODO: Handle form errors
 	// TODO: Handle login redirect to the same page with state pre-populated
 
+	const handleFormCheckout = (formValues: CheckoutFormValue) => {
+		console.log(formValues, "The form values collected is");
+		handleCheckout(formValues);
+	};
+
 	return (
 		<div className="w-7/12 px-8 py-16 max-h-max bg-violet-light">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
 			<div>
-				<Text className="text-sm text-page mb-10">*Currently shipping only for Chennai</Text>
+				<Text className="mb-10 text-sm text-page">*Currently shipping only for Chennai</Text>
 			</div>
 			{/* Contact Information */}
 			<div className="flex flex-row justify-between ">
@@ -46,42 +73,23 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 							</Link>
 						</Text>
 					)}
-					{user && <div>User Logged In</div>}
 				</div>
 			</div>
-			<form className="mt-4 space-y-8" onSubmit={userCheckoutForm.onSubmit(handleCheckout)}>
-				<TextInput required placeholder="894578****" {...userCheckoutForm.getInputProps("phone_number")} />
+			<form className="mt-4 space-y-8" onSubmit={onSubmit(handleFormCheckout)}>
+				<TextInput withAsterisk placeholder="894578****" {...getInputProps("phone_number")} />
 				<Title className="text-lg font-bold text-highlight-dark-blue">Shipping Address</Title>
 				<div className="flex flex-row justify-between gap-8">
-					<TextInput
-						className="w-6/12"
-						placeholder="First Name"
-						required
-						{...userCheckoutForm.getInputProps("first_name")}
-					/>
-					<TextInput
-						className="w-6/12"
-						placeholder="Last Name (Optional)"
-						{...userCheckoutForm.getInputProps("last_name")}
-					/>
+					<TextInput className="w-6/12" placeholder="First Name" withAsterisk {...getInputProps("first_name")} />
+					<TextInput className="w-6/12" placeholder="Last Name (Optional)" {...getInputProps("last_name")} />
 				</div>
-				<TextInput placeholder="Address" {...userCheckoutForm.getInputProps("address")} />
-				<TextInput
-					placeholder="Apartment, suit, street (Optional)"
-					{...userCheckoutForm.getInputProps("address_line_two")}
-				/>
-				<TextInput disabled readOnly placeholder="City" {...userCheckoutForm.getInputProps("city")} />
+				<TextInput withAsterisk placeholder="Address" {...getInputProps("address")} />
+				<TextInput placeholder="Apartment, suit, street (Optional)" {...getInputProps("address_line_two")} />
+				<TextInput disabled readOnly placeholder="City" {...getInputProps("city")} />
 				<div className="flex flex-row justify-center gap-8">
-					<TextInput
-						disabled
-						readOnly
-						className="w-6/12"
-						placeholder="Country"
-						{...userCheckoutForm.getInputProps("country")}
-					/>
-					<TextInput className="w-6/12" placeholder="Pin Code" {...userCheckoutForm.getInputProps("pin_code")} />
+					<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
+					<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />
 				</div>
-				<Button className="bg-pink hover:bg-violet" type="submit">
+				<Button disabled={!isValid} className="bg-pink hover:bg-violet" type="submit">
 					Proceed For Payment
 				</Button>
 			</form>

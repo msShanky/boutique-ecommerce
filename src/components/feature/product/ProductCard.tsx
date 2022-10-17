@@ -10,11 +10,12 @@ type ProductCardProps = {
 	handleProductRedirection: () => void;
 	handleWishList: () => void;
 	isActive?: boolean;
+	isWishlisted?: boolean
 };
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 	const { hovered, ref } = useHover();
-	const { handleProductRedirection, product, handleWishList, isActive } = props;
+	const { handleProductRedirection, product, handleWishList, isActive, isWishlisted } = props;
 	const { id, images, msrp, title, sub_title, variants, product_discount } = product;
 
 	const _handleWishList = (event: MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +39,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 			{/* TODO: Fetch the wishlist status from the API call */}
 			<div className="absolute flex flex-row space-x-4 top-2 left-2">
 				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
-					<IconHeart className={`${isActive ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
+					<IconHeart className={`${isWishlisted ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
 				</ActionIcon>
 			</div>
 			<div className="h-20 mt-4 space-y-2 bg-white">

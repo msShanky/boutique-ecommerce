@@ -1,6 +1,7 @@
 import { createDraftSafeSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
-import { definitions } from "../types/supabase";
+import { PURGE } from "redux-persist";
+import { useDispatch } from "react-redux";
 
 type CartInitState = {
 	products: Array<CartProduct>;
@@ -56,6 +57,12 @@ export const cartSlice = createSlice({
 			return state;
 		},
 	},
+	extraReducers: (builder) => {
+		builder.addCase(PURGE, (state) => {
+			state = initialState;
+			return state;
+		});
+	}
 });
 
 const { actions, reducer } = cartSlice;

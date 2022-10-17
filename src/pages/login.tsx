@@ -3,11 +3,23 @@ import Head from "next/head";
 import AuthForm from "../components/feature/auth/AuthForm";
 import AppLayout from "../components/layout/AppLayout";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 
 const Login = () => {
+	const { query } = useRouter();
+
 	const handleGoogleLogin = async (event: MouseEvent) => {
+		// Every referrer URL needs to be configured in SUPABASE dashboard in Auth -> Setting -> Redirect URLs
+		let redirectTo = window.location.origin
+		if (query.referrer) {
+			redirectTo += `/${query.referrer}`
+		}
+		
 		try {
-			const { error } = await supabaseClient.auth.signIn({ provider: "google" });
+			const { error } = await supabaseClient.auth.signIn(
+				{ provider: "google" },
+				{ redirectTo }
+			);
 			if (error) throw error;
 		} catch (error) {
 			console.log("there is an error with google signIn", error);
@@ -15,11 +27,11 @@ const Login = () => {
 	};
 
 	// TODO: Handle email login
-	const handleEmailLogin = () => {};
+	const handleEmailLogin = () => { };
 	// TODO: Handle email sign up
-	const handleEmailSignUp = () => {};
+	const handleEmailSignUp = () => { };
 
-	const handleEmailEvent = () => {};
+	const handleEmailEvent = () => { };
 
 	// TODO: Handle user authentication errors
 	// TODO: Add Facebook login

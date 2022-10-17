@@ -7,6 +7,7 @@ import { Loader, Title } from "@mantine/core";
 import { User } from "@supabase/supabase-js";
 import { supabaseClient, withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { WishListCard } from "@/components/feature";
+import {  useLazyGetUserWishlistQuery } from "@/reducer/breezeBaseApi";
 // import { getUser, withPageAuth } from "@supabase/auth-helpers-nextjs";
 
 type WishListProps = {
@@ -19,23 +20,22 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	const { user } = props;
 	const router = useRouter();
 	const [isLoading, setLoading] = useState(false);
+	const [getUserWishlist, userWishlistResponse] = useLazyGetUserWishlistQuery()
 	const [wishlistProducts, setWishListProducts] = useState<Array<UserWishListItem> | null>();
 
-	const loadData = async () => {
-		setLoading(true);
-		const response = await supabaseClient.from("user_wishlist")
-			.select(`id,user_id,product_id,product(id,code,images,category_id,msrp,title,sub_title,product_discount,
-			category:category_id (id,category),
-			variants: product_variant(id,sku,size))`);
-		setLoading(false);
-		setWishListProducts(response.data);
-	};
+	useEffect(()=>{
+		if (userWishlistResponse.status === 'fulfilled' && userWishlistResponse?.data?.body) {
+			setLoading(false);
+			setWishListProducts(userWishlistResponse.data.body)
+		}
+	},[userWishlistResponse])
 
 	useEffect(() => {
-		if (user) {
-			loadData();
+		if (user?.id) {
+			setLoading(true);
+			getUserWishlist(user.id)
 		}
-	}, [user]);
+	}, [user?.id]);
 
 	const handleAddToCart = (event: MouseEvent<HTMLButtonElement>, product: ProductWithRelations) => {
 		// TODO: Handle Variant selection before adding the product to cart
