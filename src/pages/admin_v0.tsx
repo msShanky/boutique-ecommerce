@@ -7,14 +7,6 @@ import { AdminLayout } from "@/components/layout";
 import { IconCategory, IconDashboard, IconReportAnalytics, IconShoppingCart, TablerIcon } from "@tabler/icons";
 import { SidePanelMenuLink } from "@/components/common/admin";
 
-const panelLinks: Array<AdminPanelLink> = [
-	{ content: "dashboard", label: "Dashboard", icon: IconDashboard },
-	{ content: "product", label: "Products", icon: IconShoppingCart },
-	{ content: "category", label: "Category", icon: IconCategory },
-	{ content: "order", label: "Orders", icon: IconShoppingCart },
-	{ content: "report", label: "Reports", icon: IconReportAnalytics },
-];
-
 const Admin = () => {
 	const [activeMenu, setActiveMenu] = useState<AdminPageContent>("dashboard");
 
@@ -22,11 +14,6 @@ const Admin = () => {
 		event.preventDefault();
 		setActiveMenu(item.content);
 	};
-
-	const links = panelLinks.map((item) => {
-		const isActive = activeMenu === item.content;
-		return <SidePanelMenuLink item={item} key={item.label} isActive={isActive} handleMenuClick={handleMenuClick} />;
-	});
 
 	return (
 		<AdminLayout>
@@ -40,7 +27,7 @@ const Admin = () => {
 							<Text className="text-2xl text-page">Admin</Text>
 						</Navbar.Section>
 						<Navbar.Section className="space-y-4" grow mt="xl">
-							{links}
+							links
 						</Navbar.Section>
 					</Navbar>
 					<section className="w-full">
