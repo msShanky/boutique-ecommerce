@@ -1,4 +1,4 @@
-import { ProductTable } from "@/components/common/admin";
+import { ProductTable } from "@/components/feature/admin";
 import { useLazyGetProductsForAdminByCategoryNameQuery } from "@/reducer/breezeBaseApi";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { definitions } from "types/supabase";

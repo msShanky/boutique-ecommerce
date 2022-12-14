@@ -10,7 +10,7 @@ import {
 import { useForm } from "@mantine/form";
 import { definitions } from "types/supabase";
 import { IconX } from "@tabler/icons";
-import { ImageUploader, ImageViewer } from "@/components/common/admin";
+import { ImageUploader, ImageViewer } from "@/components/feature/admin";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { formatCategoryFormForUpdate } from "helpers/supabase-helper";
 import CategoryFormDetails from "./CategoryDetailsForm";

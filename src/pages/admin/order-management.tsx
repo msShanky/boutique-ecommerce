@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AdminLayout } from "@/components/layout";
 import Head from "next/head";
-import { OrderTable } from "@/components/common/admin/order/table";
+import { OrderTable } from "@/components/feature/admin/order/table";
 import { useLazyGetOrdersQuery } from "@/reducer/breezeBaseApi";
-import OrderFilter from "@/components/common/admin/order/forms/OrderFilter";
-import { OrderData, OrderFilterFormValues } from "@/components/common/admin/order/types";
+import OrderFilter from "@/components/feature/admin/order/forms/OrderFilter";
+import { OrderData, OrderFilterFormValues } from "@/components/feature/admin/order/types";
 import { definitions } from "types/supabase";
 
 // TODO: Optimize the initial data fetching to pre-populate the data from api

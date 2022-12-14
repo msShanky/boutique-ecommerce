@@ -1,4 +1,4 @@
-import { ProductRow } from "@/components/common/admin";
+import { ProductRow } from "@/components/feature/admin";
 import { Table } from "@mantine/core";
 import React, { FunctionComponent } from "react";
 

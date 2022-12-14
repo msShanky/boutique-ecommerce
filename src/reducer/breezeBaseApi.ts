@@ -1,4 +1,4 @@
-import { OrderData } from "@/components/common/admin/order/types";
+import { OrderData } from "@/components/feature/admin/order/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { definitions } from "../types/supabase";
 

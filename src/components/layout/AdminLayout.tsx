@@ -1,7 +1,7 @@
 import React, { FunctionComponent, MouseEvent, ReactElement, useEffect, useState } from "react";
 import { AppHeader, AppFooter } from "@/components/common";
 import { Navbar, Text } from "@mantine/core";
-import { SidePanelMenuLink } from "../common/admin";
+import { SidePanelMenuLink } from "../feature/admin";
 import { IconCategory, IconDashboard, IconReportAnalytics, IconShoppingCart } from "@tabler/icons";
 import { useRouter } from "next/router";
 
@@ -53,7 +53,7 @@ const AdminLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
 	return (
 		<>
 			<AppHeader isAdmin />
-			<main className="container flex flex-row m-10 mx-auto space-x-10">
+			<main className="container flex flex-row mx-auto mt-2 space-x-10">
 				<Navbar className="border-r-2 bg-violet-light border-violet" height={840} width={{ sm: 250 }} p="md">
 					<Navbar.Section className="mb-6">
 						<Text className="text-2xl text-page">Admin</Text>
@@ -64,7 +64,6 @@ const AdminLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
 				</Navbar>
 				<section className="w-full">{children}</section>
 			</main>
-			<AppFooter />
 		</>
 	);
 };
