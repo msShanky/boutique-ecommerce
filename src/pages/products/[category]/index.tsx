@@ -1,4 +1,4 @@
-import { Loader, Pagination } from "@mantine/core";
+import { Loader, Pagination, Title } from "@mantine/core";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useWishlist } from "hooks";
 import type { NextPage } from "next";
@@ -50,8 +50,9 @@ const Product: NextPage = () => {
 					</div>
 				)}
 				{isSuccess && (
-					<section className="mb-20">
-						<section className="container flex flex-wrap gap-10 mx-auto my-20">
+					<section className="mt-10 mb-20">
+						<Title className="font-sans flex justify-center text-5xl text-black capitalize">{category}</Title>
+						<section className="container flex flex-wrap gap-10 mx-auto mt-10 mb-20 justify-center">
 							{products?.body &&
 								products?.body.map((product) => {
 									const isWishlisted = wishlist.includes(product.id)
