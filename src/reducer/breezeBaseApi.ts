@@ -2,6 +2,8 @@ import { OrderData } from "@/components/feature/admin/order/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { definitions } from "../types/supabase";
 
+interface CategoryProductsQueryProps { categoryName: string, from?: number, to?: number }
+
 export const breezeBaseApi = createApi({
 	reducerPath: "breezeBaseApi",
 	baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
@@ -9,8 +11,16 @@ export const breezeBaseApi = createApi({
 		getProductCategories: builder.query<SupaBaseResponse<Array<definitions["product_category"]>>, void>({
 			query: () => `product-category`,
 		}),
-		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
-			query: (categoryName: string) => `product-category/${categoryName}/products`,
+		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, CategoryProductsQueryProps>({
+			query: (props: CategoryProductsQueryProps) => {
+				const { categoryName, from, to } = props;
+				console.log(categoryName,"categoryName")
+				let queryString = `product-category/${categoryName}/products`
+				if(typeof from=== 'number' && typeof to === 'number'){
+					queryString += `?from=${from}&to=${to}`
+				}
+				return queryString
+			},
 		}),
 		getProductsForAdminByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
 			query: (categoryName: string) => `product-category/${categoryName}/products?isAdmin=true`,
@@ -58,6 +68,7 @@ export const {
 	useLazyGetProductCategoriesQuery,
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
+	useLazyGetProductsByCategoryNameQuery,
 	useGetProductsForAdminByCategoryNameQuery,
 	useLazyGetProductsForAdminByCategoryNameQuery,
 	useGetProductsByCodeQuery,
