@@ -10,7 +10,7 @@ const getProductFromProductCode = async (req: NextApiRequest, res: NextApiRespon
 		.select(
 			`id,code,images,category_id,msrp,title,sub_title,product_discount,
 	category:category_id (id,category),
-	variants: product_variant(id,sku,size)`
+	variants: product_variant(id,sku,size,inventory_count)`
 		)
 		// @ts-ignore
 		.order("size", { foreignTable: "product_variant", ascending: false })

@@ -139,6 +139,7 @@ const Product: NextPage = () => {
 											<Button
 												key={variantKey}
 												onClick={() => handleVariantSelection(variant)}
+												disabled={!variant.inventory_count}
 												className={`rounded-full min-w-14 h-14 border-pink  hover:bg-pink hover:text-white ${isSelected ? "bg-pink text-white" : "text-pink"
 													}`}
 											>
