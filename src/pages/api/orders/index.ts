@@ -12,8 +12,10 @@ const getAllOrders = async (req: NextApiRequest, res: NextApiResponse) => {
 			`id,created_at,code,status_id,status:status_id (id, status, status_text),shipment_ref,user_id`,
 			{ count: "exact" }
 		);
+	const rangeFrom = parseInt(from as string)
+	const rangeTo = parseInt(to as string)
 	if (filters && Object.keys(filters).length) supabaseQuery = supabaseQuery.match(filters);
-	if (typeof parseInt(from as string) === 'number' && typeof parseInt(to as string) === 'number') supabaseQuery = supabaseQuery.range(from, to);
+	if (typeof rangeFrom === 'number' && typeof rangeTo === 'number') supabaseQuery = supabaseQuery.range(rangeFrom, rangeTo);
 	const userOrders = await supabaseQuery
 	const { data, ...response } = userOrders;
 	res.status(200).json(response);

@@ -9,7 +9,7 @@ const OrderItem = (props: { orderItem: OrderItemWithRelations }) => {
 		title,
 		category: { category },
 	} = product;
-	const { sku, size } = product_variant;
+	const { sku, size, inventory_count } = product_variant;
 
 	const productLink = `/products/${category?.toLowerCase()}/${poduct_code}`;
 
@@ -43,6 +43,7 @@ const OrderItem = (props: { orderItem: OrderItemWithRelations }) => {
 					</Text>
 
 					<Text size="lg">{size}</Text>
+					<Text size="sm">Inventory : {inventory_count}</Text>
 				</div>
 			</Group>
 		</div>
