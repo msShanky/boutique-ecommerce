@@ -37,7 +37,6 @@ const Product: NextPage = () => {
 
 	const maxPages = Math.ceil((parseInt(`${products?.count}`) || 0) / PAGE_ITEMS);
 
-
 	return (
 		<AppLayout>
 			<>

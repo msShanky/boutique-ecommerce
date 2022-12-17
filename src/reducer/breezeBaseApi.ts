@@ -1,8 +1,11 @@
-import { OrderData } from "@/components/feature/admin/order/types";
+import { OrderData, OrderFilterFormValues } from "@/components/feature/admin/order/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { definitions } from "../types/supabase";
 
-interface CategoryProductsQueryProps { categoryName: string, from?: number, to?: number }
+interface Range { from?: number, to?: number }
+
+type CategoryProductsQueryProps = Range & { categoryName: string }
+type OrdersQueryProps = Range & OrderFilterFormValues
 
 export const breezeBaseApi = createApi({
 	reducerPath: "breezeBaseApi",
@@ -14,9 +17,8 @@ export const breezeBaseApi = createApi({
 		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, CategoryProductsQueryProps>({
 			query: (props: CategoryProductsQueryProps) => {
 				const { categoryName, from, to } = props;
-				console.log(categoryName,"categoryName")
 				let queryString = `product-category/${categoryName}/products`
-				if(typeof from=== 'number' && typeof to === 'number'){
+				if (typeof from === 'number' && typeof to === 'number') {
 					queryString += `?from=${from}&to=${to}`
 				}
 				return queryString
@@ -42,8 +44,19 @@ export const breezeBaseApi = createApi({
 				body: body,
 			}),
 		}),
-		getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, void>({
-			query: () => `orders`,
+		getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, OrdersQueryProps>({
+			query: (props: OrdersQueryProps) => {
+				const { from, to, ...filters } = props;
+				let queryString = `orders?`
+				if (typeof from === 'number' && typeof to === 'number') {
+					queryString += `from=${from}&to=${to}`
+				}
+				for (const filter in filters) {
+					const filterValue = filters[filter as keyof OrderFilterFormValues]
+					if (filterValue !== null) queryString += `&${filter}=${filterValue}`
+				}
+				return queryString
+			},
 		}),
 		getOrderStatus: builder.query<SupaBaseResponse<Array<definitions["order_status"]>>, void>({
 			query: () => `orders/order-status`,

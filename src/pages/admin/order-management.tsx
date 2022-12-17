@@ -5,40 +5,34 @@ import { OrderTable } from "@/components/feature/admin/order/table";
 import { useLazyGetOrdersQuery } from "@/reducer/breezeBaseApi";
 import OrderFilter from "@/components/feature/admin/order/forms/OrderFilter";
 import { OrderData, OrderFilterFormValues } from "@/components/feature/admin/order/types";
-import { definitions } from "types/supabase";
+import { Pagination } from "@mantine/core";
+import { Loader } from "@mantine/core";
+
+const PAGE_ITEMS = 10;
 
 // TODO: Optimize the initial data fetching to pre-populate the data from api
 const OrderManagementPage = () => {
-	const [orders, setOrders] = useState<OrderData[]>([]);
 	const [filters, setFilters] = useState<OrderFilterFormValues>({});
+	const [currentPage, setCurrentPage] = useState(1)
 	const [getOrders, orderResponse] = useLazyGetOrdersQuery();
+	const { data: ordersData, isLoading, isSuccess } = orderResponse;
 
-	const refreshOrders = useCallback(() => {
-		getOrders();
-	}, [getOrders]);
+	const maxPages = Math.ceil((parseInt(`${ordersData?.count}`) || 0) / PAGE_ITEMS);
+
+
+	const refreshOrders = useCallback((filters: OrderFilterFormValues) => {
+		const from = ((currentPage - 1) * (PAGE_ITEMS));
+		const to = (currentPage * PAGE_ITEMS) - 1;
+		getOrders({ from, to, ...filters });
+	}, [getOrders, currentPage]);
 
 	useEffect(() => {
-		refreshOrders();
+		refreshOrders(filters);
 	}, [refreshOrders]);
-
-	useEffect(() => {
-		if (orderResponse.isSuccess && orderResponse?.data?.body) {
-			let filteredOrders = orderResponse.data.body;
-			if (Object.keys(filters).length) {
-				filteredOrders = orderResponse.data.body.filter((order) => {
-					for (const filter in filters) {
-						const filterKey = filter as keyof definitions["user_order"];
-						return !filters[filterKey] || order[filterKey] === filters[filterKey];
-					}
-				});
-			}
-			setOrders(filteredOrders);
-		}
-	}, [filters, orderResponse]);
 
 	const handleFilterChange = (values: OrderFilterFormValues, _event: React.FormEvent<HTMLFormElement>) => {
 		setFilters(values);
-		refreshOrders();
+		refreshOrders(values);
 	};
 
 	return (
@@ -51,7 +45,29 @@ const OrderManagementPage = () => {
 					<div>OrderManagement</div>
 				</section>
 				<OrderFilter values={filters} onSubmit={handleFilterChange} />
-				<OrderTable data={orders} refreshData={refreshOrders} />
+				{ordersData?.body
+					? <OrderTable data={ordersData.body} refreshData={()=>refreshOrders(filters)} />
+					: <div className="flex justify-center w-full h-56 mt-20">
+						<Loader size={60} />
+					</div>
+				}
+				<Pagination
+					page={currentPage}
+					onChange={setCurrentPage}
+					total={maxPages}
+					radius="xl"
+					withEdges
+					className="mt-10"
+					position="center"
+					styles={() => ({
+						item: {
+							'&[data-active]': {
+								backgroundColor: '#7E33E0'
+							}
+						}
+					})}
+				/>
+
 			</>
 		</AdminLayout>
 	);
