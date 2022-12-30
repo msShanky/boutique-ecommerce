@@ -1,4 +1,4 @@
-import { Loader } from "@mantine/core";
+import { Loader, Title } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -31,16 +31,19 @@ const Product: NextPage = () => {
 					</div>
 				)}
 				{isSuccess && (
-					<section className="container flex flex-wrap gap-10 mx-auto my-20">
-						{data?.body?.map((categoryData, index) => {
-							return (
-								<ProductCategoryCard
-									handleCardClick={() => handleCategoryRedirection(categoryData)}
-									key={`CATEGORY_INDEX_${index + 15}`}
-									categoryProp={categoryData}
-								/>
-							);
-						})}
+					<section className="mt-10">
+						<Title className="font-sans justify-center flex text-5xl text-black">Categories</Title>
+						<section className="container justify-center flex flex-wrap gap-10 mx-auto mt-10 mb-20">
+							{data?.body?.map((categoryData, index) => {
+								return (
+									<ProductCategoryCard
+										handleCardClick={() => handleCategoryRedirection(categoryData)}
+										key={`CATEGORY_INDEX_${index + 15}`}
+										categoryProp={categoryData}
+									/>
+								);
+							})}
+						</section>
 					</section>
 				)}
 			</>

@@ -50,11 +50,11 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 							{variants &&
 								variants.map((variant, index) => {
 									const variantKey = `product_variant_${index + 556}`;
-									return (
+									return variant.inventory_count ? (
 										<Text key={variantKey} className="font-sans text-sm text-violet-subtext">
 											{variant.size}
 										</Text>
-									);
+									): ''
 								})}
 						</div>
 					</>

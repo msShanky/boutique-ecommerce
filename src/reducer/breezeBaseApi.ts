@@ -1,6 +1,11 @@
-import { OrderData } from "@/components/common/admin/order/types";
+import { OrderData, OrderFilterFormValues } from "@/components/feature/admin/order/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { definitions } from "../types/supabase";
+
+interface Range { from?: number, to?: number }
+
+type CategoryProductsQueryProps = Range & { categoryName: string }
+type OrdersQueryProps = Range & OrderFilterFormValues
 
 export const breezeBaseApi = createApi({
 	reducerPath: "breezeBaseApi",
@@ -9,8 +14,15 @@ export const breezeBaseApi = createApi({
 		getProductCategories: builder.query<SupaBaseResponse<Array<definitions["product_category"]>>, void>({
 			query: () => `product-category`,
 		}),
-		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
-			query: (categoryName: string) => `product-category/${categoryName}/products`,
+		getProductsByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, CategoryProductsQueryProps>({
+			query: (props: CategoryProductsQueryProps) => {
+				const { categoryName, from, to } = props;
+				let queryString = `product-category/${categoryName}/products`
+				if (typeof from === 'number' && typeof to === 'number') {
+					queryString += `?from=${from}&to=${to}`
+				}
+				return queryString
+			},
 		}),
 		getProductsForAdminByCategoryName: builder.query<SupaBaseResponse<Array<ProductWithRelations>>, string>({
 			query: (categoryName: string) => `product-category/${categoryName}/products?isAdmin=true`,
@@ -32,8 +44,19 @@ export const breezeBaseApi = createApi({
 				body: body,
 			}),
 		}),
-		getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, void>({
-			query: () => `orders`,
+		getOrders: builder.query<SupaBaseResponse<Array<OrderData>>, OrdersQueryProps>({
+			query: (props: OrdersQueryProps) => {
+				const { from, to, ...filters } = props;
+				let queryString = `orders?`
+				if (typeof from === 'number' && typeof to === 'number') {
+					queryString += `from=${from}&to=${to}`
+				}
+				for (const filter in filters) {
+					const filterValue = filters[filter as keyof OrderFilterFormValues]
+					if (filterValue !== null) queryString += `&${filter}=${filterValue}`
+				}
+				return queryString
+			},
 		}),
 		getOrderStatus: builder.query<SupaBaseResponse<Array<definitions["order_status"]>>, void>({
 			query: () => `orders/order-status`,
@@ -58,6 +81,7 @@ export const {
 	useLazyGetProductCategoriesQuery,
 	useGetProductCategoriesQuery,
 	useGetProductsByCategoryNameQuery,
+	useLazyGetProductsByCategoryNameQuery,
 	useGetProductsForAdminByCategoryNameQuery,
 	useLazyGetProductsForAdminByCategoryNameQuery,
 	useGetProductsByCodeQuery,

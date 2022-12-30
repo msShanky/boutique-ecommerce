@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
-import { ProductList, ProductManager } from "@/components/common/admin";
+import { ProductList, ProductManager } from "@/components/feature/admin";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { formatProductFormForUpdate } from "helpers/supabase-helper";
 import { PostgrestError } from "@supabase/supabase-js";
@@ -57,7 +57,6 @@ const ProductContent = () => {
 				.from("product_variant")
 				.insert(newVariants);
 
-			// console.log(" ===> The product edit response for variants", variantsData);
 			handleProductApiResponse(variantsEditData, variantsEditError);
 		}
 	};

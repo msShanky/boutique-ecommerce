@@ -7,7 +7,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 import {
   CategoryList,
   CategoryManager,
-} from "@/components/common/admin/category";
+} from "@/components/feature/admin/category";
 // TODO: Add parent category for gender and child categories for different types
 
 const CategoryContent = () => {
