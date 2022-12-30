@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 const breezeTheme: Partial<MantineTheme> = {
-	fontFamily: "Josefin Sans, sans-serif",
+	fontFamily: "Poppins, sans-serif",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

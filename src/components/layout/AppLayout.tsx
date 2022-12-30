@@ -5,12 +5,13 @@ import AppFooter from "../common/AppFooter";
 type AppLayoutProps = {
 	children: ReactElement;
 	isContained?: boolean;
+	menuLinks: Array<any>;
 };
 
-const AppLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
+const AppLayout: FunctionComponent<AppLayoutProps> = ({ children, menuLinks }) => {
 	return (
 		<>
-			<AppHeader />
+			<AppHeader menuLinks={menuLinks} />
 			<main>{children}</main>
 			<AppFooter />
 		</>

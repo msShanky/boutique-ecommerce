@@ -51,20 +51,17 @@ const AdminLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
 	});
 
 	return (
-		<>
-			<AppHeader isAdmin />
-			<main className="container flex flex-row mx-auto mt-2 space-x-10">
-				<Navbar className="border-r-2 bg-violet-light border-violet" height={840} width={{ sm: 250 }} p="md">
-					<Navbar.Section className="mb-6">
-						<Text className="text-2xl text-page">Admin</Text>
-					</Navbar.Section>
-					<Navbar.Section className="space-y-4" grow mt="xl">
-						{links}
-					</Navbar.Section>
-				</Navbar>
-				<section className="w-full">{children}</section>
-			</main>
-		</>
+		<main className="container flex flex-row mx-auto mt-2 space-x-10">
+			<Navbar className="border-r-2 bg-violet-light border-violet" height={840} width={{ sm: 250 }} p="md">
+				<Navbar.Section className="mb-6">
+					<Text className="text-2xl text-page">Admin</Text>
+				</Navbar.Section>
+				<Navbar.Section className="space-y-4" grow mt="xl">
+					{links}
+				</Navbar.Section>
+			</Navbar>
+			<section className="w-full">{children}</section>
+		</main>
 	);
 };
 
