@@ -12,7 +12,8 @@ const AppLayout: FunctionComponent<AppLayoutProps> = ({ children, menuLinks }) =
 	return (
 		<>
 			<AppHeader menuLinks={menuLinks} />
-			<main>{children}</main>
+			<main className="mb-32">{children}</main>
+			{/* TODO: The footer should be modified as per the latest content */}
 			<AppFooter />
 		</>
 	);

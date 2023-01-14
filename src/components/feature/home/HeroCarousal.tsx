@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Carousel } from "@mantine/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Image } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 const heroImages = [
 	{
@@ -28,6 +29,7 @@ const heroImages = [
 
 export const HomeCarousal = () => {
 	const autoplay = useRef(Autoplay({ delay: 4500 }));
+	const isMobile = useMediaQuery("(max-width:600px)");
 
 	const carousalItems = heroImages.map((hero, index) => {
 		const uniqueKey = `${(index + 99) * 55}_carousal_image`;
@@ -47,9 +49,10 @@ export const HomeCarousal = () => {
 		);
 	});
 
+	// TODO: Reduce the image quality to improve the performance
 	return (
 		<Carousel
-			height={950}
+			height={isMobile ? 760 : 950}
 			controlsOffset="lg"
 			plugins={[autoplay.current]}
 			onMouseEnter={autoplay.current.stop}
@@ -60,7 +63,7 @@ export const HomeCarousal = () => {
 			align="center"
 			inViewThreshold={0}
 			classNames={{
-				indicators: "md:bottom-16 bottom-[33%]",
+				indicators: "md:bottom-16 bottom-[20%]",
 				indicator: "w-10 h-2 bg-primary",
 			}}
 		>
