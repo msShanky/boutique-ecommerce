@@ -1,4 +1,4 @@
-import { Avatar, Button, Text } from "@mantine/core";
+import { Image, Avatar, Button, Text } from "@mantine/core";
 import { User } from "@supabase/supabase-js";
 import React, { FunctionComponent, ReactElement } from "react";
 
@@ -9,6 +9,9 @@ type UserAvatarProps = {
 
 const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => {
 	const { user, handleToggle } = props;
+
+	console.log("user ==> ", user);
+	console.log("user image ==> ", user.user_metadata.avatar_url);
 	const [firstName, lastName] = user.user_metadata.full_name.split(" ");
 	const userInitials = `${firstName[0].toUpperCase()} ${lastName[0].toUpperCase()}`;
 	const userImage = user?.user_metadata.avatar_url ?? undefined;
@@ -23,9 +26,17 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 			className=" hover:cursor-pointer"
 			onClick={handleToggle}
 		>
-			<Text className="">{firstName}</Text>
+			<Text className="text-white">{firstName}</Text>
 			{userImage ? (
-				<Avatar size={30} radius="xl" src={userImage} alt="user icon" />
+				<Image
+					alt="user icon"
+					src={userImage}
+					width={40}
+					classNames={{
+						imageWrapper: "rounded-full",
+						image: "rounded-full",
+					}}
+				/>
 			) : (
 				<Avatar size={30} radius="xl">
 					{userInitials}

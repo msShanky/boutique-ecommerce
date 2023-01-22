@@ -114,3 +114,8 @@ type RazorPaySuccess = {
 	razorpay_payment_id: string;
 	razorpay_signature: string;
 };
+
+type HomeCarousal = {
+	sourceURI: string;
+	style?: string;
+};

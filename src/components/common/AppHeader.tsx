@@ -1,14 +1,21 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
 import Link from "next/link";
-import { Burger, Container, Group, Header, Image } from "@mantine/core";
+import React, { FunctionComponent, useEffect, useState } from "react";
+
+import { Text, Burger, Container, Group, Header, Image, Avatar } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import SearchInput from "./input/Search";
+import { IconHeart, IconShoppingCart } from "@tabler/icons";
+import { useAppSelector } from "app/hooks";
+import { LinkIcon } from "./header";
+import { useUser } from "@supabase/auth-helpers-react";
+import { getUserProfileFromGoogle } from "@/helpers/authHelper";
+import { UserAvatar } from "./user";
 
 const HEADER_HEIGHT = 100;
 
 type AppHeaderProps = {
 	isAdmin?: boolean;
 	menuLinks?: Array<any>;
+	isLanding?: boolean;
 };
 
 const staticMenuLinks = [
@@ -28,11 +35,23 @@ const staticMenuLinks = [
 
 const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	const [opened, { toggle }] = useDisclosure(false);
-	const [active, setActive] = useState(0);
 	const [scrollY, setScrollY] = useState(0);
+	const { user, isLoading: userLoading } = useUser();
+	const { products } = useAppSelector((state) => state.cart);
+
+	console.log("The user information", user, userLoading);
+
+	// const formattedUser = getUserProfileFromGoogle(user);
 
 	const isMobile = useMediaQuery("(max-width: 600px)");
-	// const { menuLinks } = props;
+
+	const menuItem = (label: string) => {
+		return (
+			<Text className={`md:flex flex-col justify-between hidden hover:text-primary text-white hover:cursor-pointer`}>
+				{label}
+			</Text>
+		);
+	};
 
 	const menuItems =
 		staticMenuLinks &&
@@ -41,12 +60,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 			return (
 				<Link key={uniqueKey} href={item.link} passHref>
 					<span
-						key={item.label}
-						className={`h-[${HEADER_HEIGHT}px] md:flex flex-col justify-between hidden hover:text-primaryAlt/70 text-white hover:cursor-pointer`}
-						onClick={(event) => {
-							// event.preventDefault();
-							setActive(index);
-						}}
+						className={`md:flex flex-col justify-between hidden hover:text-primary text-white hover:cursor-pointer`}
 					>
 						{item.label}
 					</span>
@@ -67,12 +81,13 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 		};
 	}, []);
 
+	const headerBgStyle =
+		scrollY > 650 ? `bg-primaryBlack/90` : props.isLanding ? `bg-primaryBlack/10` : `bg-primaryBlack/60`;
+
 	return (
 		<Header
 			height={HEADER_HEIGHT}
-			className={`fixed transition-colors z-10 w-full mx-auto border-none ${
-				scrollY > 650 ? `bg-primaryBlack/90` : `bg-transparent`
-			}`}
+			className={`fixed transition-colors z-10 w-full mx-auto border-none ${headerBgStyle}`}
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
 				<Link href="/" passHref>
@@ -83,13 +98,23 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						alt="Breeze Logo"
 					/>
 				</Link>
-				{/* TODO: [1] Add login, card and wishlist icons and links */}
-				<div className={"md:flex flex-row gap-8 hidden"}>
-					<Group spacing={0} position="right" className={"mr-4 gap-6"}>
+				<div className="flex-row hidden gap-12 md:flex">
+					<Group position="right" className={"mr-4 gap-6"}>
 						{menuItems}
 					</Group>
-					{/* <SearchInput /> */}
-					{/* TODO: Add the wishlist and login button */}
+					<Group position="right" className={"mr-4 gap-6"}>
+						{user && !userLoading ? (
+							<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} />
+						) : (
+							<Link href="/login">{menuItem("login")}</Link>
+						)}
+						<LinkIcon icon={<IconHeart size={20} className="stroke-white" />} link="/wishlist" label="WishList" />
+						<LinkIcon
+							icon={<IconShoppingCart size={25} className="stroke-white" />}
+							link="/cart"
+							dockCount={products.length}
+						/>
+					</Group>
 				</div>
 				<Burger opened={opened} onClick={toggle} className={"md:hidden"} color="#fff" size="md" />
 			</Container>

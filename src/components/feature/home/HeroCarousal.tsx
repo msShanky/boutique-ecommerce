@@ -5,34 +5,16 @@ import { Image } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { getImageUrl } from "@/helpers/supabase-helper";
 
-const heroImages = [
-	{
-		sourceURI: "home-banner/bridal_makeup_saree.webp",
-		style: "md:mt-[140px]",
-	},
-	{
-		sourceURI: "home-banner/contemporary_dress_green_background.webp",
-		style: "md:mt-[140px]",
-	},
-	{
-		sourceURI: "home-banner/red_saree_garden_background.webp",
-		style: "md:mt-[140px]",
-	},
-	{
-		sourceURI: "home-banner/saree_home_background.webp",
-		style: "md:mt-[140px]",
-	},
-	{
-		sourceURI: "home-banner/saree_temple_background.webp",
-		style: "md:mt-[140px]",
-	},
-];
+type HomeCarousalProps = {
+	carousalContent: Array<HomeCarousal>;
+};
 
-export const HomeCarousal = () => {
+export const HomeCarousal = (props: HomeCarousalProps) => {
+	const { carousalContent } = props;
 	const autoplay = useRef(Autoplay({ delay: 4500 }));
 	const isMobile = useMediaQuery("(max-width:600px)");
 
-	const carousalItems = heroImages.map((hero, index) => {
+	const carousalItems = carousalContent.map((hero, index) => {
 		const uniqueKey = `${(index + 99) * 55}_carousal_image`;
 		return (
 			<Image

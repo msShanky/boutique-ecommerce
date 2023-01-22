@@ -43,7 +43,7 @@ const Login = () => {
 				<Head>
 					<title>Breeze Boutique | Login</title>
 				</Head>
-				<main className="container mx-auto mt-12">
+				<main className="container mx-auto mt-40">
 					{/* TODO: [5] Display an overlay loader */}
 					<AuthForm handleGoogleLogin={handleGoogleLogin} />
 				</main>

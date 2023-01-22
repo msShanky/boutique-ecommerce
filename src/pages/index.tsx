@@ -10,6 +10,7 @@ type HomePageProps = {
 	menuLinks: Array<{ label: string; link: string }>;
 	featured: Array<ProductWithRelations>;
 	categories: Array<ProductCategory>;
+	bannerContent: Array<HomeCarousal>;
 };
 
 const Home: NextPage<HomePageProps> = (props) => {
@@ -18,7 +19,7 @@ const Home: NextPage<HomePageProps> = (props) => {
 	console.log("The props received are ", props);
 
 	return (
-		<AppLayout menuLinks={props.menuLinks}>
+		<AppLayout isLanding menuLinks={props.menuLinks}>
 			<>
 				<Head>
 					<title>Breeze Boutique | Home</title>
@@ -32,7 +33,7 @@ const Home: NextPage<HomePageProps> = (props) => {
 				{/* Home Landing Section */}
 				{!isLoading && !isWaitingForSignIn && (
 					<>
-						<HomeCarousal />
+						<HomeCarousal carousalContent={props.bannerContent} />
 						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
 						{/* TODO: Featured */}
 						<CarousalCardSlider items={props.featured} />
@@ -45,11 +46,7 @@ const Home: NextPage<HomePageProps> = (props) => {
 								label="Handpicked With Love"
 								subText="Selectively Picked by The Team"
 							/>
-							<SiteFeatureIcon
-								icon="quality"
-								label="Assured quality"
-								subText="Our products meet quality standards"
-							/>
+							<SiteFeatureIcon icon="quality" label="Assured quality" subText="Our products meet quality standards" />
 						</div>
 					</>
 				)}
