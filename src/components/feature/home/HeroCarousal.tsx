@@ -3,26 +3,27 @@ import { Carousel } from "@mantine/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Image } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { getImageUrl } from "@/helpers/supabase-helper";
 
 const heroImages = [
 	{
-		sourceURI: "sabesh-photography-dFyjYq92gLk-unsplash.jpg",
+		sourceURI: "home-banner/bridal_makeup_saree.webp",
 		style: "md:mt-[140px]",
 	},
 	{
-		sourceURI: "inesh-thamotharampillai-6XZWrSBo5o4-unsplash.jpg",
+		sourceURI: "home-banner/contemporary_dress_green_background.webp",
 		style: "md:mt-[140px]",
 	},
 	{
-		sourceURI: "sabesh-photography-CUhnjt3zbvE-unsplash.jpg",
+		sourceURI: "home-banner/red_saree_garden_background.webp",
 		style: "md:mt-[140px]",
 	},
-	// {
-	// 	sourceURI: "sabesh-photography-e5J0Etnt23k-unsplash.jpg",
-	// 	style: "md:mt-[140px]",
-	// },
 	{
-		sourceURI: "sabesh-photography-xdF8HFa2Id0-unsplash.jpg",
+		sourceURI: "home-banner/saree_home_background.webp",
+		style: "md:mt-[140px]",
+	},
+	{
+		sourceURI: "home-banner/saree_temple_background.webp",
 		style: "md:mt-[140px]",
 	},
 ];
@@ -43,7 +44,7 @@ export const HomeCarousal = () => {
 				}}
 				height="100vh"
 				alt="home_carousal"
-				src={`/images/home/${hero.sourceURI}`}
+				src={getImageUrl(hero.sourceURI)}
 				fit="cover"
 			/>
 		);

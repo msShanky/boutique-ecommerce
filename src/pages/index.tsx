@@ -1,8 +1,8 @@
 import type { NextPage, NextPageContext } from "next";
+import { Loader, Image } from "@mantine/core";
 import Head from "next/head";
 import { AppLayout } from "@/components/layout";
-import { HomeCarousal, CarousalCardSlider, CategorySection } from "@/components/feature/home";
-import { Loader } from "@mantine/core";
+import { HomeCarousal, CarousalCardSlider, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
 import { useAuthValidator } from "../helpers";
 import { getHomePageData } from "../lib";
 
@@ -35,10 +35,22 @@ const Home: NextPage<HomePageProps> = (props) => {
 						<HomeCarousal />
 						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
 						{/* TODO: Featured */}
-						{/* TODO: Categories */}
 						<CarousalCardSlider items={props.featured} />
 						{/* TODO: [1] The category should be fetched from the database and populated accordingly */}
+						{/* TODO: Categories */}
 						<CategorySection items={props.categories} />
+						<div className="container flex flex-col gap-6 mx-auto mt-20 md:flex-row justify-evenly">
+							<SiteFeatureIcon
+								icon="selected_with_love"
+								label="Handpicked With Love"
+								subText="Selectively Picked by The Team"
+							/>
+							<SiteFeatureIcon
+								icon="quality"
+								label="Assured quality"
+								subText="Our products meet quality standards"
+							/>
+						</div>
 					</>
 				)}
 			</>

@@ -83,6 +83,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						alt="Breeze Logo"
 					/>
 				</Link>
+				{/* TODO: [1] Add login, card and wishlist icons and links */}
 				<div className={"md:flex flex-row gap-8 hidden"}>
 					<Group spacing={0} position="right" className={"mr-4 gap-6"}>
 						{menuItems}

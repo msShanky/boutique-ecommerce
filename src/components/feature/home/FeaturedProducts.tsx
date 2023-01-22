@@ -27,36 +27,45 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 		router.push(`${router.asPath}/${productRoute}`);
 	};
 
-	const itemCards = items && items.map((product, index) => {
-		const isWishlisted = wishlist.includes(product.id);
-		const uniqueKey = `unique_card_carousal_${(index + 46) * 99}_${product.id}}`;
-		return (
-			<Carousel.Slide key={uniqueKey}>
-				<FeaturedProductCard
-					handleProductRedirection={() => handleProductRedirection(product)}
-					handleWishList={() => handleWishlist(product)}
-					product={product}
-					isWishlisted={isWishlisted}
-					key={product.id}
-				/>
-			</Carousel.Slide>
-		);
-	});
+	const itemCards =
+		items &&
+		items.map((product, index) => {
+			const isWishlisted = wishlist.includes(product.id);
+			const uniqueKey = `unique_card_carousal_${(index + 46) * 99}_${product.id}}`;
+			return (
+				<Carousel.Slide key={uniqueKey}>
+					<FeaturedProductCard
+						handleProductRedirection={() => handleProductRedirection(product)}
+						handleWishList={() => handleWishlist(product)}
+						product={product}
+						isWishlisted={isWishlisted}
+						key={product.id}
+					/>
+				</Carousel.Slide>
+			);
+		});
 
 	return (
 		<div className="container flex flex-col items-center justify-center gap-6 pb-12 mx-auto my-10">
-			<Title className="mb-12 font-sans text-5xl text-primaryBlack font-extralight">Featured Products</Title>
+			<Title className="mb-12 font-sans text-3xl md:text-5xl text-primaryBlack font-extralight">
+				Featured Products
+			</Title>
 			{/* For mobile devices */}
 			<Carousel
 				className="bg-opacity-25 md:hidden"
-				sx={{ maxWidth: 288 }}
+				sx={{ maxWidth: 344 }}
 				classNames={{
-					control: "bg-primary w-10 h-10 rounded-none",
+					control: "bg-primary/90 w-10 h-20 rounded-none border-none ",
+					indicator: "bg-primary",
 				}}
 				mx="auto"
 				withIndicators
 				height={"100%"}
-				controlsOffset="xs"
+				controlsOffset={0}
+				slidesToScroll={1}
+				slideSize={1}
+				slideGap={20}
+				loop
 			>
 				{itemCards}
 			</Carousel>
@@ -65,6 +74,7 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 				className="hidden w-full md:flex"
 				classNames={{
 					control: "bg-primary/90 w-10 h-20 rounded-none border-none ",
+					indicator: "bg-primary",
 				}}
 				mx="auto"
 				withIndicators
