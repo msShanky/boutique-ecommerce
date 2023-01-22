@@ -38,7 +38,7 @@ const Product: NextPage = () => {
 	const maxPages = Math.ceil((parseInt(`${products?.count}`) || 0) / PAGE_ITEMS);
 
 	return (
-		<AppLayout>
+		<AppLayout menuLinks={[]}>
 			<>
 				<Head>
 					<title>Breeze Boutique | Products</title>
@@ -50,8 +50,8 @@ const Product: NextPage = () => {
 				)}
 				{isSuccess && (
 					<section className="mt-10 mb-20">
-						<Title className="font-sans flex justify-center text-5xl text-black capitalize">{category}</Title>
-						<section className="container flex flex-wrap gap-10 mx-auto mt-10 mb-20 justify-center">
+						<Title className="flex justify-center font-sans text-5xl text-black capitalize">{category}</Title>
+						<section className="container flex flex-wrap justify-center gap-10 mx-auto mt-10 mb-20">
 							{products?.body &&
 								products?.body.map((product) => {
 									const isWishlisted = wishlist.includes(product.id)

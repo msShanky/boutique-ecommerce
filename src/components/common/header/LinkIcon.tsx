@@ -23,7 +23,7 @@ const LinkIcon: FunctionComponent<LinkIconProps> = (props) => {
 		<Link href={props.link} passHref>
 			<div className="relative flex flex-row items-center space-x-2 hover:cursor-pointer">
 				{(dockCount ? dockCount > 0 : false) && <NumberDocked count={dockCount as number} />}
-				{label && <p>{label}</p>}
+				{label && <p className="text-white">{label}</p>}
 				{props.icon}
 			</div>
 		</Link>

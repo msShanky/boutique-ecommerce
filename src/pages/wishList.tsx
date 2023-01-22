@@ -38,7 +38,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	}, [getUserWishlist, user.id]);
 
 	const handleAddToCart = (event: MouseEvent<HTMLButtonElement>, product: ProductWithRelations) => {
-		// TODO: Handle Variant selection before adding the product to cart
+		// TODO: [2] Handle Variant selection before adding the product to cart
 		console.log("ADD PRODUCT TO CART", event, product);
 		event.preventDefault();
 		event.stopPropagation();
@@ -53,7 +53,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	};
 
 	return (
-		<AppLayout>
+		<AppLayout menuLinks={[]}>
 			<>
 				<Head>
 					<title>Breeze Boutique | WishList</title>

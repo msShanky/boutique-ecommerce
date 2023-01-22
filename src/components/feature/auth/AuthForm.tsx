@@ -10,10 +10,13 @@ type AuthFormProps = {
 	handleGoogleLogin: (event: MouseEvent) => void;
 };
 
+// TODO: [1] The email sign up is not working
+// TODO: [1] The errors should be displayed on form validation
 const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 	const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
 	const [isLoading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>("");
+	
 	const form = useForm<AuthFormInitialType>({
 		initialValues: {
 			email: "",
@@ -21,7 +24,6 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			password: "",
 			terms: true,
 		},
-
 		validate: {
 			email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
 			password: (val) => {
@@ -54,14 +56,15 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 			<Text size="lg" weight={500}>
 				Welcome to breeze boutique, {type} with
 			</Text>
-			<Group grow mb="md" mt="md">
-				<Button onClick={props.handleGoogleLogin} className="bg-pink hover:bg-violet" radius="xl">
+			<div className="flex justify-center my-6">
+				<Button
+					onClick={props.handleGoogleLogin}
+					className="w-48 text-primaryBlack bg-primary hover:bg-secondary"
+					radius="xl"
+				>
 					Google
 				</Button>
-				<Button className="bg-pink hover:bg-violet" radius="xl">
-					Twitter
-				</Button>
-			</Group>
+			</div>
 			<Divider label="Or continue with email" labelPosition="center" my="lg" />
 			<form onSubmit={form.onSubmit(handleFormSubmit)}>
 				<Stack>
@@ -94,22 +97,30 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 						<Checkbox
 							label="I accept terms and conditions"
 							checked={form.values.terms}
+							classNames={{
+								input: "bg-primary",
+							}}
 							onChange={(event) => form.setFieldValue("terms", event.currentTarget.checked)}
 						/>
 					)}
 				</Stack>
 				<Group position="apart" mt="xl">
-					<Anchor
-						className="text-page"
-						component="button"
-						type="button"
-						color="gray"
-						onClick={() => toggle()}
-						size="xs"
-					>
-						{type === "register" ? "Already have an account? Login" : "Don't have an account? Register"}
-					</Anchor>
-					<Button className="w-40 bg-black" type="submit">
+					<div className="flex items-center gap-2">
+						<Text className="font-sans text-xs">
+							{type === "register" ? "Already have an account?" : "Don't have an account?"}
+						</Text>
+						<Anchor
+							className="underline text-primaryBlack decoration-primary decoration-2"
+							component="button"
+							type="button"
+							color="gray"
+							onClick={() => toggle()}
+							size="sm"
+						>
+							{type === "register" ? "Login" : "Register"}
+						</Anchor>
+					</div>
+					<Button className="w-40 bg-black hover:bg-primary/60 hover:text-primaryBlack" type="submit">
 						{upperFirst(type)}
 					</Button>
 				</Group>

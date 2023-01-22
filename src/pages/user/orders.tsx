@@ -15,7 +15,7 @@ const OrdersPage = () => {
 	const { user } = useUser();
 	const [userOrders, setUserOrders] = useState<Array<UserOrderWithRelations> | undefined>();
 
-	// TODO: Orders should be sorted by time of creation or update
+	// TODO: [2] Orders should be sorted by time of creation or update
 	const fetchUserOrders = async () => {
 		const { data, error } = await supabaseClient
 			.from("user_order")
@@ -46,7 +46,7 @@ const OrdersPage = () => {
 	};
 
 	return (
-		<AppLayout>
+		<AppLayout menuLinks={[]}>
 			<section className="container flex flex-wrap flex-col gap-10 mx-auto my-20 2xl:min-h-[550px]">
 				<h1>User Orders</h1>
 				<>
