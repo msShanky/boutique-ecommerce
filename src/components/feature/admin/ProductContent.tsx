@@ -14,19 +14,10 @@ export const ProductContent = () => {
 	const [productApiState, setProductApiState] = useState<ApiStatus>("idle");
 	const { data: categories, isLoading, error, isError } = useGetProductCategoriesQuery();
 
-	console.log("The categories received from api", categories);
-
 	if (categories?.status === 401 || categories?.statusText === "Unauthorized") {
-		console.log("The user is not authorized so directing them to login");
 		supabaseClient.auth.signOut();
 		router.push("/login");
 	}
-
-	useEffect(() => {
-		if (isError) {
-			console.log("The error received is", error);
-		}
-	}, [isError, error]);
 
 	const toggleProductAdd = () => {
 		setCrudState("create");

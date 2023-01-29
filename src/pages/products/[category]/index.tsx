@@ -15,10 +15,9 @@ const Product: NextPage = () => {
 	const router = useRouter();
 	const { user } = useUser();
 	const { category } = router.query;
-	const { wishlist, handleWishlist } = useWishlist(user?.id)
-	const [currentPage, setCurrentPage] = useState(1)
+	const { wishlist, handleWishlist } = useWishlist(user?.id);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [getProductsByCategoryName, { data: products, isLoading, isSuccess }] = useLazyGetProductsByCategoryNameQuery();
-
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const productRoute = product.code;
@@ -26,14 +25,19 @@ const Product: NextPage = () => {
 	};
 
 	const fetchProducts = () => {
-		getProductsByCategoryName({ categoryName: category as string, from: ((currentPage - 1) * (PAGE_ITEMS)), to: (currentPage * PAGE_ITEMS) - 1 })
-	}
+		getProductsByCategoryName({
+			categoryName: category as string,
+			from: (currentPage - 1) * PAGE_ITEMS,
+			to: currentPage * PAGE_ITEMS - 1,
+			isAdmin: false,
+		});
+	};
 
 	useEffect(() => {
 		if (category) {
-			fetchProducts()
+			fetchProducts();
 		}
-	}, [category, currentPage])
+	}, [category, currentPage]);
 
 	const maxPages = Math.ceil((parseInt(`${products?.count}`) || 0) / PAGE_ITEMS);
 
@@ -54,7 +58,7 @@ const Product: NextPage = () => {
 						<section className="container flex flex-wrap justify-center gap-10 mx-auto mt-10 mb-20">
 							{products?.body &&
 								products?.body.map((product) => {
-									const isWishlisted = wishlist.includes(product.id)
+									const isWishlisted = wishlist.includes(product.id);
 									return (
 										<ProductCard
 											handleProductRedirection={() => handleProductRedirection(product)}
@@ -75,10 +79,10 @@ const Product: NextPage = () => {
 							position="center"
 							styles={() => ({
 								item: {
-									'&[data-active]': {
-										backgroundColor: '#7E33E0'
-									}
-								}
+									"&[data-active]": {
+										backgroundColor: "#7E33E0",
+									},
+								},
 							})}
 						/>
 					</section>

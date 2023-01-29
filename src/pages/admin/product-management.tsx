@@ -11,7 +11,7 @@ const ProductManagementPage = () => {
         <Head>
           <title>BB | Product Management</title>
         </Head>
-        <section className="w-full">
+        <section className="w-full pb-12">
           <ProductContent />
         </section>
       </>
