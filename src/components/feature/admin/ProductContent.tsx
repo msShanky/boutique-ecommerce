@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
 import { ProductList, ProductManager } from "@/components/feature/admin";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { formatProductFormForUpdate } from "helpers/supabase-helper";
 import { PostgrestError } from "@supabase/supabase-js";
+import { useRouter } from "next/router";
 
-const ProductContent = () => {
+export const ProductContent = () => {
 	const [crudState, setCrudState] = useState<AdminCRUDContent>("read");
+	const router = useRouter();
 	const [activeProduct, setActiveProduct] = useState<ProductWithRelations>();
 	const [productApiState, setProductApiState] = useState<ApiStatus>("idle");
-	const { data: categories, isLoading } = useGetProductCategoriesQuery();
+	const { data: categories, isLoading, error, isError } = useGetProductCategoriesQuery();
+
+	console.log("The categories received from api", categories);
+
+	if (categories?.status === 401 || categories?.statusText === "Unauthorized") {
+		console.log("The user is not authorized so directing them to login");
+		supabaseClient.auth.signOut();
+		router.push("/login");
+	}
+
+	useEffect(() => {
+		if (isError) {
+			console.log("The error received is", error);
+		}
+	}, [isError, error]);
 
 	const toggleProductAdd = () => {
 		setCrudState("create");
@@ -96,7 +112,7 @@ const ProductContent = () => {
 
 	if (shouldShowLoader) {
 		return (
-			<div className={"w-full min-h-[85vh] relative bg-violet-light"}>
+			<div className={"w-full min-h-[85vh] relative bg-primary"}>
 				<LoadingOverlay visible={true} overlayBlur={2} />
 			</div>
 		);
@@ -129,5 +145,3 @@ const ProductContent = () => {
 		</>
 	);
 };
-
-export default ProductContent;

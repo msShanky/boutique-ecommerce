@@ -15,6 +15,8 @@ const ProductList: FunctionComponent<ProductListProps> = (props) => {
 	const [selectedCategory, setSelectedCategory] = useState<definitions["product_category"] | null>();
 	const [getProductsForAdmin, results] = useLazyGetProductsForAdminByCategoryNameQuery();
 
+	console.log("the results received for categories are", results);
+
 	const handleCategoryUpdate = (value: definitions["product_category"] | null) => {
 		setSelectedCategory(value);
 	};
@@ -35,6 +37,8 @@ const ProductList: FunctionComponent<ProductListProps> = (props) => {
 	useEffect(() => {
 		handleCategoryUpdate(categories?.[0] || null);
 	}, [categories]);
+
+	console.log("The category name is", selectedCategory, results.data);
 
 	return (
 		<div>

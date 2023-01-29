@@ -66,7 +66,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				)}
 			</div>
 			<div className="flex items-center mt-6 space-x-4">
-				<Text className="font-sans text-base text-page">Rs. {getSellingPrice(product)}</Text>
+				<Text className="font-sans text-base text-primary">Rs. {getSellingPrice(product)}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
 				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
 			</div>

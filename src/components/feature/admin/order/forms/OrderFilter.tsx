@@ -37,7 +37,7 @@ const OrderFilter = (props: OrderFilterProps) => {
                     placeholder='None'
                     data={orderStatusOptions}
                 />
-                <Button className="bg-pink hover:bg-violet" type="submit" disabled={!orderFilterForm.isDirty()}>
+                <Button className="text-black bg-primary hover:bg-secondary" type="submit" disabled={!orderFilterForm.isDirty()}>
                     Apply
                 </Button>
             </Group>

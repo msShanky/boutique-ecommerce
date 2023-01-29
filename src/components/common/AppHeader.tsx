@@ -39,10 +39,6 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	const { user, isLoading: userLoading } = useUser();
 	const { products } = useAppSelector((state) => state.cart);
 
-	console.log("The user information", user, userLoading);
-
-	// const formattedUser = getUserProfileFromGoogle(user);
-
 	const isMobile = useMediaQuery("(max-width: 600px)");
 
 	const menuItem = (label: string) => {

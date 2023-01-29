@@ -1,6 +1,7 @@
 import React, { FunctionComponent, MouseEvent, ReactElement, useEffect, useState } from "react";
-import { AppHeader, AppFooter } from "@/components/common";
-import { Navbar, Text } from "@mantine/core";
+import Link from "next/link";
+import { Navbar, Text, Container, Image } from "@mantine/core";
+
 import { SidePanelMenuLink } from "../feature/admin";
 import { IconCategory, IconDashboard, IconReportAnalytics, IconShoppingCart } from "@tabler/icons";
 import { useRouter } from "next/router";
@@ -32,6 +33,7 @@ const AdminLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
 	useEffect(() => {
 		const activeMenu = panelLinks.filter((link) => {
 			const routeName = router.route.split("/admin/")[1];
+			if (!routeName) return true;
 			return link.link === routeName;
 		});
 
@@ -45,23 +47,34 @@ const AdminLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
 
 	const links = panelLinks.map((item) => {
 		const isActive = activeMenu?.content === item.content;
-		const routeName = router.route.split("/admin/")[1];
-		const isLinkActive = activeMenu?.link === routeName;
 		return <SidePanelMenuLink item={item} key={item.label} isActive={isActive} handleMenuClick={handleMenuClick} />;
 	});
 
 	return (
-		<main className="container flex flex-row mx-auto mt-2 space-x-10">
-			<Navbar className="border-r-2 bg-violet-light border-violet" height={840} width={{ sm: 250 }} p="md">
-				<Navbar.Section className="mb-6">
-					<Text className="text-2xl text-page">Admin</Text>
-				</Navbar.Section>
-				<Navbar.Section className="space-y-4" grow mt="xl">
-					{links}
-				</Navbar.Section>
-			</Navbar>
-			<section className="w-full">{children}</section>
-		</main>
+		<>
+			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
+				<Link href="/admin" passHref>
+					<div className="flex items-center gap-4">
+						<Image width={30} className="hover:cursor-pointer" src="/images/breeze_logo_v2.svg" alt="Breeze Logo" />
+						<Text>Breeze Boutique</Text>
+					</div>
+				</Link>
+				<Link href="/" passHref>
+					Go Back Live
+				</Link>
+			</Container>
+			<main className="container flex flex-row mx-auto mt-2">
+				<Navbar className="border-r-4 border-black bg-primary" height={840} width={{ sm: 250 }} p="md">
+					<Navbar.Section className="mb-6">
+						<Text className="text-2xl text-black">Admin</Text>
+					</Navbar.Section>
+					<Navbar.Section className="space-y-4" grow mt="xl">
+						{links}
+					</Navbar.Section>
+				</Navbar>
+				<section className="flex flex-row w-full ml-8">{children}</section>
+			</main>
+		</>
 	);
 };
 

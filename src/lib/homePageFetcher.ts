@@ -47,10 +47,12 @@ variants: product_variant(id,sku,size,inventory_count)`
 
 	const { data, ...response } = getFeaturedProducts;
 
+	// @ts-ignore
+	const featuredProducts = response.body?.filter((item) => item?.variants.length > 0) || [];
+
 	// TODO: Update this logic to fetch the featured products
 	return {
-		// @ts-ignore
-		featured: response.body?.filter((item) => item?.variants.length > 0),
+		featured: featuredProducts,
 		categories: categoryResponse.body,
 		bannerContent: homeCarousal,
 	};
