@@ -1,9 +1,9 @@
-type Product = {
-	id: number;
-	image: string;
-	price: number;
-	size: Array<string>;
-};
+// type Product = {
+// 	id: number;
+// 	images: string;
+// 	price: number;
+// 	size: Array<string>;
+// };
 
 type CartProduct = ProductCartType & {
 	quantity: number;
@@ -113,4 +113,9 @@ type RazorPaySuccess = {
 	razorpay_order_id: string;
 	razorpay_payment_id: string;
 	razorpay_signature: string;
+};
+
+type HomeCarousal = {
+	sourceURI: string;
+	style?: string;
 };

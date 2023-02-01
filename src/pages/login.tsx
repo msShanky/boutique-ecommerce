@@ -26,25 +26,25 @@ const Login = () => {
 		}
 	};
 
-	// TODO: Handle email login
+	// TODO: [4] Handle email login
 	const handleEmailLogin = () => { };
-	// TODO: Handle email sign up
+	// TODO: [4] Handle email sign up
 	const handleEmailSignUp = () => { };
 
 	const handleEmailEvent = () => { };
 
-	// TODO: Handle user authentication errors
-	// TODO: Add Facebook login
-	// TODO: Test the email sign up and login
+	// TODO: [5] Handle user authentication errors
+	// TODO: [5] Add Facebook login
+	// TODO: [5] Test the email sign up and login
 
 	return (
-		<AppLayout>
+		<AppLayout menuLinks={[]}>
 			<>
 				<Head>
 					<title>Breeze Boutique | Login</title>
 				</Head>
-				<main className="container mx-auto mt-12">
-					{/* TODO: Display an overlay loader */}
+				<main className="container mx-auto mt-40">
+					{/* TODO: [5] Display an overlay loader */}
 					<AuthForm handleGoogleLogin={handleGoogleLogin} />
 				</main>
 			</>

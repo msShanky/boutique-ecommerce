@@ -13,10 +13,12 @@ const appLinks = [
 const AppNavigation = () => {
 	return (
 		<section className="container flex flex-row items-center justify-between w-full h-16 p-2 pt-4 mx-auto bg-white">
-			<div className="flex flex-row items-center space-x-24">
+			<div>
 				<Link href="/" passHref>
 					<Image className="hover:cursor-pointer" width={50} src="/images/breeze_logo_v2.svg" alt="Breeze Logo" />
 				</Link>
+			</div>
+			<div className="flex-row items-center justify-end hidden space-x-8 md:flex ">
 				<div className="space-x-8 font-sans text-base ">
 					{appLinks.map(({ link, label }) => {
 						const uniqueKey = `APP_LINK_KEY_${label}`;
@@ -32,8 +34,8 @@ const AppNavigation = () => {
 						);
 					})}
 				</div>
+				<SearchInput />
 			</div>
-			<SearchInput />
 		</section>
 	);
 };

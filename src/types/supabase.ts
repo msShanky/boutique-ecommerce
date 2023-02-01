@@ -448,6 +448,8 @@ export interface paths {
           msrp?: parameters["rowFilter.product.msrp"];
           /** manages the product discount percentage */
           product_discount?: parameters["rowFilter.product.product_discount"];
+          /** Denotes whether */
+          is_featured?: parameters["rowFilter.product.is_featured"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -510,6 +512,8 @@ export interface paths {
           msrp?: parameters["rowFilter.product.msrp"];
           /** manages the product discount percentage */
           product_discount?: parameters["rowFilter.product.product_discount"];
+          /** Denotes whether */
+          is_featured?: parameters["rowFilter.product.is_featured"];
         };
         header: {
           /** Preference */
@@ -536,6 +540,8 @@ export interface paths {
           msrp?: parameters["rowFilter.product.msrp"];
           /** manages the product discount percentage */
           product_discount?: parameters["rowFilter.product.product_discount"];
+          /** Denotes whether */
+          is_featured?: parameters["rowFilter.product.is_featured"];
         };
         body: {
           /** product */
@@ -1209,6 +1215,12 @@ export interface definitions {
      * @description manages the product discount percentage
      */
     product_discount?: number;
+    /**
+     * Format: boolean
+     * @description Denotes whether
+     * @default false
+     */
+    is_featured?: boolean;
   };
   profiles: {
     /**
@@ -1466,6 +1478,11 @@ export interface parameters {
    * @description manages the product discount percentage
    */
   "rowFilter.product.product_discount": string;
+  /**
+   * Format: boolean
+   * @description Denotes whether
+   */
+  "rowFilter.product.is_featured": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */

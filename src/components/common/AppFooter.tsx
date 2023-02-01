@@ -1,33 +1,51 @@
-import { Button, Text, TextInput, Title } from "@mantine/core";
+import { Button, Text, TextInput, Title, Image } from "@mantine/core";
+import Link from "next/link";
 import React from "react";
+
+const staticMenuLinks = [
+	{
+		label: "Men",
+		link: "/shop/men",
+	},
+	{
+		label: "Women",
+		link: "/shop/women",
+	},
+	{
+		label: "Kids",
+		link: "/shop/kids",
+	},
+];
 
 const AppHeader = () => {
 	return (
-		<footer className="w-full bg-violet-light h-[532px]">
-			<section className="container flex pt-24 mx-auto space-x-20">
-				<div className="w-1/3 space-y-4">
-					{/* <Title className="text-2xl text-page">Logo</Title>
-					<TextInput
-						rightSection={
-							<Button className="bg-pink hover:bg-violet" variant="filled">
-								Sign Up
-							</Button>
-						}
-						placeholder="Enter An Email Address"
-						rightSectionWidth={90}
-					/> */}
-					{/* <Text>Contact Info</Text>
-					<Text>care@breezeboutique.in</Text> */}
+		<footer className="w-full bg-primary h-[532px] pl-8 md:pl-0">
+			<section className="container flex flex-col gap-12 pt-24 mx-auto md:flex-row md:gap-20">
+				<div className="flex flex-col w-1/3 gap-y-4">
+					<Image
+						src="/images/breeze_logo_v2.svg"
+						width={80}
+						alt="Breeze Boutique Logo"
+						className="text-2xl text-primary"
+					>
+						Logo
+					</Image>
+					<Text>Contact Info</Text>
+					<Text>care@breezeboutique.in</Text>
 				</div>
-				{/* <div>
-					<Title className="text-2xl text-page">Categories</Title>
-					<div className="mt-8 space-y-4 text-page text-opacity-30">
-						<Text>Category 1</Text>
-						<Text>Category 2</Text>
-						<Text>Category 3</Text>
-						<Text>Category 4</Text>
+				<div>
+					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>
+					<div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
+						{staticMenuLinks.map((menuLink, index) => {
+							const uniqueLinkKey = `${(index + 88) * 44}_menu_link_${menuLink.label}`;
+							return (
+								<Link href={menuLink.link} passHref key={uniqueLinkKey}>
+									<Text className="font-sans text-xl text-primaryAlt hover:cursor-pointer hover:underline">{menuLink.label}</Text>
+								</Link>
+							);
+						})}
 					</div>
-				</div> */}
+				</div>
 			</section>
 		</footer>
 	);

@@ -248,12 +248,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@mantine/carousel@^5.5.4":
-  version "5.5.4"
-  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-5.5.4.tgz#b6a4e61e635a0fe25102ed93c5460b4959071ae9"
-  integrity sha512-mwTp0OP+rx3XkkE974kPxRFCOsINwTk3oQC9E9cAaow5VXB2BlEeCgtreqsx9isRaIM0rNyLC6n/gGAv7UeGvw==
+"@mantine/carousel@^5.9.5":
+  version "5.9.5"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-5.9.5.tgz#bf994d38c885119edff551c6fcf89f7fe16d459e"
+  integrity sha512-PiZBHa/zoaHRgisVSQZWST/0QRytYd/1rcVlwMSqaiE5ov7W+7wtt8ETXDr2GgCnQVfX26ZSFND94KDn3aExHA==
   dependencies:
-    "@mantine/utils" "5.5.4"
+    "@mantine/utils" "5.9.5"
 
 "@mantine/core@^5.3.3":
   version "5.5.4"
@@ -344,6 +344,11 @@
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.5.4.tgz#4cea84cfbe16ac04b9b407b4215c66d606c702f3"
   integrity sha512-EO0iD99wfvKC09WHpCXrqb5ewTmuYf4GeNR3xOtecNaXNbFUVxmlV6wwhsJ61YScy+7bM1lplwNvkGz5CF0v7Q==
+
+"@mantine/utils@5.9.5":
+  version "5.9.5"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.9.5.tgz#9b56c899e479c90abecc096eb8543b93bdc52938"
+  integrity sha512-OtMOvXMyqpZ+Tz25DYRwRkvERvmF4L0RJiq+JnXk+1yKDvG+JZQuMMLnt0nZ81T6q7uzDSA29cJ45syHL2BXmQ==
 
 "@motionone/animation@^10.13.1":
   version "10.14.0"
@@ -688,6 +693,11 @@
   resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-1.101.0.tgz#fc0bbcf55878a858c89a492d9900cdb0b8488a62"
   integrity sha512-3DXsgQRpxSMQMNGQbFndYWPGNlxRKnl3I1p11i7kT6eEJTY2Noc7J37gg25MoxVIs57m+fUI6Qux1X7i9fiobw==
 
+"@tailwindcss/line-clamp@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.4.2.tgz#f353c5a8ab2c939c6267ac5b907f012e5ee130f9"
+  integrity sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==
+
 "@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -875,14 +885,6 @@ anymatch@~3.1.2:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
-
-appwrite@^10.0.1:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/appwrite/-/appwrite-10.1.0.tgz#c4e2599ee26bd35b2cde15d0b92003a58a946d91"
-  integrity sha512-kHtPqKf0X+mxmkS47G3F5vVY5wKMVRv7ZTpTvd9H3m1KBIm3aDAEBCEUt6bGQdE8XKgqLFzhqWFdQWkxX6I0xA==
-  dependencies:
-    cross-fetch "3.1.5"
-    isomorphic-form-data "2.0.0"
 
 arg@^5.0.2:
   version "5.0.2"
@@ -1137,11 +1139,6 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classnames@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
-  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
-
 clsx@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
@@ -1216,7 +1213,7 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cross-fetch@3.1.5, cross-fetch@^3.0.6, cross-fetch@^3.1.0, cross-fetch@^3.1.5:
+cross-fetch@^3.0.6, cross-fetch@^3.1.0, cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -1414,17 +1411,22 @@ electron-to-chromium@^1.4.251:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.276.tgz#17837b19dafcc43aba885c4689358b298c19b520"
   integrity sha512-EpuHPqu8YhonqLBXHoU6hDJCD98FCe6KDoet3/gY1qsQ6usjJoHqBH2YIVs8FXaAtHwVL8Uqa/fsYao/vq9VWQ==
 
-embla-carousel-react@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.3.tgz#343c972a1ac5869acba3d6e9c7eeb3bd27f7e335"
-  integrity sha512-nvgAAmoFuXyCPuH2rSTnSdaTSMwFX/ilXDlfMCCDfdaj4X3u25+x8lMC1bINuk+4G2Hm6SOlrZ1eGkYdBg5HAg==
-  dependencies:
-    embla-carousel "7.0.3"
+embla-carousel-autoplay@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel-autoplay/-/embla-carousel-autoplay-7.0.5.tgz#d411cd7d3ea8edd907ef26330ad8524c5ebf174b"
+  integrity sha512-3tvlhJuBvyj99k/SBIHTZ1dNdAVjK0LOH1NFXbV5GCaaeyENHt1Uv/h5C2+fHdMGLovUs5PeuwCQL1LFnjz/xw==
 
-embla-carousel@7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.3.tgz#7173a0f27b697a42266d34764c657eeba85bd7b5"
-  integrity sha512-Zo8E/qNb8J7n/jcfQxPrfdARlTgsMvmcXshn3J/2oxWVLwL/3N4cAhuqLQiud/oCjZzl+A8maCJDe2PDVlc/cA==
+embla-carousel-react@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.5.tgz#c6a079e382432335e34adb16bb11558df047760c"
+  integrity sha512-qhw980gKj7G+O5d3WSwj0TyhcbpGP3DqJPiAatt1t3wEEcZqn7csaIfLh4e1N/0kna9sZfZZRzz+//NSrUodSg==
+  dependencies:
+    embla-carousel "7.0.5"
+
+embla-carousel@7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.5.tgz#b43e590c072d06a5b11d4ce19d024f5f07a62862"
+  integrity sha512-loRcu0La0F7bhEMwbvgpi14iaaIEdwacH1xoplnaYfwN4KMgECkiuLgu4lx+v6MYd6lSpg/bw7ZxEuLUwYjavg==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
@@ -1848,15 +1850,6 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==
-
-form-data@^2.3.2:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
-  integrity sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.6"
-    mime-types "^2.1.12"
 
 form-data@~2.3.2:
   version "2.3.3"
@@ -2304,13 +2297,6 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-isomorphic-form-data@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/isomorphic-form-data/-/isomorphic-form-data-2.0.0.tgz#9f6adf1c4c61ae3aefd8f110ab60fb9b143d6cec"
-  integrity sha512-TYgVnXWeESVmQSg4GLVbalmQ+B4NPi/H4eWxqALKj63KsUrcu301YDjBqaOw3h+cbak7Na4Xyps3BiptHtxTfg==
-  dependencies:
-    form-data "^2.3.2"
-
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -2451,6 +2437,18 @@ loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+lottie-react@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/lottie-react/-/lottie-react-2.3.1.tgz#697060417bab027edb57ed45bda9d62e920d4040"
+  integrity sha512-8cxd6XZZtECT6LoAhCftRdYrEpHxiouvB5EPiYA+TtCG5LHNYAdMS9IVIHcxKtWnpo7x16QfCLj1XLXZpaN81A==
+  dependencies:
+    lottie-web "^5.9.4"
+
+lottie-web@^5.9.4:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.10.0.tgz#72563f22efdcf2b8f7e8359743514930ebaf5f8c"
+  integrity sha512-q2hfqKrGXNkwjSSZjKxf3fWMi0e3ZBc03qBkVWoGbwUJ7BcG+9YXjMPtmmhitzk8Nc6VQ5PRnh9yInPdfq0PZg==
 
 lru-cache@^6.0.0:
   version "6.0.0"
@@ -3348,10 +3346,10 @@ tabler-icons-react@^1.55.0:
   resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.55.0.tgz#d4a4d6be3b504f6a1f50f818ad96d9335287ce39"
   integrity sha512-+5zz2mQ2wl5658tMtK4mxUCFdF7TyPiPqLAvCUHHOeltZWukExE3aftY04HDMcap8skob/UFbzSzVhifCCMeUQ==
 
-tailwind-scrollbar@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tailwind-scrollbar/-/tailwind-scrollbar-2.0.1.tgz#f08721173d513f1406a44601640b79726e3f9728"
-  integrity sha512-OcR7qHBbux4k+k6bWqnEQFYFooLK/F4dhkBz6nvswIoaA9ancZ5h20e0tyV7ifSWLDCUBtpG+1NHRA8HMRH/wg==
+tailwind-scrollbar@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tailwind-scrollbar/-/tailwind-scrollbar-2.1.0.tgz#46e0b8788cef75387f9d163a5ec82b8cacd66c44"
+  integrity sha512-zpvY5mDs0130YzYjZKBiDaw32rygxk5RyJ4KmeHjGnwkvbjm/PszON1m4Bbt2DkMRIXlXsfNevykAESgURN4KA==
 
 tailwindcss@^3.1.7:
   version "3.1.8"

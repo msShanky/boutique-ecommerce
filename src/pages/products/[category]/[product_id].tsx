@@ -114,14 +114,14 @@ const Product: NextPage = () => {
 							</div>
 						</div>
 						<div className="w-4/12 px-4 py-2">
-							<Title order={1} className="font-sans text-4xl text-page">
+							<Title order={1} className="font-sans text-4xl text-primary">
 								{product?.title}
 							</Title>
 							<Text className="mt-4 font-sans text-xl text-violet-subtext">{product?.sub_title}</Text>
 							<Divider my="md" />
 							{/* Price Section */}
 							<div className="flex items-center mt-8 space-x-4">
-								<Text className="font-sans text-2xl text-page">
+								<Text className="font-sans text-2xl text-primary">
 									Rs. {getSellingPrice(product as ProductWithRelations)}
 								</Text>
 								<Text className="font-sans text-xl line-through text-pink">Rs. {product?.msrp}</Text>
@@ -139,6 +139,7 @@ const Product: NextPage = () => {
 											<Button
 												key={variantKey}
 												onClick={() => handleVariantSelection(variant)}
+												disabled={!variant.inventory_count}
 												className={`rounded-full min-w-14 h-14 border-pink  hover:bg-pink hover:text-white ${isSelected ? "bg-pink text-white" : "text-pink"
 													}`}
 											>

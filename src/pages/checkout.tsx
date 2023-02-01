@@ -108,7 +108,7 @@ const Checkout: NextPage = () => {
 						{isSuccess && (
 							<div className="flex flex-col items-center justify-center w-3/5 space-y-8 text-center select-none">
 								<Image width={350} src="/images/success_icon.svg" alt="Cart Success Icon" />
-								<Title className="text-4xl font-bold text-page">Your Order Is Completed!</Title>
+								<Title className="text-4xl font-bold text-primary">Your Order Is Completed!</Title>
 								<Text className="text-base font-semibold text-violet-subtext">
 									Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You
 									will receive an email confirmation when your order is completed.

@@ -52,3 +52,25 @@ type UserSignInType = {
 	email: string;
 	password: string;
 };
+
+type GoogleAuthUser = {
+	aal: string;
+	amr: Array<Record<any, any>>;
+	app_metadata?: {
+		provide: string;
+		providers?: Array<string>;
+	};
+	id: string;
+	aud?: string;
+	email: string;
+	role?: string;
+	session_id?: string;
+	confirmed_at?: string | null;
+	created_at?: string | null;
+	exp: number;
+	identities?: Array<UserIdentity>;
+	phone?: string;
+	sub: string;
+	updated_at?: string | null;
+	user_metadata?: IdentityData;
+};

@@ -1,81 +1,80 @@
-import type { NextPage } from "next";
+import type { NextPage, NextPageContext } from "next";
+import { Loader, Image } from "@mantine/core";
 import Head from "next/head";
-import AppLayout from "../components/layout/AppLayout";
-import HomeBanner from "../components/feature/home/HomeBanner";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useUser } from "@supabase/auth-helpers-react";
-import { getFragmentParams } from "@/lib/get-fragment-params";
-import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-import { Loader } from "@mantine/core";
-// import FeaturedProducts from "../components/feature/home/FeaturedProducts";
-// import LatestProducts from "../components/feature/home/LatestProducts";
-// import SiteFeatures from "../components/feature/SiteFeatures";
+import { AppLayout } from "@/components/layout";
+import { HomeCarousal, CarousalCardSlider, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
+import { useAuthValidator } from "../helpers";
+import { getHomePageData } from "../lib";
 
-const Home: NextPage = () => {
-	const router = useRouter();
-	const { user, isLoading } = useUser();
-	const [shouldRedirect, setShouldRedirect] = useState(false);
-	const isSignedIn = user;
-	let isWaitingForSignIn = false;
-	let refreshToken: string;
+type HomePageProps = {
+	menuLinks: Array<{ label: string; link: string }>;
+	featured: Array<ProductWithRelations>;
+	categories: Array<ProductCategory>;
+	bannerContent: Array<HomeCarousal>;
+};
 
-	if (!isSignedIn) {
-		/**
-		 * Get fragment params. Will only exist if bug happens in supabase helpers -
-		 * causing the successful signin with third party to not be registered -
-		 * here on client side after re-direct from provider.
-		 */
-		const fragmentParams = getFragmentParams(router.asPath);
-		refreshToken = fragmentParams.refresh_token;
+const Home: NextPage<HomePageProps> = (props) => {
+	const { isLoading, isWaitingForSignIn } = useAuthValidator();
 
-		if (refreshToken) {
-			/* Function to manually sign user in with refresh token from fragment. */
-			const signUserInWithRefreshToken = () => {
-				supabaseClient.auth.setSession(refreshToken);
-			};
-			/*
-			 * To avoid sign in page flicker while waiting for sign in.
-			 * Page will re-render after successful sign in and isWaitingForSignIn -
-			 * will be set to false while isSignedIn will be true
-			 */
-			isWaitingForSignIn = true;
-			signUserInWithRefreshToken();
-		}
-	}
-
-	useEffect(() => {
-		if (shouldRedirect && !isWaitingForSignIn) {
-			router.replace(router.pathname, undefined);
-		}
-	}, [shouldRedirect, router, isWaitingForSignIn]);
-
-	useEffect(() => {
-		if (router.asPath.includes("access_token")) {
-			setTimeout(() => {
-				setShouldRedirect(true);
-			}, 1400);
-		} else {
-			setShouldRedirect(false);
-		}
-	}, [router]);
+	console.log("The props received are ", props);
 
 	return (
-		<AppLayout>
+		<AppLayout isLanding menuLinks={props.menuLinks}>
 			<>
 				<Head>
 					<title>Breeze Boutique | Home</title>
 				</Head>
-				{/* TODO: Replace this loader with something decent with animations */}
-				{(isLoading || isWaitingForSignIn) && (
+				{/* TODO: [3] Replace this loader with something decent with animations */}
+				{isLoading && isWaitingForSignIn && (
 					<section className="container mx-auto my-20 h-80">
 						<Loader size={300} />
 					</section>
 				)}
-				{!isLoading && !isWaitingForSignIn && <HomeBanner />}
+				{/* Home Landing Section */}
+				{!isLoading && !isWaitingForSignIn && (
+					<>
+						{props.bannerContent && <HomeCarousal carousalContent={props.bannerContent} />}
+						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
+						{props.featured && <CarousalCardSlider items={props.featured} />}
+						{/* TODO: [1] The category should be fetched from the database and populated accordingly */}
+						{/* TODO: Categories */}
+						{props.categories && <CategorySection items={props.categories} />}
+						<div className="container flex flex-col gap-6 mx-auto mt-20 md:flex-row justify-evenly">
+							<SiteFeatureIcon
+								icon="selected_with_love"
+								label="Handpicked With Love"
+								subText="Selectively Picked by The Team"
+							/>
+							<SiteFeatureIcon icon="quality" label="Assured quality" subText="Our products meet quality standards" />
+						</div>
+					</>
+				)}
 			</>
 		</AppLayout>
 	);
 };
 
 export default Home;
+
+// TODO: [2] Menu links should be available inside the AppLayout so that all pages can access them
+export async function getStaticProps(context: NextPageContext) {
+	return {
+		props: {
+			menuLinks: [
+				{
+					label: "Men",
+					link: "/shop/men",
+				},
+				{
+					label: "Women",
+					link: "/shop/women",
+				},
+				{
+					label: "Kids",
+					link: "/shop/kids",
+				},
+			],
+			...(await getHomePageData()),
+		}, // will be passed to the page component as props
+	};
+}
