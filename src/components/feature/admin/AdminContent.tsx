@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement } from "react";
-import ProductContent from "./ProductContent";
+import { ProductContent } from "./ProductContent";
 
 type AdminContentProps = {
 	content: AdminPageContent;
