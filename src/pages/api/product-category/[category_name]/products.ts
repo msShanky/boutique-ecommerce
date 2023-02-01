@@ -18,13 +18,15 @@ const getProductsForCategory = async (
 	variants: ${isAdmin ? adminVariantsInventory : userVariants}`;
 	let supabaseQuery = supabaseClient
 		.from<definitions["product"]>("product")
-		.select(baseQuery,{count: "exact"})
+		.select(baseQuery, { count: "exact" })
 		// @ts-ignore
 		.order("size", { foreignTable: "product_variant", ascending: false })
 		.order("id", { ascending: true })
 		.eq("category_id", categoryId);
-	if (typeof from === 'number' && typeof to === 'number') supabaseQuery = supabaseQuery.range(from, to)
-	const productsForCategory = await supabaseQuery
+
+	if (typeof from === "number" && typeof to === "number") supabaseQuery = supabaseQuery.range(from, to);
+
+	const productsForCategory = await supabaseQuery;
 	return productsForCategory;
 };
 
@@ -41,7 +43,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const { data: categoryData } = await getCategoryIdByName(category_name as string);
 		const _categoryId = categoryData ? categoryData[0].id : undefined;
 		if (!_categoryId) res.status(404).send({ message: "Category not found" });
-		const { data, ...response } = await getProductsForCategory(_categoryId as number, !!isAdmin, parseInt(from as string), parseInt(to as string));
+		const { data, ...response } = await getProductsForCategory(
+			_categoryId as number,
+			!!isAdmin,
+			parseInt(from as string),
+			parseInt(to as string)
+		);
 
 		res.status(200).json(response);
 	}

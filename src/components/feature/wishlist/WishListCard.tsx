@@ -37,7 +37,7 @@ const WishListCard: FunctionComponent<WishListCardProps> = (props) => {
 				</>
 			</div>
 			<div className="flex items-center mt-6 space-x-2">
-				<Text className="font-sans text-base text-page">Rs. {productPrice}</Text>
+				<Text className="font-sans text-base text-primary">Rs. {productPrice}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
 				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
 			</div>

@@ -53,9 +53,9 @@ export const FeaturedProductCard: FunctionComponent<FeaturedProductCardProps> = 
 				<Title className="font-sans text-xl text-dark-blue cla">{title}</Title>
 			</div>
 			<div className="flex items-center mt-6 space-x-4">
-				<Text className="font-sans text-base text-page">Rs. {getSellingPrice(product)}</Text>
+				<Text className="font-sans text-base text-primary">Rs. {getSellingPrice(product)}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
-				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
+				<Text className="font-sans text-sm text-primaryBlack">{`(${product_discount}% OFF)`}</Text>
 			</div>
 		</div>
 	);

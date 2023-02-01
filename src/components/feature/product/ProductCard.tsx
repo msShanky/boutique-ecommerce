@@ -37,7 +37,8 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				/>
 			</Card.Section>
 			{/* TODO: Fetch the wishlist status from the API call */}
-			<div className="absolute flex flex-row space-x-4 top-2 left-2">
+			{/* <div className="absolute flex flex-row space-x-4 top-2 left-2"> */}
+			<div className="absolute flex flex-row space-x-4 top-2">
 				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
 					<IconHeart className={`${isWishlisted ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
 				</ActionIcon>
@@ -66,7 +67,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				)}
 			</div>
 			<div className="flex items-center mt-6 space-x-4">
-				<Text className="font-sans text-base text-page">Rs. {getSellingPrice(product)}</Text>
+				<Text className="font-sans text-base text-primary">Rs. {getSellingPrice(product)}</Text>
 				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
 				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
 			</div>

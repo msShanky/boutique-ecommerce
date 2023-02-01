@@ -101,7 +101,7 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 					className="w-6/12 border-none"
 					classNames={{
 						wrapper: "select-none",
-						input: "border-none bg-violet-light text-page tracking-widest",
+						input: "border-none bg-violet-light text-primary tracking-widest",
 					}}
 					value={getSellingPriceFromDiscount(values.msrp ?? 0, values.product_discount ?? 0)}
 					readOnly

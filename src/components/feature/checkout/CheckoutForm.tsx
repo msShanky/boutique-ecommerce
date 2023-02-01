@@ -59,7 +59,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 		<div className="w-7/12 px-8 py-16 max-h-max bg-violet-light">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
 			<div>
-				<Text className="mb-10 text-sm text-page">*Currently shipping only for Chennai</Text>
+				<Text className="mb-10 text-sm text-primary">*Currently shipping only for Chennai</Text>
 			</div>
 			{/* Contact Information */}
 			<div className="flex flex-row justify-between ">

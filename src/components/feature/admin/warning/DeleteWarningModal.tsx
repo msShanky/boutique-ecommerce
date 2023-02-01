@@ -28,8 +28,8 @@ const DeleteWarningModal: FunctionComponent<DeleteWarningModalProps> = (props) =
 			}}
 		>
 			<div className="">
-				<Title className="text-base font-bold text-page">{en.delete_warning[`${modelType}_delete`]}</Title>
-				<Text className="mt-4 text-sm text-page">This action is not reversible</Text>
+				<Title className="text-base font-bold text-primary">{en.delete_warning[`${modelType}_delete`]}</Title>
+				<Text className="mt-4 text-sm text-primary">This action is not reversible</Text>
 				<div className="flex justify-center mt-12 space-x-10">
 					<Button
 						className="text-black bg-violet-light border-violet hover:bg-transparent"

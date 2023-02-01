@@ -31,7 +31,7 @@ const CategoryRow: FunctionComponent<CategoryRowProps> = (props) => {
       <td className="hover:cursor-pointer">
         <ActionIcon
           onClick={() => toggleEdit(data)}
-          className="bg-violet"
+          className="bg-primary"
           variant="filled"
         >
           <IconEdit size={16} />

@@ -36,7 +36,7 @@ const OrdersPage = () => {
 			<div className="flex flex-row space-x-10">
 				<Image height={130} width={100} alt="product" radius={"md"} src={(product?.images?.[0] as string) || ""} />
 				<div className="space-y-2">
-					<Title className="text-2xl text-page">{item.product.title}</Title>
+					<Title className="text-2xl text-primary">{item.product.title}</Title>
 					<Text>{item.product.sub_title}</Text>
 					<Text>Size: {product_variant.size}</Text>
 					<Text>Quantity: {quantity}</Text>
@@ -59,7 +59,7 @@ const OrdersPage = () => {
 									className="flex flex-col self-center w-4/6 p-4 space-y-4 rounded-md shadow-md bg-violet-light min-h-40"
 								>
 									<div className="flex flex-row items-baseline space-x-4">
-										<Title className="text-xl text-page">{getFormattedStatus(order_status.status as string)}</Title>
+										<Title className="text-xl text-primary">{getFormattedStatus(order_status.status as string)}</Title>
 										<Text>{dayjs(created_at).format(`YYYY-MM-DD`)}</Text>
 									</div>
 									<div className="py-4 select-none">

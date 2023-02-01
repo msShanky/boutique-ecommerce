@@ -114,14 +114,14 @@ const Product: NextPage = () => {
 							</div>
 						</div>
 						<div className="w-4/12 px-4 py-2">
-							<Title order={1} className="font-sans text-4xl text-page">
+							<Title order={1} className="font-sans text-4xl text-primary">
 								{product?.title}
 							</Title>
 							<Text className="mt-4 font-sans text-xl text-violet-subtext">{product?.sub_title}</Text>
 							<Divider my="md" />
 							{/* Price Section */}
 							<div className="flex items-center mt-8 space-x-4">
-								<Text className="font-sans text-2xl text-page">
+								<Text className="font-sans text-2xl text-primary">
 									Rs. {getSellingPrice(product as ProductWithRelations)}
 								</Text>
 								<Text className="font-sans text-xl line-through text-pink">Rs. {product?.msrp}</Text>

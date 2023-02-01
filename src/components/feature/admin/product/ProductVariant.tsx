@@ -68,7 +68,7 @@ const ProductVariant: FunctionComponent<ProductVariantProps> = (props) => {
 					);
 				})
 			) : (
-				<Text className="font-sans text-lg text-page">No Variants Found, Would you like to create one ?</Text>
+				<Text className="font-sans text-lg text-primary">No Variants Found, Would you like to create one ?</Text>
 			)}
 			<Button
 				onClick={handleVariantAdd}

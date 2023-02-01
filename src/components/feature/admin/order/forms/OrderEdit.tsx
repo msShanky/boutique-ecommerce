@@ -66,7 +66,7 @@ const OrderEdit = (props: OrderEditProps) => {
           data={orderStatusOptions}
           styles={InputStyles}
         />
-        <Button className="bg-pink hover:bg-violet" type="submit" disabled={!orderEditForm.isDirty()}>
+        <Button className="text-black bg-primary hover:bg-secondary" type="submit" disabled={!orderEditForm.isDirty()}>
           Modify
         </Button>
       </form>

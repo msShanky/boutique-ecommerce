@@ -33,13 +33,12 @@ const Home: NextPage<HomePageProps> = (props) => {
 				{/* Home Landing Section */}
 				{!isLoading && !isWaitingForSignIn && (
 					<>
-						<HomeCarousal carousalContent={props.bannerContent} />
+						{props.bannerContent && <HomeCarousal carousalContent={props.bannerContent} />}
 						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
-						{/* TODO: Featured */}
-						<CarousalCardSlider items={props.featured} />
+						{props.featured && <CarousalCardSlider items={props.featured} />}
 						{/* TODO: [1] The category should be fetched from the database and populated accordingly */}
 						{/* TODO: Categories */}
-						<CategorySection items={props.categories} />
+						{props.categories && <CategorySection items={props.categories} />}
 						<div className="container flex flex-col gap-6 mx-auto mt-20 md:flex-row justify-evenly">
 							<SiteFeatureIcon
 								icon="selected_with_love"

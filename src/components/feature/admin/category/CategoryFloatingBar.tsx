@@ -13,7 +13,7 @@ const CategoryFloatingBar: FunctionComponent<CategoryFloatingBarProps> = (
   return (
     <Button
       variant="filled"
-      className="bg-violet hover:bg-pink"
+      className="bg-primary hover:bg-secondaryAlt"
       leftIcon={<IconPlus size={14} />}
       onClick={toggleAdd}
     >

@@ -23,10 +23,10 @@ const AppHeader = () => {
 			<section className="container flex flex-col gap-12 pt-24 mx-auto md:flex-row md:gap-20">
 				<div className="flex flex-col w-1/3 gap-y-4">
 					<Image
-						src="/images/breeze_logo_v2_white.svg"
+						src="/images/breeze_logo_v2.svg"
 						width={80}
 						alt="Breeze Boutique Logo"
-						className="text-2xl text-page"
+						className="text-2xl text-primary"
 					>
 						Logo
 					</Image>
@@ -35,7 +35,7 @@ const AppHeader = () => {
 				</div>
 				<div>
 					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>
-					<div className="flex flex-col mt-8 text-page text-opacity-30 gap-y-4">
+					<div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
 						{staticMenuLinks.map((menuLink, index) => {
 							const uniqueLinkKey = `${(index + 88) * 44}_menu_link_${menuLink.label}`;
 							return (

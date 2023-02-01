@@ -14,7 +14,7 @@ const ProductSuccess: FunctionComponent<ProductSuccessType> = (props) => {
   return (
     <div className="flex flex-col items-center justify-center w-3/5 mx-auto space-y-8 text-center select-none">
       <Image src="/images/success_icon.svg" alt="Cart Success Icon" />
-      <Title className="text-4xl font-bold text-page">{successText}</Title>
+      <Title className="text-4xl font-bold text-primary">{successText}</Title>
       <Text className="text-base font-semibold text-violet-subtext">
         {validateText}
       </Text>
