@@ -12,8 +12,9 @@ export const ProductContent = () => {
 	const router = useRouter();
 	const [activeProduct, setActiveProduct] = useState<ProductWithRelations>();
 	const [productApiState, setProductApiState] = useState<ApiStatus>("idle");
-	const { data: categories, isLoading, error, isError } = useGetProductCategoriesQuery();
+	const { data: categories, isLoading } = useGetProductCategoriesQuery();
 
+	// If there is an error when fetching information and the user session is invalid, log out the user and redirect them to login screen
 	if (categories?.status === 401 || categories?.statusText === "Unauthorized") {
 		supabaseClient.auth.signOut();
 		router.push("/login");

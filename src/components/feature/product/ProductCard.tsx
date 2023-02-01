@@ -37,7 +37,8 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				/>
 			</Card.Section>
 			{/* TODO: Fetch the wishlist status from the API call */}
-			<div className="absolute flex flex-row space-x-4 top-2 left-2">
+			{/* <div className="absolute flex flex-row space-x-4 top-2 left-2"> */}
+			<div className="absolute flex flex-row space-x-4 top-2">
 				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
 					<IconHeart className={`${isWishlisted ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
 				</ActionIcon>

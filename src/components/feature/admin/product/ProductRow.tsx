@@ -27,8 +27,8 @@ const ProductRow: FunctionComponent<ProductRowProps> = (props) => {
 			<td>{getSellingPrice(product)}</td>
 			<td>{product_discount}</td>
 			<td className="hover:cursor-pointer">
-				<ActionIcon onClick={() => handleProductEdit(product)} className="bg-violet" variant="filled">
-					<IconEdit size={16} />
+				<ActionIcon onClick={() => handleProductEdit(product)} className="bg-primary" variant="filled">
+					<IconEdit size={16} className='stroke-primaryBlack' />
 				</ActionIcon>
 			</td>
 		</tr>
