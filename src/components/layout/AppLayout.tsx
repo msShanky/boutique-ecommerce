@@ -5,7 +5,7 @@ import AppFooter from "../common/AppFooter";
 type AppLayoutProps = {
 	children: ReactElement;
 	isContained?: boolean;
-	menuLinks: Array<any>;
+	menuLinks?: Array<any>;
 	isLanding?: boolean;
 };
 

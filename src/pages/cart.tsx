@@ -11,7 +11,7 @@ const Cart: NextPage = () => {
 	const cartState = useAppSelector((state) => state.cart);
 
 	return (
-		<AppLayout>
+		<AppLayout menuLinks={[]}>
 			<>
 				<Head>
 					<title>Breeze Boutique | Cart</title>
