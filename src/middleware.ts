@@ -4,9 +4,7 @@ import type { NextRequest } from "next/server";
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
 	const isPreview = process.env.NEXT_IS_PREVIEW;
-	console.log("The env for preview is ==> ", isPreview, !!isPreview);
-	if (process.env.NEXT_IS_PREVIEW ) {
-		console.log(" ** NEXT JS is redirecting the user to the under_construction page")
+	if (!!isPreview) {
 		return NextResponse.redirect(new URL("/under-construction", request.url));
 	}
 }
