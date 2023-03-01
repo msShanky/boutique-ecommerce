@@ -119,3 +119,18 @@ type HomeCarousal = {
 	sourceURI: string;
 	style?: string;
 };
+
+type SubCategoryWithRelations = import("../types/supabase").definitions["product_sub_category"] & {
+	node_categories: Array<import("../types/supabase").definitions["product_sub_category"]>;
+};
+
+type CategoryMenuWithRelations = import("../types/supabase").definitions["product_category"] & {
+	gender_group: import("../types/supabase").definitions["gender_group"];
+	product_sub_category: Array<SubCategoryWithRelations>;
+};
+
+type MenuLinkPropTypes = {
+	menuLink: string;
+	menuLabel: string;
+	categories: Array<CategoryMenuWithRelations>;
+};

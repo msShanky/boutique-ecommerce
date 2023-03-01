@@ -64,7 +64,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -177,7 +177,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -287,7 +287,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -383,7 +383,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -420,6 +420,111 @@ export interface paths {
         body: {
           /** order_status */
           order_status?: definitions["order_status"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/product_sub_category": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.product_sub_category.id"];
+          created_at?: parameters["rowFilter.product_sub_category.created_at"];
+          updated_at?: parameters["rowFilter.product_sub_category.updated_at"];
+          name?: parameters["rowFilter.product_sub_category.name"];
+          category_id?: parameters["rowFilter.product_sub_category.category_id"];
+          /** Manages the nested relations within the sub category level */
+          parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["product_sub_category"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** product_sub_category */
+          product_sub_category?: definitions["product_sub_category"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferPost"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.product_sub_category.id"];
+          created_at?: parameters["rowFilter.product_sub_category.created_at"];
+          updated_at?: parameters["rowFilter.product_sub_category.updated_at"];
+          name?: parameters["rowFilter.product_sub_category.name"];
+          category_id?: parameters["rowFilter.product_sub_category.category_id"];
+          /** Manages the nested relations within the sub category level */
+          parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.product_sub_category.id"];
+          created_at?: parameters["rowFilter.product_sub_category.created_at"];
+          updated_at?: parameters["rowFilter.product_sub_category.updated_at"];
+          name?: parameters["rowFilter.product_sub_category.name"];
+          category_id?: parameters["rowFilter.product_sub_category.category_id"];
+          /** Manages the nested relations within the sub category level */
+          parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+        };
+        body: {
+          /** product_sub_category */
+          product_sub_category?: definitions["product_sub_category"];
         };
         header: {
           /** Preference */
@@ -489,7 +594,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -608,7 +713,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -712,7 +817,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -816,7 +921,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -920,7 +1025,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -969,6 +1074,102 @@ export interface paths {
       };
     };
   };
+  "/gender_group": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.gender_group.id"];
+          created_at?: parameters["rowFilter.gender_group.created_at"];
+          updated_at?: parameters["rowFilter.gender_group.updated_at"];
+          gender?: parameters["rowFilter.gender_group.gender"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["gender_group"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** gender_group */
+          gender_group?: definitions["gender_group"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferPost"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.gender_group.id"];
+          created_at?: parameters["rowFilter.gender_group.created_at"];
+          updated_at?: parameters["rowFilter.gender_group.updated_at"];
+          gender?: parameters["rowFilter.gender_group.gender"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.gender_group.id"];
+          created_at?: parameters["rowFilter.gender_group.created_at"];
+          updated_at?: parameters["rowFilter.gender_group.updated_at"];
+          gender?: parameters["rowFilter.gender_group.gender"];
+        };
+        body: {
+          /** gender_group */
+          gender_group?: definitions["gender_group"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/product_category": {
     get: {
       parameters: {
@@ -979,6 +1180,8 @@ export interface paths {
           description?: parameters["rowFilter.product_category.description"];
           /** contains the image to be displayed for the category */
           category_image?: parameters["rowFilter.product_category.category_image"];
+          /** Manages the relationship between the gender group and the product category */
+          gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -1018,7 +1221,7 @@ export interface paths {
         };
         header: {
           /** Preference */
-          Prefer?: parameters["preferReturn"];
+          Prefer?: parameters["preferPost"];
         };
       };
       responses: {
@@ -1035,6 +1238,8 @@ export interface paths {
           description?: parameters["rowFilter.product_category.description"];
           /** contains the image to be displayed for the category */
           category_image?: parameters["rowFilter.product_category.category_image"];
+          /** Manages the relationship between the gender group and the product category */
+          gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
         };
         header: {
           /** Preference */
@@ -1055,6 +1260,8 @@ export interface paths {
           description?: parameters["rowFilter.product_category.description"];
           /** contains the image to be displayed for the category */
           category_image?: parameters["rowFilter.product_category.category_image"];
+          /** Manages the relationship between the gender group and the product category */
+          gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
         };
         body: {
           /** product_category */
@@ -1177,6 +1384,41 @@ export interface definitions {
     /** Format: text */
     status_text?: string;
   };
+  /** @description Manages the sub category for the categories available in the application */
+  product_sub_category: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    updated_at?: string;
+    /** Format: character varying */
+    name?: string;
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `product_category.id`.<fk table='product_category' column='id'/>
+     */
+    category_id: number;
+    /**
+     * Format: bigint
+     * @description Manages the nested relations within the sub category level
+     *
+     * Note:
+     * This is a Foreign Key to `product_sub_category.id`.<fk table='product_sub_category' column='id'/>
+     */
+    parent_id?: number;
+  };
   /** @description Maintains the product information of breeze */
   product: {
     /**
@@ -1192,8 +1434,8 @@ export interface definitions {
     created_at?: string;
     /** Format: numeric */
     code?: number;
-    /** Format: ARRAY */
-    images?: unknown[];
+    /** Format: text[] */
+    images?: string[];
     /**
      * Format: bigint
      * @description Note:
@@ -1329,6 +1571,27 @@ export interface definitions {
      */
     variant_id?: number;
   };
+  /** @description Maintains the gender group available within the application */
+  gender_group: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    updated_at?: string;
+    /** Format: character varying */
+    gender?: string;
+  };
   /** @description Contains the product category for the boutique */
   product_category: {
     /**
@@ -1351,6 +1614,14 @@ export interface definitions {
      * @description contains the image to be displayed for the category
      */
     category_image?: string;
+    /**
+     * Format: bigint
+     * @description Manages the relationship between the gender group and the product category
+     *
+     * Note:
+     * This is a Foreign Key to `gender_group.id`.<fk table='gender_group' column='id'/>
+     */
+    gender_group_id?: number;
   };
 }
 
@@ -1370,6 +1641,16 @@ export interface parameters {
    * @enum {string}
    */
   preferCount: "count=none";
+  /**
+   * @description Preference
+   * @enum {string}
+   */
+  preferPost:
+    | "return=representation"
+    | "return=minimal"
+    | "return=none"
+    | "resolution=ignore-duplicates"
+    | "resolution=merge-duplicates";
   /** @description Filtering Columns */
   select: string;
   /** @description On Conflict */
@@ -1451,6 +1732,23 @@ export interface parameters {
   "rowFilter.order_status.created_at": string;
   /** Format: text */
   "rowFilter.order_status.status_text": string;
+  /** @description product_sub_category */
+  "body.product_sub_category": definitions["product_sub_category"];
+  /** Format: bigint */
+  "rowFilter.product_sub_category.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.product_sub_category.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.product_sub_category.updated_at": string;
+  /** Format: character varying */
+  "rowFilter.product_sub_category.name": string;
+  /** Format: bigint */
+  "rowFilter.product_sub_category.category_id": string;
+  /**
+   * Format: bigint
+   * @description Manages the nested relations within the sub category level
+   */
+  "rowFilter.product_sub_category.parent_id": string;
   /** @description product */
   "body.product": definitions["product"];
   /** Format: bigint */
@@ -1459,7 +1757,7 @@ export interface parameters {
   "rowFilter.product.created_at": string;
   /** Format: numeric */
   "rowFilter.product.code": string;
-  /** Format: ARRAY */
+  /** Format: text[] */
   "rowFilter.product.images": string;
   /** Format: bigint */
   "rowFilter.product.category_id": string;
@@ -1542,6 +1840,16 @@ export interface parameters {
   "rowFilter.product_inventory.stock": string;
   /** Format: bigint */
   "rowFilter.product_inventory.variant_id": string;
+  /** @description gender_group */
+  "body.gender_group": definitions["gender_group"];
+  /** Format: bigint */
+  "rowFilter.gender_group.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.gender_group.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.gender_group.updated_at": string;
+  /** Format: character varying */
+  "rowFilter.gender_group.gender": string;
   /** @description product_category */
   "body.product_category": definitions["product_category"];
   /** Format: bigint */
@@ -1557,6 +1865,11 @@ export interface parameters {
    * @description contains the image to be displayed for the category
    */
   "rowFilter.product_category.category_image": string;
+  /**
+   * Format: bigint
+   * @description Manages the relationship between the gender group and the product category
+   */
+  "rowFilter.product_category.gender_group_id": string;
 }
 
 export interface operations {}
