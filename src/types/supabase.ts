@@ -443,6 +443,8 @@ export interface paths {
           category_id?: parameters["rowFilter.product_sub_category.category_id"];
           /** Manages the nested relations within the sub category level */
           parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+          /** The page link that should be generated for the the product sub category */
+          page_link?: parameters["rowFilter.product_sub_category.page_link"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -500,6 +502,8 @@ export interface paths {
           category_id?: parameters["rowFilter.product_sub_category.category_id"];
           /** Manages the nested relations within the sub category level */
           parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+          /** The page link that should be generated for the the product sub category */
+          page_link?: parameters["rowFilter.product_sub_category.page_link"];
         };
         header: {
           /** Preference */
@@ -521,6 +525,8 @@ export interface paths {
           category_id?: parameters["rowFilter.product_sub_category.category_id"];
           /** Manages the nested relations within the sub category level */
           parent_id?: parameters["rowFilter.product_sub_category.parent_id"];
+          /** The page link that should be generated for the the product sub category */
+          page_link?: parameters["rowFilter.product_sub_category.page_link"];
         };
         body: {
           /** product_sub_category */
@@ -1182,6 +1188,8 @@ export interface paths {
           category_image?: parameters["rowFilter.product_category.category_image"];
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
+          /** The page link for the category items available within the system */
+          category_link?: parameters["rowFilter.product_category.category_link"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -1240,6 +1248,8 @@ export interface paths {
           category_image?: parameters["rowFilter.product_category.category_image"];
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
+          /** The page link for the category items available within the system */
+          category_link?: parameters["rowFilter.product_category.category_link"];
         };
         header: {
           /** Preference */
@@ -1262,6 +1272,8 @@ export interface paths {
           category_image?: parameters["rowFilter.product_category.category_image"];
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
+          /** The page link for the category items available within the system */
+          category_link?: parameters["rowFilter.product_category.category_link"];
         };
         body: {
           /** product_category */
@@ -1418,6 +1430,11 @@ export interface definitions {
      * This is a Foreign Key to `product_sub_category.id`.<fk table='product_sub_category' column='id'/>
      */
     parent_id?: number;
+    /**
+     * Format: text
+     * @description The page link that should be generated for the the product sub category
+     */
+    page_link?: string;
   };
   /** @description Maintains the product information of breeze */
   product: {
@@ -1622,6 +1639,11 @@ export interface definitions {
      * This is a Foreign Key to `gender_group.id`.<fk table='gender_group' column='id'/>
      */
     gender_group_id?: number;
+    /**
+     * Format: text
+     * @description The page link for the category items available within the system
+     */
+    category_link?: string;
   };
 }
 
@@ -1749,6 +1771,11 @@ export interface parameters {
    * @description Manages the nested relations within the sub category level
    */
   "rowFilter.product_sub_category.parent_id": string;
+  /**
+   * Format: text
+   * @description The page link that should be generated for the the product sub category
+   */
+  "rowFilter.product_sub_category.page_link": string;
   /** @description product */
   "body.product": definitions["product"];
   /** Format: bigint */
@@ -1870,6 +1897,11 @@ export interface parameters {
    * @description Manages the relationship between the gender group and the product category
    */
   "rowFilter.product_category.gender_group_id": string;
+  /**
+   * Format: text
+   * @description The page link for the category items available within the system
+   */
+  "rowFilter.product_category.category_link": string;
 }
 
 export interface operations {}

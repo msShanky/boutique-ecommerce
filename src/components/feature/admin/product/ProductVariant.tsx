@@ -56,7 +56,7 @@ const ProductVariant: FunctionComponent<ProductVariantProps> = (props) => {
 			/>
 			{values.variants && values.variants?.length > 0 ? (
 				values.variants.map((variant, index) => {
-					const key = variant.sku;
+					const key = `${variant.sku}_${(index + 4) * 1588}`;
 					return (
 						<VariantLineForm
 							key={key}
