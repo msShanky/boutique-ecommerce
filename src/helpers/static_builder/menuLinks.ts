@@ -12,6 +12,7 @@ export const getCategoryMenuLinks = async () => {
 
 	if (!genderGroup || !productCategory) return null;
 
+	// @ts-ignore
 	const constructedMenu: Array<MenuLinkPropTypes> = genderGroup?.map((genderValue) => {
 		const { id, gender } = genderValue;
 		// TODO: add a link to each of the categories inside the database
