@@ -20,7 +20,7 @@ export const HomeCarousal = (props: HomeCarousalProps) => {
 			<Image
 				key={uniqueKey}
 				width="100%"
-				className="-mt-16 md:mt-0"
+				// className="-mt-16 md:mt-0"
 				classNames={{
 					figure: "w-screen h-screen",
 				}}

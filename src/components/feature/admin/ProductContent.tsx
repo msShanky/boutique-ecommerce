@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import { useGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
 import { ProductList, ProductManager } from "@/components/feature/admin";
@@ -53,17 +53,15 @@ export const ProductContent = () => {
 				.insert(variantsBody);
 			handleProductApiResponse(variantsData, variantsError);
 		} else {
-			console.log(" ===> The product is being edited and already contains variants", variantsBody);
+			// console.log(" ===> The product is being edited and already contains variants", variantsBody);
 			const newVariants = variantsBody.filter((variant) => !variant.id && variant.sku);
 			const variantsForEdit = variantsBody.filter((variant) => variant.id);
-			console.log("The new variants to be created are:", newVariants);
-			console.log("The variants to be edited are:", variantsForEdit);
+			// console.log("The new variants to be created are:", newVariants);
+			// console.log("The variants to be edited are:", variantsForEdit);
 			const { data: variantsEditData, error: variantsEditError } = await supabaseClient
 				.from("product_variant")
 				.upsert(variantsForEdit);
-			const { data: variantsCreateData, error: variantsCreateError } = await supabaseClient
-				.from("product_variant")
-				.insert(newVariants);
+			await supabaseClient.from("product_variant").insert(newVariants);
 
 			handleProductApiResponse(variantsEditData, variantsEditError);
 		}

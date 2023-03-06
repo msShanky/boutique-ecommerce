@@ -1,43 +1,31 @@
 import Link from "next/link";
 import React, { FunctionComponent, useEffect, useState } from "react";
 
-import { Text, Burger, Container, Group, Header, Image, Avatar } from "@mantine/core";
+import { Text, Burger, Container, Group, Header, Image, Menu, Button } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppSelector } from "app/hooks";
-import { LinkIcon } from "./header";
+import { HoverMenuItem, LinkIcon } from "./header";
 import { useUser } from "@supabase/auth-helpers-react";
-import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 import { UserAvatar } from "./user";
+
+// import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 
 const HEADER_HEIGHT = 100;
 
 type AppHeaderProps = {
 	isAdmin?: boolean;
-	menuLinks?: Array<any>;
+	menuLinks?: Array<MenuLinkPropTypes>;
 	isLanding?: boolean;
 };
-
-const staticMenuLinks = [
-	{
-		label: "Men",
-		link: "/shop/men",
-	},
-	{
-		label: "Women",
-		link: "/shop/women",
-	},
-	{
-		label: "Kids",
-		link: "/shop/kids",
-	},
-];
 
 const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	const [opened, { toggle }] = useDisclosure(false);
 	const [scrollY, setScrollY] = useState(0);
 	const { user, isLoading: userLoading } = useUser();
 	const { products } = useAppSelector((state) => state.cart);
+
+	const { isLanding, menuLinks } = props;
 
 	const isMobile = useMediaQuery("(max-width: 600px)");
 
@@ -50,18 +38,10 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	};
 
 	const menuItems =
-		staticMenuLinks &&
-		staticMenuLinks.map((item, index) => {
+		menuLinks &&
+		menuLinks.map((item, index) => {
 			const uniqueKey = `${(index + 48) * 146}_menu_item`;
-			return (
-				<Link key={uniqueKey} href={item.link} passHref>
-					<span
-						className={`md:flex flex-col justify-between hidden hover:text-primary text-white hover:cursor-pointer`}
-					>
-						{item.label}
-					</span>
-				</Link>
-			);
+			return <HoverMenuItem key={uniqueKey} categoryItem={item} />;
 		});
 
 	const handleScroll = () => {
@@ -77,13 +57,12 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 		};
 	}, []);
 
-	const headerBgStyle =
-		scrollY > 650 ? `bg-primaryBlack/90` : props.isLanding ? `bg-primaryBlack/10` : `bg-primaryBlack/60`;
+	// const headerBgStyle = scrollY > 650 ? `bg-primaryBlack/90` : isLanding ? `bg-primaryBlack/10` : `bg-primaryBlack/60`;
 
 	return (
 		<Header
 			height={HEADER_HEIGHT}
-			className={`fixed transition-colors z-10 w-full mx-auto border-none ${headerBgStyle}`}
+			className={`fixed transition-colors z-10 w-full mx-auto border-none bg-primaryBlack/80`}
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
 				<Link href="/" passHref>

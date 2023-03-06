@@ -2,21 +2,7 @@
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ["legumfivysflstxpzgou.supabase.co"],
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "images.unsplash.com",
-				// port: "",
-				// pathname: "/account123/**",
-			},
-			{
-				protocol: "https",
-				hostname: "picsum.photos",
-				// port: "",
-				// pathname: "/account123/**",
-			},
-		],
+		domains: ["legumfivysflstxpzgou.supabase.co"]
 	},
 };
 

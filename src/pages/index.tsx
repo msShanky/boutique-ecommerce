@@ -1,22 +1,22 @@
 import type { NextPage, NextPageContext } from "next";
-import { Loader, Image } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import Head from "next/head";
 import { AppLayout } from "@/components/layout";
 import { HomeCarousal, CarousalCardSlider, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
 import { useAuthValidator } from "../helpers";
-import { getHomePageData } from "../lib";
+import { getHomePageData } from "../helpers/static_builder";
+import { getCategoryMenuLinks } from "@/helpers/static_builder/menuLinks";
 
 type HomePageProps = {
-	menuLinks: Array<{ label: string; link: string }>;
+	menuLinks: Array<MenuLinkPropTypes>;
 	featured: Array<ProductWithRelations>;
 	categories: Array<ProductCategory>;
 	bannerContent: Array<HomeCarousal>;
+	apiMenuLinks: any;
 };
 
 const Home: NextPage<HomePageProps> = (props) => {
 	const { isLoading, isWaitingForSignIn } = useAuthValidator();
-
-	console.log("The props received are ", props);
 
 	return (
 		<AppLayout isLanding menuLinks={props.menuLinks}>
@@ -33,9 +33,9 @@ const Home: NextPage<HomePageProps> = (props) => {
 				{/* Home Landing Section */}
 				{!isLoading && !isWaitingForSignIn && (
 					<>
-						{props.bannerContent && <HomeCarousal carousalContent={props.bannerContent} />}
+						{props.bannerContent.length > 0 && <HomeCarousal carousalContent={props.bannerContent} />}
 						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
-						{props.featured && <CarousalCardSlider items={props.featured} />}
+						{props.featured.length > 0 && <CarousalCardSlider items={props.featured} />}
 						{/* TODO: [1] The category should be fetched from the database and populated accordingly */}
 						{/* TODO: Categories */}
 						{props.categories && <CategorySection items={props.categories} />}
@@ -57,23 +57,11 @@ const Home: NextPage<HomePageProps> = (props) => {
 export default Home;
 
 // TODO: [2] Menu links should be available inside the AppLayout so that all pages can access them
-export async function getStaticProps(context: NextPageContext) {
+export async function getStaticProps() {
+	const menuLinkResponse = await getCategoryMenuLinks();
 	return {
 		props: {
-			menuLinks: [
-				{
-					label: "Men",
-					link: "/shop/men",
-				},
-				{
-					label: "Women",
-					link: "/shop/women",
-				},
-				{
-					label: "Kids",
-					link: "/shop/kids",
-				},
-			],
+			menuLinks: menuLinkResponse,
 			...(await getHomePageData()),
 		}, // will be passed to the page component as props
 	};
