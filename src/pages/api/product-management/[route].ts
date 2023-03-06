@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-// import { PostgrestResponse } from "@supabase/supabase-js";
-// import { definitions } from "../../../../types/supabase";
 import { definitions } from "@/types/supabase";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 
@@ -18,11 +16,20 @@ const getCategoriesForGenderId = async (genderId: number) => {
 };
 
 const getSubCategoriesForCategoryId = async (categoryId: number) => {
-	const genderGroupResponse = await supabaseClient
+	const productSubCategoryResponse = await supabaseClient
+		.from<definitions["product_sub_category"]>("product_sub_category")
+		.select(`*`)
+		.eq("category_id", categoryId)
+		.is("parent_id", null);
+	return productSubCategoryResponse.data;
+};
+
+const getNodeCategoriesForCategoryId = async (categoryId: number) => {
+	const nodeSubCategoryResponse = await supabaseClient
 		.from<definitions["product_sub_category"]>("product_sub_category")
 		.select(`*`)
 		.eq("parent_id", categoryId);
-	return genderGroupResponse.data;
+	return nodeSubCategoryResponse.data;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -31,15 +38,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 		switch (route) {
 			case "gender-group":
-				return res.status(200).json({ gender: await getGenderGroup() });
+				const genderGroupResponse = await getGenderGroup();
+				return res.status(200).json(genderGroupResponse);
 
 			case "categories":
-				return res.status(200).json({
-					categories: await getCategoriesForGenderId(1),
-				});
+				if (!req.query.gender) {
+					return res.status(404).json({
+						message: "No gender provided",
+					});
+				}
+
+				const categories = await getCategoriesForGenderId(parseInt(req.query.gender as string, 10));
+				return res.status(200).json(categories);
 
 			case "sub-categories":
-				return res.status(200).json({ message: await getSubCategoriesForCategoryId(1) });
+				if (!req.query.category) {
+					return res.status(404).json({
+						message: "No sub categories provided",
+					});
+				}
+
+				const subCategory = await getSubCategoriesForCategoryId(parseInt(req.query.category as string, 10));
+				return res.status(200).json(subCategory);
+
+			case "node-categories":
+				if (!req.query.category) {
+					return res.status(404).json({
+						message: "No sub categories provided",
+					});
+				}
+
+				const nodeCategory = await getNodeCategoriesForCategoryId(parseInt(req.query.category as string, 10));
+				return res.status(200).json(nodeCategory);
 
 			default:
 				break;

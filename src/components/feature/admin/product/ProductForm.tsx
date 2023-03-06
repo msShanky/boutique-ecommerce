@@ -19,7 +19,6 @@ type ProductFormProps = {
 const initialFormState: ProductPostBody = {
 	code: undefined,
 	images: [],
-	category_id: undefined,
 	description: "",
 	title: "",
 	sub_title: "",
@@ -27,6 +26,9 @@ const initialFormState: ProductPostBody = {
 	msrp: undefined,
 	product_discount: undefined,
 	variants: [],
+	category_id: undefined,
+	gender_group_id: undefined,
+	sub_category_id: undefined,
 };
 
 const getFormInitialState = (product: ProductWithRelations | undefined) => {
@@ -87,18 +89,23 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setProductImages((product?.images as string[]) ?? []);
-	// }, [product]);
-
 	return (
 		<form className="grid grid-cols-2 gap-5" onSubmit={onSubmit((values) => handleSubmit(values))}>
 			<section className="flex flex-col">
 				<ImageUploader isDisabled={!values.code} handleImageSuccess={handleImageSuccess} code={values.code as number} />
 				<ImageViewer productImages={values.images as string[]} handleImageDelete={handleImageDelete} />
 			</section>
-			{/* Product Information Section */}
 			<section className="flex flex-col space-y-4">
+				<ProductDetailsForm
+					productForm={productForm}
+					isAdd={isAdd}
+					categories={categories}
+					variants={product?.variants as Array<ProductVariantPost>}
+					handleVariantDelete={handleVariantDelete}
+				/>
+			</section>
+			{/* Product Information Section */}
+			{/* <section className="flex flex-col space-y-4">
 				<SegmentedControl
 					className="w-6/12"
 					value={productFormState}
@@ -113,7 +120,13 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 					]}
 				/>
 				{productFormState === "product-info" && (
-					<ProductDetailsForm productForm={productForm} isAdd={isAdd} categories={categories} />
+					<ProductDetailsForm
+						productForm={productForm}
+						isAdd={isAdd}
+						categories={categories}
+						variants={product?.variants as Array<ProductVariantPost>}
+						handleVariantDelete={handleVariantDelete}
+					/>
 				)}
 				{productFormState === "product-variant" && (
 					<ProductVariant
@@ -123,7 +136,7 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 						handleVariantDelete={handleVariantDelete}
 					/>
 				)}
-			</section>
+			</section> */}
 			<div className="flex justify-end col-start-2 mt-12 space-x-4">
 				<Button leftIcon={<IconX />} onClick={handleFormCancel} variant="filled" className="bg-error" type="reset">
 					Cancel

@@ -561,6 +561,10 @@ export interface paths {
           product_discount?: parameters["rowFilter.product.product_discount"];
           /** Denotes whether */
           is_featured?: parameters["rowFilter.product.is_featured"];
+          /** The product relation with product and the respective sub category id */
+          sub_category_id?: parameters["rowFilter.product.sub_category_id"];
+          /** The gender id relation with the product */
+          gender_group_id?: parameters["rowFilter.product.gender_group_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -625,6 +629,10 @@ export interface paths {
           product_discount?: parameters["rowFilter.product.product_discount"];
           /** Denotes whether */
           is_featured?: parameters["rowFilter.product.is_featured"];
+          /** The product relation with product and the respective sub category id */
+          sub_category_id?: parameters["rowFilter.product.sub_category_id"];
+          /** The gender id relation with the product */
+          gender_group_id?: parameters["rowFilter.product.gender_group_id"];
         };
         header: {
           /** Preference */
@@ -653,6 +661,10 @@ export interface paths {
           product_discount?: parameters["rowFilter.product.product_discount"];
           /** Denotes whether */
           is_featured?: parameters["rowFilter.product.is_featured"];
+          /** The product relation with product and the respective sub category id */
+          sub_category_id?: parameters["rowFilter.product.sub_category_id"];
+          /** The gender id relation with the product */
+          gender_group_id?: parameters["rowFilter.product.gender_group_id"];
         };
         body: {
           /** product */
@@ -1189,7 +1201,7 @@ export interface paths {
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
-          category_link?: parameters["rowFilter.product_category.category_link"];
+          page_link?: parameters["rowFilter.product_category.page_link"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -1249,7 +1261,7 @@ export interface paths {
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
-          category_link?: parameters["rowFilter.product_category.category_link"];
+          page_link?: parameters["rowFilter.product_category.page_link"];
         };
         header: {
           /** Preference */
@@ -1273,7 +1285,7 @@ export interface paths {
           /** Manages the relationship between the gender group and the product category */
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
-          category_link?: parameters["rowFilter.product_category.category_link"];
+          page_link?: parameters["rowFilter.product_category.page_link"];
         };
         body: {
           /** product_category */
@@ -1480,6 +1492,22 @@ export interface definitions {
      * @default false
      */
     is_featured?: boolean;
+    /**
+     * Format: bigint
+     * @description The product relation with product and the respective sub category id
+     *
+     * Note:
+     * This is a Foreign Key to `product_sub_category.id`.<fk table='product_sub_category' column='id'/>
+     */
+    sub_category_id?: number;
+    /**
+     * Format: bigint
+     * @description The gender id relation with the product
+     *
+     * Note:
+     * This is a Foreign Key to `gender_group.id`.<fk table='gender_group' column='id'/>
+     */
+    gender_group_id?: number;
   };
   profiles: {
     /**
@@ -1643,7 +1671,7 @@ export interface definitions {
      * Format: text
      * @description The page link for the category items available within the system
      */
-    category_link?: string;
+    page_link?: string;
   };
 }
 
@@ -1808,6 +1836,16 @@ export interface parameters {
    * @description Denotes whether
    */
   "rowFilter.product.is_featured": string;
+  /**
+   * Format: bigint
+   * @description The product relation with product and the respective sub category id
+   */
+  "rowFilter.product.sub_category_id": string;
+  /**
+   * Format: bigint
+   * @description The gender id relation with the product
+   */
+  "rowFilter.product.gender_group_id": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */
@@ -1901,7 +1939,7 @@ export interface parameters {
    * Format: text
    * @description The page link for the category items available within the system
    */
-  "rowFilter.product_category.category_link": string;
+  "rowFilter.product_category.page_link": string;
 }
 
 export interface operations {}
