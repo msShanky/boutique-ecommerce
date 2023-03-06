@@ -9,9 +9,6 @@ type UserAvatarProps = {
 
 const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => {
 	const { user, handleToggle } = props;
-
-	console.log("user ==> ", user);
-	console.log("user image ==> ", user.user_metadata.avatar_url);
 	const [firstName, lastName] = user.user_metadata.full_name.split(" ");
 	const userInitials = `${firstName[0].toUpperCase()} ${lastName[0].toUpperCase()}`;
 	const userImage = user?.user_metadata.avatar_url ?? undefined;

@@ -20,7 +20,8 @@
 			"@/helpers/*": ["helpers/*"],
 			"@/lib/*": ["lib/*"],
 			"@/reducer/*": ["reducer/*"],
-			"@/copy/*": ["copy/*"]
+			"@/copy/*": ["copy/*"],
+			"@/types/*": ["types/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
