@@ -7,7 +7,6 @@ import { persistor, store } from "../app/store";
 import { Provider } from "react-redux";
 import { UserProvider } from "@supabase/auth-helpers-react";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useEffect, useState } from "react";
 
 const breezeTheme: Partial<MantineTheme> = {
 	fontFamily: "Poppins, sans-serif",

@@ -46,7 +46,7 @@ const OrdersPage = () => {
 	};
 
 	return (
-		<AppLayout menuLinks={[]}>
+		<AppLayout pageTitle="User | Orders" menuLinks={[]}>
 			<section className="container flex flex-wrap flex-col gap-10 mx-auto my-20 2xl:min-h-[550px]">
 				<h1>User Orders</h1>
 				<>

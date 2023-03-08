@@ -83,11 +83,8 @@ const Checkout: NextPage = () => {
 	};
 
 	return (
-		<AppLayout>
+		<AppLayout pageTitle="Breeze Boutique | Checkout">
 			<>
-				<Head>
-					<title>Breeze Boutique | Checkout</title>
-				</Head>
 				<AppSection>
 					<>
 						{products.length === 0 && !isSuccess && (
@@ -113,7 +110,7 @@ const Checkout: NextPage = () => {
 									Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You
 									will receive an email confirmation when your order is completed.
 								</Text>
-								<Link href="/products" passHref>
+								<Link href="/" passHref>
 									<Button className="text-white border-none bg-pink hover:bg-violet">Continue Shopping</Button>
 								</Link>
 							</div>

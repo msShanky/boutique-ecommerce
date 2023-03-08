@@ -55,3 +55,11 @@ export const manageProductVariants = async (product: ProductWithRelations, conta
 		console.log(" ===> The product edit response for variants", variantsData);
 	}
 };
+
+export const getCategoryThumbnail = (category: string) => {
+	if (!category.includes(" ")) return category[0];
+
+	if (category.includes("/")) return `${category?.split(" / ")[0][0]} ${category?.split(" / ")[1][0].toUpperCase()}`;
+
+	return `${category?.split(" ")[0][0]} ${category?.split(" ")[1][0].toUpperCase()}`;
+};

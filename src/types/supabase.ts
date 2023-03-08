@@ -565,6 +565,10 @@ export interface paths {
           sub_category_id?: parameters["rowFilter.product.sub_category_id"];
           /** The gender id relation with the product */
           gender_group_id?: parameters["rowFilter.product.gender_group_id"];
+          /** The tags that would be displayed for users and used for fileting products */
+          product_tags?: parameters["rowFilter.product.product_tags"];
+          /** The page slug used to generate the list of product pages */
+          page_link?: parameters["rowFilter.product.page_link"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -633,6 +637,10 @@ export interface paths {
           sub_category_id?: parameters["rowFilter.product.sub_category_id"];
           /** The gender id relation with the product */
           gender_group_id?: parameters["rowFilter.product.gender_group_id"];
+          /** The tags that would be displayed for users and used for fileting products */
+          product_tags?: parameters["rowFilter.product.product_tags"];
+          /** The page slug used to generate the list of product pages */
+          page_link?: parameters["rowFilter.product.page_link"];
         };
         header: {
           /** Preference */
@@ -665,6 +673,10 @@ export interface paths {
           sub_category_id?: parameters["rowFilter.product.sub_category_id"];
           /** The gender id relation with the product */
           gender_group_id?: parameters["rowFilter.product.gender_group_id"];
+          /** The tags that would be displayed for users and used for fileting products */
+          product_tags?: parameters["rowFilter.product.product_tags"];
+          /** The page slug used to generate the list of product pages */
+          page_link?: parameters["rowFilter.product.page_link"];
         };
         body: {
           /** product */
@@ -1508,6 +1520,16 @@ export interface definitions {
      * This is a Foreign Key to `gender_group.id`.<fk table='gender_group' column='id'/>
      */
     gender_group_id?: number;
+    /**
+     * Format: text[]
+     * @description The tags that would be displayed for users and used for fileting products
+     */
+    product_tags?: string[];
+    /**
+     * Format: text
+     * @description The page slug used to generate the list of product pages
+     */
+    page_link?: string;
   };
   profiles: {
     /**
@@ -1846,6 +1868,16 @@ export interface parameters {
    * @description The gender id relation with the product
    */
   "rowFilter.product.gender_group_id": string;
+  /**
+   * Format: text[]
+   * @description The tags that would be displayed for users and used for fileting products
+   */
+  "rowFilter.product.product_tags": string;
+  /**
+   * Format: text
+   * @description The page slug used to generate the list of product pages
+   */
+  "rowFilter.product.page_link": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */

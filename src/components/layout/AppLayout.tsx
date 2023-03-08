@@ -1,4 +1,5 @@
 import React, { FunctionComponent, ReactElement } from "react";
+import Head from "next/head";
 import AppHeader from "../common/AppHeader";
 import AppFooter from "../common/AppFooter";
 
@@ -7,13 +8,18 @@ type AppLayoutProps = {
 	isContained?: boolean;
 	menuLinks?: Array<any>;
 	isLanding?: boolean;
+	pageTitle: string;
 };
 
-const AppLayout: FunctionComponent<AppLayoutProps> = ({ children, menuLinks, isLanding }) => {
+const AppLayout: FunctionComponent<AppLayoutProps> = (props) => {
+	const { children, menuLinks, isLanding, pageTitle } = props;
 	return (
 		<>
 			<AppHeader menuLinks={menuLinks} isLanding={isLanding} />
-			<main className={isLanding ? "mb-32": "my-32"}>{children}</main>
+			<Head>
+				<title>{pageTitle}</title>
+			</Head>
+			<main className={isLanding ? "mb-32" : "my-32"}>{children}</main>
 			<AppFooter />
 		</>
 	);
