@@ -24,6 +24,8 @@ type SupaBaseResponse<T> = {
 type ProductVariants = {
 	variants?: Array<import("../types/supabase").definitions["product_variant"]>;
 	category?: import("../types/supabase").definitions["product_category"];
+	gender_group?: import("../types/supabase").definitions["gender_group"];
+	sub_category?: import("../types/supabase").definitions["product_sub_category"];
 };
 
 type ProductCategory = import("../types/supabase").definitions["product_category"];
@@ -133,4 +135,34 @@ type MenuLinkPropTypes = {
 	menuLink: string;
 	menuLabel: string;
 	categories: Array<CategoryMenuWithRelations>;
+};
+
+type GenderGroupPage = {
+	gender: import("../types/supabase").definitions["gender_group"];
+	categories: Array<CategoryMenuWithRelations>;
+	products: Array<ProductMenuWithRelations>;
+};
+
+type CategoryPageProps = {
+	category: CategoryMenuWithRelations;
+	subCategories: Array<SubCategoryWithRelations>;
+	products: Array<ProductMenuWithRelations>;
+};
+
+type ProductCategoriesWithGender = import("../types/supabase").definitions["product_category"] & {
+	gender_group: import("../types/supabase").definitions["gender_group"];
+};
+
+type ProductPageSlugs = {
+	id: number;
+	page_link: string;
+	gender_group: {
+		id: number;
+		gender: string;
+	};
+	category: {
+		id: number;
+		category: string;
+		page_link: string;
+	};
 };

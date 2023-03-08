@@ -18,12 +18,11 @@ type HomePageProps = {
 const Home: NextPage<HomePageProps> = (props) => {
 	const { isLoading, isWaitingForSignIn } = useAuthValidator();
 
+	console.log("The props received from all the server INDEX *** ", props);
+
 	return (
-		<AppLayout isLanding menuLinks={props.menuLinks}>
+		<AppLayout pageTitle="Breeze Boutique | Home" isLanding menuLinks={props.menuLinks}>
 			<>
-				<Head>
-					<title>Breeze Boutique | Home</title>
-				</Head>
 				{/* TODO: [3] Replace this loader with something decent with animations */}
 				{isLoading && isWaitingForSignIn && (
 					<section className="container mx-auto my-20 h-80">

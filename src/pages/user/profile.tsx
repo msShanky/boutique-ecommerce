@@ -24,7 +24,7 @@ const ProfilePage = () => {
 	const userInitials = userName && `${userName[0][0].toUpperCase()} ${userName[0][0].toUpperCase()}`;
 
 	return (
-		<AppLayout>
+		<AppLayout pageTitle="User | Profile">
 			<section className="container flex flex-col mx-auto my-20">
 				<div className="flex flex-col items-center self-center w-6/12 p-4 shadow-lg bg-violet-light h-96 rounded-xl">
 					{userProfile?.avatar_url ? (

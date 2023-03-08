@@ -35,7 +35,7 @@ export const getHomePageData = async () => {
 		.select(
 			`id,code,images,category_id,msrp,title,sub_title,product_discount,
 category:category_id (id,category),
-variants: product_variant(id,sku,size,inventory_count)`
+variants:product_variant(id,sku,size,inventory_count)`
 		)
 		// @ts-ignore
 		.order("size", { foreignTable: "product_variant", ascending: false });
@@ -46,7 +46,6 @@ variants: product_variant(id,sku,size,inventory_count)`
 		.limit(5);
 
 	const { data: categoryData, ...categoryResponse } = allProductCategories;
-
 	const { data, ...response } = getFeaturedProducts;
 
 	// @ts-ignore

@@ -10,16 +10,13 @@ const Login = () => {
 
 	const handleGoogleLogin = async (event: MouseEvent) => {
 		// Every referrer URL needs to be configured in SUPABASE dashboard in Auth -> Setting -> Redirect URLs
-		let redirectTo = window.location.origin
+		let redirectTo = window.location.origin;
 		if (query.referrer) {
-			redirectTo += `/${query.referrer}`
+			redirectTo += `/${query.referrer}`;
 		}
-		
+
 		try {
-			const { error } = await supabaseClient.auth.signIn(
-				{ provider: "google" },
-				{ redirectTo }
-			);
+			const { error } = await supabaseClient.auth.signIn({ provider: "google" }, { redirectTo });
 			if (error) throw error;
 		} catch (error) {
 			console.log("there is an error with google signIn", error);
@@ -27,22 +24,19 @@ const Login = () => {
 	};
 
 	// TODO: [4] Handle email login
-	const handleEmailLogin = () => { };
+	const handleEmailLogin = () => {};
 	// TODO: [4] Handle email sign up
-	const handleEmailSignUp = () => { };
+	const handleEmailSignUp = () => {};
 
-	const handleEmailEvent = () => { };
+	const handleEmailEvent = () => {};
 
 	// TODO: [5] Handle user authentication errors
 	// TODO: [5] Add Facebook login
 	// TODO: [5] Test the email sign up and login
 
 	return (
-		<AppLayout menuLinks={[]}>
+		<AppLayout pageTitle="Breeze Boutique | Login" menuLinks={[]}>
 			<>
-				<Head>
-					<title>Breeze Boutique | Login</title>
-				</Head>
 				<main className="container mx-auto mt-40">
 					{/* TODO: [5] Display an overlay loader */}
 					<AuthForm handleGoogleLogin={handleGoogleLogin} />

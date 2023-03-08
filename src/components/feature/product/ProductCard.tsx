@@ -10,7 +10,7 @@ type ProductCardProps = {
 	handleProductRedirection: () => void;
 	handleWishList: () => void;
 	isActive?: boolean;
-	isWishlisted?: boolean
+	isWishlisted?: boolean;
 };
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
@@ -55,7 +55,9 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 										<Text key={variantKey} className="font-sans text-sm text-violet-subtext">
 											{variant.size}
 										</Text>
-									): ''
+									) : (
+										""
+									);
 								})}
 						</div>
 					</>
