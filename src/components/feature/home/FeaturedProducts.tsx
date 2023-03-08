@@ -23,8 +23,14 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 	const { wishlist, handleWishlist } = useWishlist(user?.id);
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
-		const productRoute = product.code;
-		router.push(`${router.asPath}/${productRoute}`);
+		const { gender_group, category, page_link } = product;
+
+		if (!page_link) return;
+
+		const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${
+			category?.page_link?.split("/")[1]
+		}/${page_link}`;
+		router.push(productSlug);
 	};
 
 	const itemCards =
