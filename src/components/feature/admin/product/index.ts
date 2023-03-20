@@ -10,3 +10,4 @@ export { default as ProductManager } from "./ProductManager";
 export { default as ProductDetailsForm } from "./ProductDetailsForm";
 export { default as ProductVariant } from "./ProductVariant";
 export { default as VariantLineForm } from "./VariantLineForm";
+export * from "./ProductDescriptionEditor";

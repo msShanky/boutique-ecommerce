@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Button, NumberInput, SegmentedControl, Select, Textarea, TextInput } from "@mantine/core";
+import React, { FunctionComponent, useState } from "react";
+import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { definitions } from "types/supabase";
 import { IconX } from "@tabler/icons";
-import { ImageUploader, ImageViewer, ProductDetailsForm, ProductVariant } from "@/components/feature/admin";
+import { ImageUploader, ImageViewer, ProductDetailsForm } from "@/components/feature/admin";
 
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { formatProductFormForUpdate } from "helpers/supabase-helper";
@@ -104,44 +104,11 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 					handleVariantDelete={handleVariantDelete}
 				/>
 			</section>
-			{/* Product Information Section */}
-			{/* <section className="flex flex-col space-y-4">
-				<SegmentedControl
-					className="w-6/12"
-					value={productFormState}
-					onChange={(value) => setProductFormState(value as AdminProductFormView)}
-					classNames={{
-						labelActive: "bg-violet text-white hover:text-white",
-						root: "bg-violet-light",
-					}}
-					data={[
-						{ label: "Product Info", value: "product-info" },
-						{ label: "Variants", value: "product-variant" },
-					]}
-				/>
-				{productFormState === "product-info" && (
-					<ProductDetailsForm
-						productForm={productForm}
-						isAdd={isAdd}
-						categories={categories}
-						variants={product?.variants as Array<ProductVariantPost>}
-						handleVariantDelete={handleVariantDelete}
-					/>
-				)}
-				{productFormState === "product-variant" && (
-					<ProductVariant
-						productForm={productForm}
-						variants={product?.variants as Array<ProductVariantPost>}
-						product={values}
-						handleVariantDelete={handleVariantDelete}
-					/>
-				)}
-			</section> */}
 			<div className="flex justify-end col-start-2 mt-12 space-x-4">
 				<Button leftIcon={<IconX />} onClick={handleFormCancel} variant="filled" className="bg-error" type="reset">
 					Cancel
 				</Button>
-				<Button variant="outline" type="submit">
+				<Button className="text-primaryBlack border-primaryBlack" variant="outline" type="submit">
 					{isAdd ? "Add" : "Edit"} Product
 				</Button>
 			</div>
