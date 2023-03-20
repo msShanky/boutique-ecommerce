@@ -2,7 +2,10 @@ import Razorpay from "razorpay";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuth } from "@supabase/auth-helpers-nextjs";
 import { nanoid } from "nanoid";
-const instance = new Razorpay({ key_id: "rzp_test_xieC6kdiO45yJN", key_secret: "eAfWqg0glMuqEGJIHcErjnKL" });
+const instance = new Razorpay({
+	key_id: process.env.NEXT_RAZOR_ID ?? "rzp_test_xieC6kdiO45yJN",
+	key_secret: process.env.NEXT_RAZOR_VALUE ?? "eAfWqg0glMuqEGJIHcErjnKL",
+});
 
 interface ExtendedApiRequest extends NextApiRequest {
 	body: CheckoutPostBody;

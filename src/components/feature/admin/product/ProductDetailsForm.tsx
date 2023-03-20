@@ -26,6 +26,8 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 	const { productForm, isAdd, variants, handleVariantDelete } = props;
 	const { values, getInputProps, setFieldValue } = productForm;
 
+	// console.log("The product form values ====> ", values);
+
 	const { data: genderGroupData, isSuccess } = useGetGenderGroupQuery();
 	const [getCategoriesByGenderId, { data: categoriesData, isSuccess: categoriesSuccess }] =
 		useLazyGetCategoriesByGenderIdQuery();
@@ -55,6 +57,20 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 		setFieldValue("code", parseInt(nanoid(), 10));
 	};
 
+	const constructPageLink = (): string => {
+		const isDataAvailable = !values.title || !values.sub_title || !values.code;
+		if (isDataAvailable) return `No parameters to create product link`;
+		const parsedTitle = values.title?.trim()?.toLowerCase().replaceAll(" ", "-");
+		const parsedSubTitle = values.sub_title?.trim().toLowerCase().replaceAll(" ", "-");
+		const pageLink = `${parsedTitle}-${parsedSubTitle}-${values.code}`;
+
+		return pageLink;
+	};
+
+	useEffect(() => {
+		setFieldValue("page_link", constructPageLink());
+	}, [values]);
+
 	return (
 		<>
 			<TextInput
@@ -71,7 +87,7 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 						<Button
 							disabled={!!values.code}
 							onClick={handleCodeGeneration}
-							className="bg-violet hover:bg-pink hover:bg-opacity-80 h-9"
+							className="bg-primary hover:bg-primaryAlt hover:text-primary text-primaryBlack hover:bg-opacity-80 h-9"
 						>
 							Generate Code
 						</Button>
@@ -86,6 +102,8 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 				required
 				{...getInputProps("sub_title")}
 			/>
+			<TextInput placeholder="Product link" label="Product Link" readOnly {...getInputProps("page_link")} />
+			{/* <TextInput placeholder="Product link" label="Product Link" readOnly value={constructPageLink()} /> */}
 			<Textarea placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
 			<div className="flex items-center justify-between gap-4">
 				{isSuccess && genderGroupData && (

@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"type-check": "tsc",
-		"generate-types": "npx openapi-typescript https://legumfivysflstxpzgou.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ3VtZml2eXNmbHN0eHB6Z291Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc4MTU2NDcsImV4cCI6MTk3MzM5MTY0N30.jMDdz3KZxLwtBsHrpT1OBbODFi8V2qIuCYODGbZ2n1Q --output src/types/supabase.ts"
+		"generate-types": "npx openapi-typescript@5.4.0 https://legumfivysflstxpzgou.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZ3VtZml2eXNmbHN0eHB6Z291Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc4MTU2NDcsImV4cCI6MTk3MzM5MTY0N30.jMDdz3KZxLwtBsHrpT1OBbODFi8V2qIuCYODGbZ2n1Q --output src/types/supabase.ts"
 	},
 	"resolutions": {
 		"@supabase/gotrue-js": "1.22.21"
@@ -26,12 +26,21 @@
 		"@mantine/next": "^5.3.3",
 		"@mantine/notifications": "^5.3.3",
 		"@mantine/spotlight": "^5.3.3",
+		"@mantine/tiptap": "^6.0.2",
 		"@reduxjs/toolkit": "^1.8.3",
 		"@supabase/auth-helpers-nextjs": "^0.2.8",
 		"@supabase/auth-helpers-react": "^0.2.4",
 		"@supabase/gotrue-js": "1.22.22",
 		"@supabase/supabase-js": "^1.35.5",
 		"@tabler/icons": "^1.101.0",
+		"@tabler/icons-react": "^2.11.0",
+		"@tiptap/extension-link": "^2.0.0-beta.220",
+		"@tiptap/extension-placeholder": "^2.0.0-beta.220",
+		"@tiptap/extension-text-align": "^2.0.0-beta.220",
+		"@tiptap/extension-underline": "^2.0.0-beta.220",
+		"@tiptap/pm": "^2.0.0-beta.220",
+		"@tiptap/react": "^2.0.0-beta.220",
+		"@tiptap/starter-kit": "^2.0.0-beta.220",
 		"dayjs": "^1.11.5",
 		"embla-carousel-autoplay": "^7.0.5",
 		"embla-carousel-react": "^7.0.5",

@@ -8,7 +8,10 @@ interface ExtendedApiRequest extends NextApiRequest {
 	body: CheckoutPostBody;
 }
 
-const instance = new Razorpay({ key_id: "rzp_test_xieC6kdiO45yJN", key_secret: "eAfWqg0glMuqEGJIHcErjnKL" });
+const instance = new Razorpay({
+	key_id: process.env.NEXT_RAZOR_ID ?? "rzp_test_xieC6kdiO45yJN",
+	key_secret: process.env.NEXT_RAZOR_VALUE ?? "eAfWqg0glMuqEGJIHcErjnKL",
+});
 
 const getCartTotalPrice = (products: Array<CartProduct>) => {
 	let totalValue = 0;

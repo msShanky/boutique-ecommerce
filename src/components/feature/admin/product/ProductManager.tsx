@@ -17,7 +17,7 @@ const ProductManager: FunctionComponent<ProductManagerProps> = (props) => {
 	const { handleCancel, handleProductUpdate } = props;
 	const validateText = "Please validate the product details and information related to products";
 	const successText = `Product has been ${crudState === "create" ? "added" : "updated"}!`;
-	
+
 	if (productApiState === "success")
 		return <ProductSuccess onCancel={handleCancel} successText={successText} validateText={validateText} />;
 
