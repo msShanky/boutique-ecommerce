@@ -59,7 +59,8 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 				) : (
 					<section className="justify-between w-full mt-10 mb-20">
 						<Title className="flex justify-center font-sans text-5xl text-black capitalize">{gender.gender}</Title>
-						<section className="container flex flex-wrap justify-center w-full gap-10 mx-auto mt-10 mb-20 min-w-max">
+						{/* <section className="container flex flex-wrap justify-center w-full gap-10 mx-auto mt-10 mb-20 min-w-max"> */}
+						<section className="container flex flex-wrap justify-center w-full gap-10 my-10">
 							{products.map((product) => {
 								const isWishlisted = wishlist.includes(product.id);
 								return (
@@ -73,7 +74,7 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 								);
 							})}
 						</section>
-						<Pagination
+						{/* <Pagination
 							page={currentPage}
 							onChange={setCurrentPage}
 							total={maxPages}
@@ -87,7 +88,7 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 									},
 								},
 							})}
-						/>
+						/> */}
 					</section>
 				)}
 			</section>

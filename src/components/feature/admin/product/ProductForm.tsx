@@ -29,6 +29,7 @@ const initialFormState: ProductPostBody = {
 	category_id: undefined,
 	gender_group_id: undefined,
 	sub_category_id: undefined,
+	is_published: false,
 };
 
 const getFormInitialState = (product: ProductWithRelations | undefined) => {
@@ -70,7 +71,6 @@ const ProductForm: FunctionComponent<ProductFormProps> = (props) => {
 		localCopyVariants.splice(index, 1);
 		setFieldValue(`variants`, localCopyVariants);
 		const variantToDelete = values?.variants?.[index];
-		console.log("The variant to delete is", variantToDelete);
 		if (!variantToDelete || !variantToDelete.sku) return;
 
 		setProductVariantDeleteState("in-progress");

@@ -76,7 +76,6 @@ const Checkout: NextPage = () => {
 		initiatePayment({ products, shipping_address: formValues, user_id: user?.id })
 			.unwrap()
 			.then((res: RazorpayOrderResponse) => {
-				console.log(" The response is received from the API ", res);
 				if (!res) return;
 				handlePayment(res, formValues);
 			});

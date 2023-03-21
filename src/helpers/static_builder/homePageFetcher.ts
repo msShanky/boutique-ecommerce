@@ -43,6 +43,7 @@ variants:product_variant(id,sku,size,inventory_count)`
 	const allProductCategories = await supabaseClient
 		.from<definitions["product_category"]>("product_category")
 		.select(`*`)
+		.eq("is_published", true)
 		.limit(5);
 
 	const { data: categoryData, ...categoryResponse } = allProductCategories;

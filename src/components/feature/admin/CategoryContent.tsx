@@ -34,7 +34,7 @@ const CategoryContent = () => {
 	const handleCategoryAdd = async (category: CategoryPostBody) => {
 		const { ...coreCategory } = category;
 		const { data, error } = await supabaseClient.from("product_category").insert(coreCategory);
-		console.log(`[Data]: ${JSON.stringify(data)}, [Error]: ${error}`);
+
 		getProductCategories();
 	};
 

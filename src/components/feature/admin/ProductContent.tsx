@@ -53,11 +53,8 @@ export const ProductContent = () => {
 				.insert(variantsBody);
 			handleProductApiResponse(variantsData, variantsError);
 		} else {
-			// console.log(" ===> The product is being edited and already contains variants", variantsBody);
 			const newVariants = variantsBody.filter((variant) => !variant.id && variant.sku);
 			const variantsForEdit = variantsBody.filter((variant) => variant.id);
-			// console.log("The new variants to be created are:", newVariants);
-			// console.log("The variants to be edited are:", variantsForEdit);
 			const { data: variantsEditData, error: variantsEditError } = await supabaseClient
 				.from("product_variant")
 				.upsert(variantsForEdit);

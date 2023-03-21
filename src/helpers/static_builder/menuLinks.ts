@@ -7,10 +7,12 @@ export const getCategoryMenuLinks = async () => {
 	const { data: productCategory } = await supabaseClient
 		.from<definitions["product_category"]>("product_category")
 		.select(`*, gender_group (*), product_sub_category(*, node_categories:product_sub_category(*))`)
+		.eq("is_published", true)
 		// @ts-ignore
 		.is("product_sub_category.parent_id", null);
 
 	if (!genderGroup || !productCategory) return null;
+
 
 	// @ts-ignore
 	const constructedMenu: Array<MenuLinkPropTypes> = genderGroup?.map((genderValue) => {

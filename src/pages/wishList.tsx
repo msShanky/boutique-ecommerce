@@ -39,7 +39,6 @@ const WishListPage: NextPage<PageProps> = (props) => {
 
 	const handleAddToCart = (event: MouseEvent<HTMLButtonElement>, product: ProductWithRelations) => {
 		// TODO: [2] Handle Variant selection before adding the product to cart
-		console.log("ADD PRODUCT TO CART", event, product);
 		event.preventDefault();
 		event.stopPropagation();
 	};

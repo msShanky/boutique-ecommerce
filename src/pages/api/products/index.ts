@@ -19,7 +19,6 @@ const getProductsForGenderGroup = async (genderId: number) => {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "GET") {
-		console.log(req.query, "Get products by these query parameters");
 		// return getProductFromProductCode(req, res);
 		if (req.query.genderId) {
 			const genderId = parseInt(req.query.genderId as string, 10);

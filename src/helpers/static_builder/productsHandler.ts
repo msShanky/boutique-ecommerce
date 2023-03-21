@@ -47,11 +47,10 @@ export const getAllProductSlugs = async () => {
 		.select(`id,page_link,gender_group(id,gender),category:category_id(id,category,page_link)`)
 		.not("page_link", "eq", null);
 
-	return productSlugs.data as Array<ProductPageSlugs>;
+	return productSlugs.data as unknown as Array<ProductPageSlugs>;
 };
 
 export const getProductDetailsForSlugs = async (productSlug: string) => {
-	console.log("The product slug is ", productSlug.trim());
 	const productDetails = await supabaseClient
 		.from<definitions["product"]>("product")
 		.select(

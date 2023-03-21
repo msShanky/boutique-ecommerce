@@ -41,7 +41,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 		menuLinks &&
 		menuLinks.map((item, index) => {
 			const uniqueKey = `${(index + 48) * 146}_menu_item`;
-			return <HoverMenuItem key={uniqueKey} categoryItem={item} />;
+			if (item.categories.length > 0) return <HoverMenuItem key={uniqueKey} categoryItem={item} />;
 		});
 
 	const handleScroll = () => {
@@ -56,8 +56,6 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-
-	// const headerBgStyle = scrollY > 650 ? `bg-primaryBlack/90` : isLanding ? `bg-primaryBlack/10` : `bg-primaryBlack/60`;
 
 	return (
 		<Header
@@ -79,7 +77,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 					</Group>
 					<Group position="right" className={"mr-4 gap-6"}>
 						{user && !userLoading ? (
-							<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} />
+							<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} theme="black" />
 						) : (
 							<Link href="/login">{menuItem("login")}</Link>
 						)}
@@ -91,7 +89,38 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						/>
 					</Group>
 				</div>
-				<Burger opened={opened} onClick={toggle} className={"md:hidden"} color="#fff" size="md" />
+				<div className="flex gap-8 md:hidden">
+					<LinkIcon
+						icon={<IconShoppingCart size={25} className="stroke-white" />}
+						link="/cart"
+						dockCount={products.length}
+					/>
+					<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" />
+					<Menu onClose={toggle} opened={opened} shadow="md" width={200}>
+						<Menu.Target>
+							<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />
+						</Menu.Target>
+						<Menu.Dropdown className="items-center p-6">
+							{user && !userLoading ? (
+								<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} theme="white" />
+							) : (
+								<Link href="/login">{menuItem("login")}</Link>
+							)}
+							{/* <Menu.Item>Messages</Menu.Item> */}
+							{/* <Menu.Item>Gallery</Menu.Item> */}
+							<Menu.Item
+								rightSection={
+									<Text size="xs" color="dimmed">
+										⌘K
+									</Text>
+								}
+							>
+								Search
+							</Menu.Item>
+							<Menu.Divider />
+						</Menu.Dropdown>
+					</Menu>
+				</div>
 			</Container>
 		</Header>
 	);

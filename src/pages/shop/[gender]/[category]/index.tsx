@@ -2,18 +2,12 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { AppLayout } from "@/components/layout";
 import { GetStaticPropsContext, NextPage } from "next";
-import { Title, Image, Text, Pagination } from "@mantine/core";
-import {
-	getGenderGroupPages,
-	getCategoryMenuLinks,
-	getCategoriesAndProductsForGenderGroup,
-} from "@/helpers/static_builder";
-import { CategoryListing } from "@/components/feature/pages";
+import { Title, Pagination } from "@mantine/core";
+import { getCategoryMenuLinks } from "@/helpers/static_builder";
 import { ProductCard } from "@/components/feature";
 import { useWishlist } from "hooks";
 import { useUser } from "@supabase/auth-helpers-react";
 import { getCategoriesForPage, getSubCategoriesAndProductsForCategory } from "@/helpers/static_builder/categoryPage";
-import { SubCategoryListing } from "@/components/feature/pages/SubCategoryListing";
 
 type GenderGroupPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -27,14 +21,14 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 	const router = useRouter();
 	const { category, products, subCategories } = categoryProps;
 	const { user } = useUser();
-	const [currentPage, setCurrentPage] = useState(1);
+	// const [currentPage, setCurrentPage] = useState(1);
 	const { wishlist, handleWishlist } = useWishlist(user?.id);
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const { gender_group, category, page_link } = product;
 
 		if (!page_link) return;
-		
+
 		const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${
 			category?.page_link?.split("/")[1]
 		}/${page_link}`;
@@ -42,7 +36,7 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 		router.push(productSlug);
 	};
 
-	const maxPages = Math.ceil((parseInt(`${products?.length}`) || 0) / PAGE_ITEMS);
+	// const maxPages = Math.ceil((parseInt(`${products?.length}`) || 0) / PAGE_ITEMS);
 
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Gender Listing" menuLinks={menuLinks}>
@@ -67,23 +61,21 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 								</div>
 							</aside>
 							<div className="container flex flex-wrap justify-start w-full gap-10 mx-auto mb-20 min-h-[60vh]">
-								<div>
-									{products.map((product) => {
-										const isWishlisted = wishlist.includes(product.id);
-										return (
-											<ProductCard
-												handleProductRedirection={() => handleProductRedirection(product)}
-												handleWishList={() => handleWishlist(product)}
-												product={product}
-												isWishlisted={isWishlisted}
-												key={product.id}
-											/>
-										);
-									})}
-								</div>
+								{products.map((product) => {
+									const isWishlisted = wishlist.includes(product.id);
+									return (
+										<ProductCard
+											handleProductRedirection={() => handleProductRedirection(product)}
+											handleWishList={() => handleWishlist(product)}
+											product={product}
+											isWishlisted={isWishlisted}
+											key={product.page_link}
+										/>
+									);
+								})}
 							</div>
 						</section>
-						<Pagination
+						{/* <Pagination
 							page={currentPage}
 							onChange={setCurrentPage}
 							total={maxPages}
@@ -97,7 +89,7 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 									},
 								},
 							})}
-						/>
+						/> */}
 					</section>
 				)}
 			</main>
@@ -127,7 +119,6 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps(context: GetStaticPropsContext) {
-	console.log("The context *** [gender] [category] *** ", context);
 	const menuLinkResponse = await getCategoryMenuLinks();
 	if (!context?.params?.gender) return null;
 

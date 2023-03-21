@@ -21,8 +21,7 @@ export const FeaturedProductCard: FunctionComponent<FeaturedProductCardProps> = 
 
 	const _handleWishList = (event: MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
-		// handleWishList();
-		console.log("---  The wishlist has been triggered ---");
+		handleWishList();
 	};
 
 	return (

@@ -25,9 +25,6 @@ type ProductDetailsFormProps = {
 const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) => {
 	const { productForm, isAdd, variants, handleVariantDelete } = props;
 	const { values, getInputProps, setFieldValue } = productForm;
-
-	// console.log("The product form values ====> ", values);
-
 	const { data: genderGroupData, isSuccess } = useGetGenderGroupQuery();
 	const [getCategoriesByGenderId, { data: categoriesData, isSuccess: categoriesSuccess }] =
 		useLazyGetCategoriesByGenderIdQuery();

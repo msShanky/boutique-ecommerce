@@ -18,7 +18,6 @@ type HomePageProps = {
 const Home: NextPage<HomePageProps> = (props) => {
 	const { isLoading, isWaitingForSignIn } = useAuthValidator();
 
-	console.log("The props received from all the server INDEX *** ", props);
 
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Home" isLanding menuLinks={props.menuLinks}>

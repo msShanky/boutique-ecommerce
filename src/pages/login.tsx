@@ -19,7 +19,7 @@ const Login = () => {
 			const { error } = await supabaseClient.auth.signIn({ provider: "google" }, { redirectTo });
 			if (error) throw error;
 		} catch (error) {
-			console.log("there is an error with google signIn", error);
+			console.error("there is an error with google signIn", error);
 		}
 	};
 
