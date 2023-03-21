@@ -23,7 +23,6 @@ const getCartTotalPrice = (products: Array<CartProduct>) => {
 		const productTotalPrice = quantity * productPrice;
 		totalValue = productTotalPrice + totalValue;
 	});
-	console.log(" TOTAL VALUE TO BE PAID IS ===> ", totalValue);
 	return totalValue;
 };
 
@@ -53,9 +52,6 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 			user_id: body.user_id,
 			...body.shipping_address,
 		};
-
-		// console.log(" THE ORDER CREATION FOR THE CHECKOUT IS ", orderPostBody, " \n \n ");
-		// console.log(" THE shippingAddressBody ", shippingAddressBody);
 
 		try {
 			const { data: order, error } = await supabaseServerClient({ req, res }).from("user_order").insert(orderPostBody);

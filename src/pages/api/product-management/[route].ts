@@ -75,7 +75,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				break;
 		}
 
-		console.log("The query parameter returned for the route inside product-management", req.query, req.url);
 
 		res.status(200).json({
 			message: "There is a new response from the dynamic route for product-management",

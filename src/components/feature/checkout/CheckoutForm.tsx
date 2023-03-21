@@ -51,7 +51,6 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	// TODO: Handle login redirect to the same page with state pre-populated
 
 	const handleFormCheckout = (formValues: CheckoutFormValue) => {
-		console.log(formValues, "The form values collected is");
 		handleCheckout(formValues);
 	};
 

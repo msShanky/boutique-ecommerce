@@ -5,10 +5,11 @@ import React, { FunctionComponent, ReactElement } from "react";
 type UserAvatarProps = {
 	user: User;
 	handleToggle: () => void;
+	theme: "white" | "black";
 };
 
 const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => {
-	const { user, handleToggle } = props;
+	const { user, handleToggle, theme = "black" } = props;
 	const [firstName, lastName] = user.user_metadata.full_name.split(" ");
 	const userInitials = `${firstName[0].toUpperCase()} ${lastName[0].toUpperCase()}`;
 	const userImage = user?.user_metadata.avatar_url ?? undefined;
@@ -23,7 +24,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 			className=" hover:cursor-pointer"
 			onClick={handleToggle}
 		>
-			<Text className="text-white">{firstName}</Text>
+			<Text className={theme === "white" ? "text-primaryBlack" : "text-white"}>{firstName}</Text>
 			{userImage ? (
 				<Image
 					alt="user icon"

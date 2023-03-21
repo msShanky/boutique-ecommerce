@@ -29,7 +29,6 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const { user } = useUser();
 	const router = useRouter();
 
-	console.log("The props received are ", props);
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
@@ -202,13 +201,10 @@ export async function getStaticPaths() {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps(context: GetStaticPropsContext) {
-	console.log("The context *** [gender] [category] *** ", context);
 	const menuLinkResponse = await getCategoryMenuLinks();
 	if (!context?.params?.product_slug) return null;
 
 	const productDetails = await getProductDetailsForSlugs(context?.params?.product_slug as string);
-	console.log(productDetails, "-- STATIC PRODUCT INFO --");
-
 	// const categoryProps = await getSubCategoriesAndProductsForCategory(context?.params?.category as string);
 	return {
 		// Passed to the page component as props

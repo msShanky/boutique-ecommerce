@@ -20,7 +20,7 @@ const AppLayout: FunctionComponent<AppLayoutProps> = (props) => {
 				<title>{pageTitle}</title>
 			</Head>
 			<main className={isLanding ? "mb-32" : "my-32"}>{children}</main>
-			<AppFooter />
+			<AppFooter menuLinks={menuLinks} />
 		</>
 	);
 };

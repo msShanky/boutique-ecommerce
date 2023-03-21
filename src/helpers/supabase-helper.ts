@@ -50,9 +50,7 @@ export const manageProductVariants = async (product: ProductWithRelations, conta
 	if (!containsVariant) {
 		await supabaseClient.from("product_variant").insert(variantsBody);
 	} else {
-		console.log(" ===> The product is being edited and already contains variants", variantsBody);
 		const { data: variantsData } = await supabaseClient.from("product_variant").upsert(variantsBody);
-		console.log(" ===> The product edit response for variants", variantsData);
 	}
 };
 

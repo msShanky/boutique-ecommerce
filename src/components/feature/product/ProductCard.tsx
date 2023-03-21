@@ -52,7 +52,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 								variants.map((variant, index) => {
 									const variantKey = `product_variant_${index + 556}`;
 									return variant.inventory_count ? (
-										<Text key={variantKey} className="font-sans text-sm text-violet-subtext">
+										<Text key={variantKey} className="font-sans text-sm uppercase text-violet-subtext">
 											{variant.size}
 										</Text>
 									) : (
@@ -69,9 +69,9 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 				)}
 			</div>
 			<div className="flex items-center mt-6 space-x-4">
-				<Text className="font-sans text-base text-primary">Rs. {getSellingPrice(product)}</Text>
-				<Text className="font-sans text-sm line-through text-pink">Rs. {msrp}</Text>
-				<Text className="font-sans text-sm text-violet">{`(${product_discount}% OFF)`}</Text>
+				<Text className="font-sans text-base text-primaryBlack">Rs. {getSellingPrice(product)}</Text>
+				<Text className="font-sans text-sm line-through text-primary">Rs. {msrp}</Text>
+				<Text className="font-sans text-sm text-success">{`(${product_discount}% OFF)`}</Text>
 			</div>
 		</Card>
 	);

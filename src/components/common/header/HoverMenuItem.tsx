@@ -14,7 +14,6 @@ export const HoverMenuItem: FC<HoverMenuItemProps> = (props) => {
 	const links = categories.map((categoryInfo) => {
 		const { category, id, product_sub_category } = categoryInfo;
 		const categoryLink = `${menuLink}/${category?.split(" ").join("-").toLowerCase()}`;
-
 		return (
 			<div className="flex flex-col gap-4" key={`${category}_${id}`}>
 				<a href={categoryLink} className="flex items-center justify-between w-full">
@@ -25,36 +24,13 @@ export const HoverMenuItem: FC<HoverMenuItemProps> = (props) => {
 				</a>
 				<div className="flex flex-col gap-2">
 					{product_sub_category.map((subCategory) => {
-						const { name, node_categories } = subCategory;
-						const link = `${categoryLink}/${name?.split(" ").join("-")?.toLowerCase()}`;
-						if (node_categories.length <= 0) {
-							return (
-								<a key={`${name}_${category}`} className="text-sm" href={link}>
-									{name}
-								</a>
-							);
-						} else {
-							return (
-								<div key={`${name}_${category}`} className="flex flex-col gap-4">
-									<a href={categoryLink} className="flex items-center justify-between w-full">
-										<Text size="xs" className="font-semibold">
-											{name}
-										</Text>
-										<IconChevronRight size={16} className="text-primaryAlt" />
-									</a>
-									<div className="flex flex-col gap-2">
-										{node_categories.map((nodeCategory) => {
-											const { name: nodeCategoryName } = nodeCategory;
-											return (
-												<a key={`${name}_${category}`} className="text-xs" href={link}>
-													{nodeCategoryName}
-												</a>
-											);
-										})}
-									</div>
-								</div>
-							);
-						}
+						const { name, category_id, id } = subCategory;
+						const link = `${categoryLink}?filter=${name?.split(" ").join("-")?.toLowerCase()}`;
+						return (
+							<a key={`${name?.toLowerCase()}_category_${category_id}_${id}`} className="text-sm" href={link}>
+								{name}
+							</a>
+						);
 					})}
 				</div>
 			</div>

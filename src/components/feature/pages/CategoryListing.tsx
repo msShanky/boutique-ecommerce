@@ -15,6 +15,9 @@ export const CategoryListing: FC<CategoryListingProps> = ({ items }) => {
 					const uniqueKey = `${index + 45 * 788}_category `;
 					const imageSrc = getImageUrl(category.category_image);
 					const categoryLink = `/shop/${category.gender_group.gender?.toLowerCase()}/${category.page_link}`;
+
+					if (!category.is_published) return null;
+
 					return (
 						<Link key={uniqueKey} passHref href={categoryLink}>
 							<div className="flex flex-col items-center gap-y-4 hover:cursor-pointer">

@@ -569,6 +569,8 @@ export interface paths {
           product_tags?: parameters["rowFilter.product.product_tags"];
           /** The page slug used to generate the list of product pages */
           page_link?: parameters["rowFilter.product.page_link"];
+          /** The column to track if the product is published or not */
+          is_published?: parameters["rowFilter.product.is_published"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -641,6 +643,8 @@ export interface paths {
           product_tags?: parameters["rowFilter.product.product_tags"];
           /** The page slug used to generate the list of product pages */
           page_link?: parameters["rowFilter.product.page_link"];
+          /** The column to track if the product is published or not */
+          is_published?: parameters["rowFilter.product.is_published"];
         };
         header: {
           /** Preference */
@@ -677,6 +681,8 @@ export interface paths {
           product_tags?: parameters["rowFilter.product.product_tags"];
           /** The page slug used to generate the list of product pages */
           page_link?: parameters["rowFilter.product.page_link"];
+          /** The column to track if the product is published or not */
+          is_published?: parameters["rowFilter.product.is_published"];
         };
         body: {
           /** product */
@@ -1214,6 +1220,8 @@ export interface paths {
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
           page_link?: parameters["rowFilter.product_category.page_link"];
+          /** The published flag to manage if the category is ready for user display */
+          is_published?: parameters["rowFilter.product_category.is_published"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -1274,6 +1282,8 @@ export interface paths {
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
           page_link?: parameters["rowFilter.product_category.page_link"];
+          /** The published flag to manage if the category is ready for user display */
+          is_published?: parameters["rowFilter.product_category.is_published"];
         };
         header: {
           /** Preference */
@@ -1298,6 +1308,8 @@ export interface paths {
           gender_group_id?: parameters["rowFilter.product_category.gender_group_id"];
           /** The page link for the category items available within the system */
           page_link?: parameters["rowFilter.product_category.page_link"];
+          /** The published flag to manage if the category is ready for user display */
+          is_published?: parameters["rowFilter.product_category.is_published"];
         };
         body: {
           /** product_category */
@@ -1530,6 +1542,12 @@ export interface definitions {
      * @description The page slug used to generate the list of product pages
      */
     page_link?: string;
+    /**
+     * Format: boolean
+     * @description The column to track if the product is published or not
+     * @default false
+     */
+    is_published: boolean;
   };
   profiles: {
     /**
@@ -1694,6 +1712,12 @@ export interface definitions {
      * @description The page link for the category items available within the system
      */
     page_link?: string;
+    /**
+     * Format: boolean
+     * @description The published flag to manage if the category is ready for user display
+     * @default false
+     */
+    is_published: boolean;
   };
 }
 
@@ -1878,6 +1902,11 @@ export interface parameters {
    * @description The page slug used to generate the list of product pages
    */
   "rowFilter.product.page_link": string;
+  /**
+   * Format: boolean
+   * @description The column to track if the product is published or not
+   */
+  "rowFilter.product.is_published": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */
@@ -1972,6 +2001,11 @@ export interface parameters {
    * @description The page link for the category items available within the system
    */
   "rowFilter.product_category.page_link": string;
+  /**
+   * Format: boolean
+   * @description The published flag to manage if the category is ready for user display
+   */
+  "rowFilter.product_category.is_published": string;
 }
 
 export interface operations {}
