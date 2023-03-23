@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Button, NumberInput, SegmentedControl, Select, Textarea, TextInput } from "@mantine/core";
+import React, { FunctionComponent } from "react";
+import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { definitions } from "types/supabase";
 import { IconX } from "@tabler/icons";
 import { ImageUploader, ImageViewer } from "@/components/feature/admin";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";

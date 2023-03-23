@@ -8,6 +8,8 @@ import { ProductCard } from "@/components/feature";
 import { useWishlist } from "hooks";
 import { useUser } from "@supabase/auth-helpers-react";
 import { getCategoriesForPage, getSubCategoriesAndProductsForCategory } from "@/helpers/static_builder/categoryPage";
+import { CategoryFilterFacet } from "@/components/feature/filters";
+import { getProductSlug } from "@/helpers/supabase-helper";
 
 type GenderGroupPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -26,17 +28,12 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
 		const { gender_group, category, page_link } = product;
-
 		if (!page_link) return;
-
 		const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${
 			category?.page_link?.split("/")[1]
 		}/${page_link}`;
-
 		router.push(productSlug);
 	};
-
-	// const maxPages = Math.ceil((parseInt(`${products?.length}`) || 0) / PAGE_ITEMS);
 
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Gender Listing" menuLinks={menuLinks}>
@@ -48,48 +45,34 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 					</h2>
 				) : (
 					<section className="justify-between w-full mb-20">
-						<Title className="flex justify-center font-sans text-5xl font-light text-black capitalize">
+						<Title className="flex justify-start ml-4 font-sans text-3xl text-black capitalize md:text-5xl font-extralight">
 							{category.category} for {category.gender_group.gender}
 						</Title>
-						<section className="flex flex-row w-full gap-10 mt-10">
-							<aside className="flex flex-col w-1/4 gap-10 p-4 bg-primary">
+						<section className="flex flex-col w-full gap-10 mt-10 lg:flex-row">
+							<aside className="flex flex-col w-11/12 gap-10 p-4 mx-auto rounded-lg lg:w-1/4 bg-primary">
 								<h3>Filters</h3>
-								<div className="flex flex-col gap-4">
+								<div className="flex flex-row gap-4 lg:flex-col">
 									{subCategories.map((categoryFilter, index) => {
-										return <p key={`${(index + 10) * 789546}`}>{categoryFilter.name}</p>;
+										return <CategoryFilterFacet key={`${(index + 10) * 789546}`} categoryFilter={categoryFilter} />;
 									})}
 								</div>
 							</aside>
-							<div className="container flex flex-wrap justify-start w-full gap-10 mx-auto mb-20 min-h-[60vh]">
+							<div className="container flex flex-wrap lg:justify-start justify-center w-full gap-10 mx-auto mb-20 min-h-[60vh]">
 								{products.map((product) => {
 									const isWishlisted = wishlist.includes(product.id);
 									return (
 										<ProductCard
-											handleProductRedirection={() => handleProductRedirection(product)}
+											// handleProductRedirection={() => handleProductRedirection(product)}
 											handleWishList={() => handleWishlist(product)}
 											product={product}
 											isWishlisted={isWishlisted}
 											key={product.page_link}
+											productLink={getProductSlug(product)}
 										/>
 									);
 								})}
 							</div>
 						</section>
-						{/* <Pagination
-							page={currentPage}
-							onChange={setCurrentPage}
-							total={maxPages}
-							radius="xl"
-							withEdges
-							position="center"
-							styles={() => ({
-								item: {
-									"&[data-active]": {
-										backgroundColor: "#7E33E0",
-									},
-								},
-							})}
-						/> */}
 					</section>
 				)}
 			</main>

@@ -16,7 +16,7 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 	const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
 	const [isLoading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>("");
-	
+
 	const form = useForm<AuthFormInitialType>({
 		initialValues: {
 			email: "",
@@ -52,7 +52,13 @@ const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 	};
 
 	return (
-		<Paper radius="lg" p="lg" className="w-4/12 mx-auto my-20 shadow-lg" withBorder {...props.paperProps}>
+		<Paper
+			radius="lg"
+			p="lg"
+			className="w-10/12 mx-auto my-20 shadow-lg 2xl:w-4/12 lg:w-6/12"
+			withBorder
+			{...props.paperProps}
+		>
 			<Text size="lg" weight={500}>
 				Welcome to breeze boutique, {type} with
 			</Text>

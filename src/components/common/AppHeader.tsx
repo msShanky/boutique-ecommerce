@@ -1,13 +1,14 @@
 import Link from "next/link";
 import React, { FunctionComponent, useEffect, useState } from "react";
 
-import { Text, Burger, Container, Group, Header, Image, Menu, Button } from "@mantine/core";
+import { Text, Drawer, Container, Group, Header, Image, Burger } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconHeart, IconShoppingCart } from "@tabler/icons";
 import { useAppSelector } from "app/hooks";
-import { HoverMenuItem, LinkIcon } from "./header";
+import { HoverMenuItem, LinkIcon, MobileMenu } from "./header";
 import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "./user";
+import { useRouter } from "next/router";
 
 // import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 
@@ -20,18 +21,27 @@ type AppHeaderProps = {
 };
 
 const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
-	const [opened, { toggle }] = useDisclosure(false);
+	const [opened, { toggle, close }] = useDisclosure(false);
 	const [scrollY, setScrollY] = useState(0);
 	const { user, isLoading: userLoading } = useUser();
 	const { products } = useAppSelector((state) => state.cart);
+	const router = useRouter();
 
 	const { isLanding, menuLinks } = props;
 
 	const isMobile = useMediaQuery("(max-width: 600px)");
 
+	// Closes the drawer when a user is redirected
+	useEffect(() => {
+		close();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [router]);
+
 	const menuItem = (label: string) => {
 		return (
-			<Text className={`md:flex flex-col justify-between hidden hover:text-primary text-white hover:cursor-pointer`}>
+			<Text
+				className={`md:flex flex-col justify-between hover:text-primary lg:text-white md:text-primaryBlack hover:cursor-pointer hover:underline`}
+			>
 				{label}
 			</Text>
 		);
@@ -96,30 +106,17 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						dockCount={products.length}
 					/>
 					<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" />
-					<Menu onClose={toggle} opened={opened} shadow="md" width={200}>
-						<Menu.Target>
-							<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />
-						</Menu.Target>
-						<Menu.Dropdown className="items-center p-6">
-							{user && !userLoading ? (
-								<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} theme="white" />
-							) : (
-								<Link href="/login">{menuItem("login")}</Link>
-							)}
-							{/* <Menu.Item>Messages</Menu.Item> */}
-							{/* <Menu.Item>Gallery</Menu.Item> */}
-							<Menu.Item
-								rightSection={
-									<Text size="xs" color="dimmed">
-										⌘K
-									</Text>
-								}
-							>
-								Search
-							</Menu.Item>
-							<Menu.Divider />
-						</Menu.Dropdown>
-					</Menu>
+					<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />
+					<Drawer
+						withCloseButton={false}
+						opened={opened}
+						onClose={toggle}
+						position="top"
+						size="100%"
+						closeOnClickOutside
+					>
+						<MobileMenu handleClose={toggle} menuLinks={menuLinks} />
+					</Drawer>
 				</div>
 			</Container>
 		</Header>

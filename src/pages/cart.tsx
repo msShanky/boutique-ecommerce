@@ -23,14 +23,12 @@ const Cart: NextPage = () => {
 								<Image height={450} src="/images/404.svg" alt="No Orders Found" />
 								<Title className="text-4xl font-thin text-violet">The Cart Is Empty</Title>
 								<Link href="/products">
-									<Text className="mt-8 hover:cursor-pointer hover:text-pink text=black underline">
-										View Products
-									</Text>
+									<Text className="mt-8 hover:cursor-pointer hover:text-pink text=black underline">View Products</Text>
 								</Link>
 							</div>
 						)}
 						{cartState.products.length > 0 && (
-							<div className="flex flex-row items-start justify-center w-full gap-10">
+							<div className="flex flex-col items-start justify-center w-full gap-10 p-4 lg:flex-row">
 								<CartTable />
 								<CartTotal />
 							</div>

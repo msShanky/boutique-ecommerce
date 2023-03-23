@@ -6,11 +6,15 @@ type AppFooterProps = {
 	menuLinks?: Array<MenuLinkPropTypes>;
 };
 
+{
+	/* TODO: [1] [Prod] Add page links for completing compliance  */
+}
 const AppFooter: FC<AppFooterProps> = (props) => {
 	const { menuLinks } = props;
 
 	return (
 		<footer className="w-full bg-primary h-[532px] pl-8 md:pl-0">
+			{/* TODO: [3] [Cosmetic] add more space on mobile after the content is rendered  */}
 			<section className="container flex flex-col gap-12 pt-24 mx-auto md:flex-row md:gap-20">
 				<div className="flex flex-col w-1/3 gap-y-4">
 					<Image
@@ -26,36 +30,41 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 				</div>
 				<div>
 					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>
+					{/* FIXME: [1] [Prod] Clicking on category Women on footer is not working  */}
 					<div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
 						{menuLinks &&
 							menuLinks.map((menuItem, index) => {
 								const { categories, menuLabel, menuLink } = menuItem;
 								if (categories.length <= 0) return null;
 								return (
-									<>
+									<div key={`category_${menuLabel}_${(index + 456) * 87954}}`} className="flex flex-col gap-8">
 										<Text className="font-sans text-xl text-primaryAlt hover:cursor-pointer hover:underline">
 											{menuLabel}
 										</Text>
 										<div className="flex flex-row gap-12">
-											{categories.map((categoryItem) => {
+											{categories.map((categoryItem, categoryIndex) => {
 												const { category, id, product_sub_category } = categoryItem;
-												const uniqueKey = `sub_category_${id}`;
+												const categoryUniqueKey = `sub_category_${id}_${(categoryIndex + 9) * 222}`;
 												const categoryLink = `${menuLink}/${category?.split(" ").join("-").toLowerCase()}`;
 												return (
-													<div key={uniqueKey} className="flex flex-col gap-6">
+													<div key={categoryUniqueKey} className="flex flex-col gap-6">
 														<a href={categoryLink} className="flex items-center justify-between w-full ">
 															<Text size="sm" className="font-bold text-primaryBlack hover:underline">
 																{category}
 															</Text>
 															<IconChevronRight size={16} className="text-primaryAlt" />
 														</a>
+														{/* TODO: [4] [Accessibility] Construct the links with Link href object for performance  */}
 														<div className="flex flex-col gap-4">
-															{product_sub_category.map((subCategory) => {
+															{product_sub_category.map((subCategory, subCategoryIndex) => {
 																const { name, category_id, id } = subCategory;
 																const link = `${categoryLink}?filter=${name?.split(" ").join("-")?.toLowerCase()}`;
+																const subCategoryUIndex = `${name?.toLowerCase()}_category_${category_id}_${id}_${
+																	(subCategoryIndex + 86) * 7896
+																}`;
 																return (
 																	<a
-																		key={`${name?.toLowerCase()}_category_${category_id}_${id}`}
+																		key={subCategoryUIndex}
 																		className="text-sm text-primaryBlack hover:underline"
 																		href={link}
 																	>
@@ -68,7 +77,7 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 												);
 											})}
 										</div>
-									</>
+									</div>
 								);
 							})}
 					</div>

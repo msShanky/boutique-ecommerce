@@ -29,6 +29,9 @@ type ProductVariants = {
 };
 
 type ProductCategory = import("../types/supabase").definitions["product_category"];
+type ProductCategoryWithRelations = import("../types/supabase").definitions["product_category"] & {
+	gender_group?: import("../types/supabase").definitions["gender_group"];
+};
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
 type ProductPostBody = Omit<ProductWithRelations, "id">;
 type CategoryPostBody = Omit<ProductCategory, "id" | "created_at">;

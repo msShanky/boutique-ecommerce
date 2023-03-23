@@ -42,7 +42,7 @@ variants:product_variant(id,sku,size,inventory_count)`
 
 	const allProductCategories = await supabaseClient
 		.from<definitions["product_category"]>("product_category")
-		.select(`*`)
+		.select("*, gender_group (*)")
 		.eq("is_published", true)
 		.limit(5);
 
