@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { MantineProvider, MantineTheme } from "@mantine/core";
+import { MantineProvider, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import type { AppProps } from "next/app";
 import { PersistGate } from "redux-persist/integration/react";
@@ -8,8 +8,23 @@ import { Provider } from "react-redux";
 import { UserProvider } from "@supabase/auth-helpers-react";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 
-const breezeTheme: Partial<MantineTheme> = {
+const breezeTheme: MantineThemeOverride = {
 	fontFamily: "Poppins, sans-serif",
+	colors: {
+		"brand-yellow": [
+			"#fef7e7",
+			"#fbe8b7",
+			"#f8d987",
+			"#f5c957",
+			"#f2ba27",
+			"#d8a10d",
+			"#a87d0a",
+			"#785907",
+			"#483604",
+			"#181201",
+		],
+	},
+	primaryColor: "brand-yellow",
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

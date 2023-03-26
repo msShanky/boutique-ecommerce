@@ -1,30 +1,32 @@
 import React, { FC } from "react";
-import { Title, Image, Text } from "@mantine/core";
 import Link from "next/link";
-import { getCategoryThumbnail, getImageUrl } from "@/helpers/supabase-helper";
+import { Image, Text } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
+import { getCategoryLink, getCategoryThumbnail, getImageUrl } from "@/helpers/supabase-helper";
 
 type CategoryListingProps = {
 	items: Array<CategoryMenuWithRelations>;
 };
 
-export const CategoryListing: FC<CategoryListingProps> = ({ items }) => {
+export const CategoryLinkListing: FC<CategoryListingProps> = ({ items }) => {
+	const { width } = useViewportSize();
+
 	return (
-		<div className="flex flex-col gap-8 md:flex-row">
+		<div className="flex flex-row gap-8">
 			{items &&
 				items.map((category, index: number) => {
 					const uniqueKey = `${index + 45 * 788}_category `;
 					const imageSrc = getImageUrl(category.category_image);
-					const categoryLink = `/shop/${category.gender_group.gender?.toLowerCase()}/${category.page_link}`;
-
-					if (!category.is_published) return null;
+					const categoryLink = getCategoryLink(category);
+					if (!category.is_published || !categoryLink) return null;
 
 					return (
-						<Link key={uniqueKey} passHref href={categoryLink}>
-							<div className="flex flex-col items-center gap-y-4 hover:cursor-pointer">
+						<Link key={uniqueKey} passHref legacyBehavior href={categoryLink}>
+							<div className="flex flex-col items-center gap-y-4 hover:cursor-pointer hover:border-solid hover:border-">
 								{imageSrc ? (
 									<Image
-										height={150}
-										width={150}
+										height={width < 600 ? 75 : 150}
+										width={width < 600 ? 75 : 150}
 										src={imageSrc}
 										alt={category.category}
 										className="overflow-hidden rounded-full"
@@ -36,11 +38,10 @@ export const CategoryListing: FC<CategoryListingProps> = ({ items }) => {
 									/>
 								) : (
 									<div className="w-[150px] h-[150px] bg-primary rounded-full flex justify-center items-center text-5xl font-light">
-										{/* {`${category?.category?.split(" ")[0][0]} ${category?.category?.split(" ")[1][0]}`} */}
 										{getCategoryThumbnail(category?.category as string)}
 									</div>
 								)}
-								<Text className="font-sans text-xl">{category.category}</Text>
+								<Text className="font-sans text-sm lg:text-xl">{category.category}</Text>
 							</div>
 						</Link>
 					);

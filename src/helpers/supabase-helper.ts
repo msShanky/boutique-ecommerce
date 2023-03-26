@@ -20,6 +20,7 @@ export const formatProductFormForUpdate = (product: ProductPostBody): ProductPos
 	const { category, ...coreProduct } = product;
 	return coreProduct;
 };
+
 export const formatCategoryFormForUpdate = (category: CategoryPostBody): CategoryPostBody => {
 	const { ...coreCategory } = category;
 	return coreCategory;
@@ -60,4 +61,26 @@ export const getCategoryThumbnail = (category: string) => {
 	if (category.includes("/")) return `${category?.split(" / ")[0][0]} ${category?.split(" / ")[1][0].toUpperCase()}`;
 
 	return `${category?.split(" ")[0][0]} ${category?.split(" ")[1][0].toUpperCase()}`;
+};
+
+export const getCategoryLink = (category: ProductCategoryWithRelations) => {
+	const { gender_group, page_link } = category;
+	const genderURI = `${gender_group?.gender?.toLowerCase()}`;
+	const categoryLink = `/shop/${genderURI}${page_link}`;
+	return categoryLink;
+};
+
+export const getSubCategoryLink = (category: ProductCategoryWithRelations, subCategory: SubCategoryWithRelations) => {
+	const categoryLink = getCategoryLink(category);
+	const subCategoryFilterFacet = `${subCategory.page_link?.split("/")[1]}`;
+	const subCategoryLink = `${categoryLink}?filter=${subCategoryFilterFacet}`;
+	return subCategoryLink;
+};
+
+export const getProductSlug = (product: ProductWithRelations): string => {
+	const { gender_group, category, page_link } = product;
+	if (!page_link) return "";
+	const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${category?.page_link?.split("/")[1]}/${page_link}`;
+
+	return productSlug;
 };

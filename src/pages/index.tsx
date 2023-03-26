@@ -18,24 +18,24 @@ type HomePageProps = {
 const Home: NextPage<HomePageProps> = (props) => {
 	const { isLoading, isWaitingForSignIn } = useAuthValidator();
 
-
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Home" isLanding menuLinks={props.menuLinks}>
 			<>
-				{/* TODO: [3] Replace this loader with something decent with animations */}
+				{/* TODO: [4] Replace this loader with something decent with animations */}
 				{isLoading && isWaitingForSignIn && (
 					<section className="container mx-auto my-20 h-80">
 						<Loader size={300} />
 					</section>
 				)}
-				{/* Home Landing Section */}
 				{!isLoading && !isWaitingForSignIn && (
 					<>
+						{/* FIXME: [1] [Prod] Replace the images or optimize the banner images, the page load times are high with the Images  */}
 						{props.bannerContent.length > 0 && <HomeCarousal carousalContent={props.bannerContent} />}
-						{/* TODO: [1] The featured card should be fetched from the database and populated with real products */}
+						{/* TODO: [3] [Accessibility] featured products does not display link when hovered */}
+						{/* TODO: [2] [Cosmetic] display additional information (subtitle) in the featured  */}
+						{/* TODO: [2] [Functionality] product wishlist does nor work  */}
 						{props.featured.length > 0 && <CarousalCardSlider items={props.featured} />}
-						{/* TODO: [1] The category should be fetched from the database and populated accordingly */}
-						{/* TODO: Categories */}
+						{/* TODO: [2] [ReUsability] Re use same components for gender listing page and home page */}
 						{props.categories && <CategorySection items={props.categories} />}
 						<div className="container flex flex-col gap-6 mx-auto mt-20 md:flex-row justify-evenly">
 							<SiteFeatureIcon

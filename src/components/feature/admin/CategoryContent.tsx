@@ -40,8 +40,7 @@ const CategoryContent = () => {
 
 	const handleCategoryEdit = async (category: ProductCategory) => {
 		const { ...coreCategory } = formatCategoryFormForUpdate(category);
-		const { data, error } = await supabaseClient.from("product_category").update(coreCategory);
-		//   .eq("code", activeCategory?.code);
+		const { data, error } = await supabaseClient.from("product_category").update(coreCategory).eq("id", category.id);
 		handleCategoryApiResponse(data, error);
 		getProductCategories();
 	};
