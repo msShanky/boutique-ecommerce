@@ -14,6 +14,7 @@ type WishListProps = {
 	user: User;
 };
 
+// TODO: Disable the initial call to fetch the wishlist count
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const WishListPage: NextPage<PageProps> = (props) => {
@@ -31,11 +32,11 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	}, [userWishlistResponse]);
 
 	useEffect(() => {
-		if (user?.id) {
+		if (!user || user?.id) {
 			setLoading(true);
 			getUserWishlist(user.id);
 		}
-	}, [getUserWishlist, user.id]);
+	}, [getUserWishlist, user]);
 
 	const handleAddToCart = (event: MouseEvent<HTMLButtonElement>, product: ProductWithRelations) => {
 		// TODO: [2] Handle Variant selection before adding the product to cart

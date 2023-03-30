@@ -62,7 +62,7 @@ export const cartSlice = createSlice({
 			state = initialState;
 			return state;
 		});
-	}
+	},
 });
 
 const { actions, reducer } = cartSlice;
@@ -71,7 +71,7 @@ export const { addProductToCart, clearCart, increaseQuantity, decreaseQuantity }
 
 const selectSelf = (state: RootState) => state.cart;
 
-export const cartSafeSelector = createDraftSafeSelector(selectSelf, (state) => {
+export const cartTotalSelector = createDraftSafeSelector(selectSelf, (state) => {
 	let totalValue = 0;
 	state.products.forEach((stateValue) => {
 		const { product, quantity } = stateValue;
@@ -82,6 +82,19 @@ export const cartSafeSelector = createDraftSafeSelector(selectSelf, (state) => {
 		totalValue = productTotalPrice + totalValue;
 	});
 	return totalValue;
+});
+
+export const cartQuantitySelector = createDraftSafeSelector(selectSelf, (state) => {
+	// let totalValue = 0;
+	// state.products.forEach((stateValue) => {
+	// 	const { product, quantity } = stateValue;
+	// 	const mrp = product.msrp as number;
+	// 	const discountPrice = mrp * ((product.product_discount as number) / 100);
+	// 	const productPrice = mrp - parseInt(discountPrice?.toFixed(), 10);
+	// 	const productTotalPrice = quantity * productPrice;
+	// 	totalValue = productTotalPrice + totalValue;
+	// });
+	return state.products.reduce((n, { quantity }) => n + quantity, 0);
 });
 
 export default reducer;

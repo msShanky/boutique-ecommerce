@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/embla.css";
 import { MantineProvider, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import type { AppProps } from "next/app";
@@ -15,7 +16,7 @@ const breezeTheme: MantineThemeOverride = {
 			"#fef7e7",
 			"#fbe8b7",
 			"#f8d987",
-			"#f5c957",
+			"#f5cb5c",
 			"#f2ba27",
 			"#d8a10d",
 			"#a87d0a",
@@ -25,6 +26,7 @@ const breezeTheme: MantineThemeOverride = {
 		],
 	},
 	primaryColor: "brand-yellow",
+	primaryShade: 3,
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

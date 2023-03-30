@@ -13,9 +13,9 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 	const { menuLinks } = props;
 
 	return (
-		<footer className="w-full bg-primary h-[532px] pl-8 md:pl-0">
+		<footer className="w-full bg-primary h-[532px] ">
 			{/* TODO: [3] [Cosmetic] add more space on mobile after the content is rendered  */}
-			<section className="container flex flex-col gap-12 pt-24 mx-auto md:flex-row md:gap-20">
+			<section className="container flex flex-col gap-12 p-10 mx-auto md:pt-24 md:flex-row md:gap-20">
 				<div className="flex flex-col w-1/3 gap-y-4">
 					<Image
 						src="/images/breeze_logo_v2.svg"

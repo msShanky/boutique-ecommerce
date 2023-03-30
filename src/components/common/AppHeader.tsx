@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React, { FunctionComponent, useEffect, useState } from "react";
 
+import { cartQuantitySelector } from "@/reducer/cart";
+
 import { Text, Drawer, Container, Group, Header, Image, Burger } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconHeart, IconShoppingCart } from "@tabler/icons";
@@ -21,13 +23,14 @@ type AppHeaderProps = {
 };
 
 const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
-	const [opened, { toggle, close }] = useDisclosure(false);
-	const [scrollY, setScrollY] = useState(0);
+	const [opened, { toggle, close }] = useDisclosure(false);	
 	const { user, isLoading: userLoading } = useUser();
-	const { products } = useAppSelector((state) => state.cart);
+	const rootState = useAppSelector((state) => state);
 	const router = useRouter();
 
-	const { isLanding, menuLinks } = props;
+	const cartItemCount = cartQuantitySelector(rootState);
+
+	const { menuLinks } = props;
 
 	const isMobile = useMediaQuery("(max-width: 600px)");
 
@@ -54,19 +57,6 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 			if (item.categories.length > 0) return <HoverMenuItem key={uniqueKey} categoryItem={item} />;
 		});
 
-	const handleScroll = () => {
-		const pageYPosition = window.pageYOffset;
-		setScrollY(pageYPosition);
-	};
-
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll, { passive: true });
-
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
-
 	return (
 		<Header
 			height={HEADER_HEIGHT}
@@ -92,10 +82,11 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 							<Link href="/login">{menuItem("login")}</Link>
 						)}
 						<LinkIcon icon={<IconHeart size={20} className="stroke-white" />} link="/wishlist" label="WishList" />
+						{/* TODO: [2] [Prod_mvp] the cart dock count should be based on the total quantity  */}
 						<LinkIcon
 							icon={<IconShoppingCart size={25} className="stroke-white" />}
 							link="/cart"
-							dockCount={products.length}
+							dockCount={cartItemCount}
 						/>
 					</Group>
 				</div>
@@ -103,7 +94,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 					<LinkIcon
 						icon={<IconShoppingCart size={25} className="stroke-white" />}
 						link="/cart"
-						dockCount={products.length}
+						dockCount={cartItemCount}
 					/>
 					<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" />
 					<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />

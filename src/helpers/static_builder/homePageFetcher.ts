@@ -33,9 +33,11 @@ export const getHomePageData = async () => {
 	const getFeaturedProducts = await supabaseClient
 		.from<definitions["product"]>("product")
 		.select(
-			`id,code,images,category_id,msrp,title,sub_title,product_discount,
-category:category_id (id,category),
-variants:product_variant(id,sku,size,inventory_count)`
+			`id,code,images,category_id,msrp,title,sub_title,product_discount,page_link,
+			variants:product_variant(id,sku,size,inventory_count),
+			category:category_id (*),
+			gender_group(*),
+			sub_category:sub_category_id(*)`
 		)
 		// @ts-ignore
 		.order("size", { foreignTable: "product_variant", ascending: false });

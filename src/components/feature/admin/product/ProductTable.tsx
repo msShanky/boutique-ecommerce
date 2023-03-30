@@ -33,7 +33,7 @@ const ProductTable: FunctionComponent<ProductTableProps> = (props) => {
 					{columns.map((column) => {
 						const key = `${column.value}_Column_Item`;
 						return (
-							<th key={key} className="text-xs font-bold text-highlight-dark-blue">
+							<th key={key} className="text-xs font-bold text-primary">
 								{column.label}
 							</th>
 						);
