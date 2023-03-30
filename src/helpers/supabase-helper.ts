@@ -79,6 +79,7 @@ export const getSubCategoryLink = (category: ProductCategoryWithRelations, subCa
 
 export const getProductSlug = (product: ProductWithRelations): string => {
 	const { gender_group, category, page_link } = product;
+	console.log(gender_group, category, page_link, "props for constructing product slug");
 	if (!page_link) return "";
 	const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${category?.page_link?.split("/")[1]}/${page_link}`;
 

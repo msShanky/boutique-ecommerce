@@ -1,11 +1,10 @@
+import React from "react";
+
 import { Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import React from "react";
 import { FeaturedProductCard } from "@/components/common/cards";
-import { definitions } from "types/supabase";
 import { useWishlist } from "hooks";
 import { useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
 
 /**
  * Featured section would consist of the featured topics or styles defined by the admin
@@ -13,25 +12,13 @@ import { useRouter } from "next/router";
  */
 
 type CarousalCardSliderProps = {
-	items: Array<definitions["product"]>;
+	items: Array<ProductWithRelations>;
 };
 
 export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 	const { items } = props;
 	const { user } = useUser();
-	const router = useRouter();
 	const { wishlist, handleWishlist } = useWishlist(user?.id);
-
-	const handleProductRedirection = (product: ProductWithRelations) => {
-		const { gender_group, category, page_link } = product;
-
-		if (!page_link) return;
-
-		const productSlug = `/shop/${gender_group?.gender?.toLowerCase()}/${
-			category?.page_link?.split("/")[1]
-		}/${page_link}`;
-		router.push(productSlug);
-	};
 
 	const itemCards =
 		items &&
@@ -41,7 +28,6 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 			return (
 				<Carousel.Slide key={uniqueKey}>
 					<FeaturedProductCard
-						handleProductRedirection={() => handleProductRedirection(product)}
 						handleWishList={() => handleWishlist(product)}
 						product={product}
 						isWishlisted={isWishlisted}

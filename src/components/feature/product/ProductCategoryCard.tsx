@@ -31,7 +31,7 @@ const ProductCategoryCard: FunctionComponent<ProductCategoryCardProps> = (
 				/>
 			</Card.Section>
 			<div className="mt-4">
-				<Title className="font-sans text-2xl group-hover:text-white text-highlight-dark-blue" order={2}>
+				<Title className="font-sans text-2xl group-hover:text-white text-primary" order={2}>
 					{category}
 				</Title>
 			</div>

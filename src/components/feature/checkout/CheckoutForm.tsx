@@ -55,20 +55,20 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	};
 
 	return (
-		<div className="w-7/12 px-8 py-16 max-h-max bg-violet-light">
+		<div className="w-full px-8 py-16 md:w-7/12 max-h-max bg-primary/60">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
 			<div>
-				<Text className="mb-10 text-sm text-primary">*Currently shipping only for Chennai</Text>
+				<Text className="mb-10 text-sm text-primaryBlack">*Currently shipping only for Chennai</Text>
 			</div>
 			{/* Contact Information */}
 			<div className="flex flex-row justify-between ">
-				<Title className="text-lg font-bold text-highlight-dark-blue">Contact Information</Title>
+				<Title className="text-lg font-bold text-primaryBlack">Contact Information</Title>
 				<div className="space-y-8">
 					{!user && (
 						<Text className="flex flex-row items-end">
 							Already have an account?
 							<Link href="/login" passHref>
-								<Text className="ml-2 text-lg underline text-violet hover:cursor-pointer">Log in</Text>
+								<Text className="ml-2 text-lg underline text-primaryBlack hover:cursor-pointer">Log in</Text>
 							</Link>
 						</Text>
 					)}
@@ -76,7 +76,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 			</div>
 			<form className="mt-4 space-y-8" onSubmit={onSubmit(handleFormCheckout)}>
 				<TextInput withAsterisk placeholder="894578****" {...getInputProps("phone_number")} />
-				<Title className="text-lg font-bold text-highlight-dark-blue">Shipping Address</Title>
+				<Title className="text-lg font-bold text-primaryBlack">Shipping Address</Title>
 				<div className="flex flex-row justify-between gap-8">
 					<TextInput className="w-6/12" placeholder="First Name" withAsterisk {...getInputProps("first_name")} />
 					<TextInput className="w-6/12" placeholder="Last Name (Optional)" {...getInputProps("last_name")} />
@@ -88,7 +88,11 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
 					<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />
 				</div>
-				<Button disabled={!isValid} className="bg-pink hover:bg-violet" type="submit">
+				<Button
+					disabled={!isValid}
+					className="text-white bg-primaryBlack hover:bg-primaryBlack/60"
+					type="submit"
+				>
 					Proceed For Payment
 				</Button>
 			</form>

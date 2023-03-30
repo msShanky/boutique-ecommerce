@@ -17,7 +17,7 @@ export const HoverMenuItem: FC<HoverMenuItemProps> = (props) => {
 		return (
 			<div className="flex flex-col gap-4" key={`${category}_${id}`}>
 				<a href={categoryLink} className="flex items-center justify-between w-full">
-					<Text size="sm" className="font-bold">
+					<Text size="sm" className="font-bold hover:underline hover:cursor-pointer">
 						{category}
 					</Text>
 					<IconChevronRight size={16} className="text-primaryAlt" />
@@ -27,7 +27,7 @@ export const HoverMenuItem: FC<HoverMenuItemProps> = (props) => {
 						const { name, category_id, id } = subCategory;
 						const link = `${categoryLink}?filter=${name?.split(" ").join("-")?.toLowerCase()}`;
 						return (
-							<a key={`${name?.toLowerCase()}_category_${category_id}_${id}`} className="text-sm" href={link}>
+							<a key={`${name?.toLowerCase()}_category_${category_id}_${id}`} className="text-sm hover:underline hover:cursor-pointer" href={link}>
 								{name}
 							</a>
 						);

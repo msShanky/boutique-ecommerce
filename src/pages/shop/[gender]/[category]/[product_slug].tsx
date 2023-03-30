@@ -15,6 +15,7 @@ import { useWishlist } from "hooks";
 import { Carousel } from "@mantine/carousel";
 import { getAllProductSlugs, getProductDetailsForSlugs } from "@/helpers/static_builder/productsHandler";
 import { getCategoryMenuLinks } from "@/helpers/static_builder";
+import { PriceWithDiscount, ProductDetailsImage } from "@/components/feature/product";
 
 type ProductPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -57,47 +58,12 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 			message: `${product?.title} has been added, and size selected is ${selectedVariant.size}`,
 		});
 	};
-
-	const renderImages = (product: ProductWithRelations, withCarousel?: boolean) => {
-		const ProductImage = ({ src }: { src: string }) => (
-			<Image
-				className="w-[49%] object-top"
-				height={680}
-				radius="md"
-				fit="contain"
-				classNames={{
-					imageWrapper: "overflow-hidden",
-					image: "hover:scale-125 delay-75 transition-transform ease-in-out",
-				}}
-				src={getImageUrl(src)}
-				alt={`product_image_`}
-			/>
-		);
-
-		return withCarousel ? (
-			<Carousel slideSize="70%" height={680} slideGap="sm" controlsOffset="xs" controlSize={20}>
-				{product?.images?.map((image, index) => {
-					return (
-						<Carousel.Slide key={`Product_image_${index + 5}`}>
-							<ProductImage src={image as string} />
-						</Carousel.Slide>
-					);
-				})}
-			</Carousel>
-		) : (
-			product?.images?.map((image, index) => {
-				return <ProductImage key={`Product_image_${index + 5}`} src={image as string} />;
-			})
-		);
-	};
-
+	
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Product" menuLinks={props.menuLinks}>
 			<section className="container flex flex-col flex-wrap items-center mx-auto my-20 lg:items-start lg:flex-row">
 				<div className="w-full p-1 lg:w-8/12">
-					<div className="relative flex flex-wrap gap-5 overflow-hidden ">
-						{renderImages(product as ProductWithRelations, !!((product?.images?.length as number) > 2))}
-					</div>
+					<ProductDetailsImage product={product} />
 				</div>
 				<div className="w-full px-4 py-2 lg:w-4/12">
 					<Title order={1} className="font-sans text-4xl text-primary">
@@ -105,12 +71,12 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 					</Title>
 					<Text className="mt-4 font-sans text-xl text-violet-subtext">{product?.sub_title}</Text>
 					<Divider my="md" />
-					<div className="flex items-center mt-8 space-x-4">
-						<Text className="font-sans text-2xl text-primary">
-							Rs. {getSellingPrice(product as ProductWithRelations)}
-						</Text>
-						<Text className="font-sans text-xl line-through text-pink">Rs. {product?.msrp}</Text>
-						<Text className="font-sans text-xl text-violet">{`(${product?.product_discount}% OFF)`}</Text>
+					<div className="flex items-center mt-6 space-x-4">
+						<Text className="font-sans text-xl text-primaryBlack">Rs. {getSellingPrice(product)}</Text>
+						<Text className="font-sans text-xl line-through text-primary">Rs. {product?.msrp}</Text>
+						{product?.product_discount && (
+							<Text className="font-sans text-xl text-success">{`(${product?.product_discount}% OFF)`}</Text>
+						)}
 					</div>
 					<div className="flex flex-col mt-8 space-y-4">
 						<Text className="font-sans text-lg font-semibold uppercase text-dark-blue">Select Size:</Text>
@@ -123,8 +89,8 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 										key={variantKey}
 										onClick={() => handleVariantSelection(variant)}
 										disabled={!variant.inventory_count}
-										className={`rounded-full min-w-14 h-14 border-pink  hover:bg-pink hover:text-white ${
-											isSelected ? "bg-pink text-white" : "text-pink"
+										className={`rounded-full min-w-14 text-md h-14 capitalize border-primaryBlack text-primaryBlack hover:bg-primary ${
+											isSelected && "bg-primary"
 										}`}
 									>
 										{variant.size}
@@ -138,17 +104,17 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 					<div className="flex flex-col items-center justify-between w-full gap-4 mt-12 lg:flex-row min-w-14">
 						<Button
 							classNames={{ label: "space-x-2" }}
-							className="flex justify-center w-10/12 h-12 lg:w-64 items-top bg-pink hover:bg-opacity-80 hover:bg-pink"
+							className="flex justify-center w-10/12 h-12 lg:w-64 items-top bg-primary hover:bg-opacity-80 hover:bg-primary/60"
 							onClick={handleAddToCart}
 						>
 							<div>
-								<IconShoppingCart size={20} />
+								<IconShoppingCart size={20} className="stroke-primaryBlack" />
 							</div>
-							<Text>Add To Cart</Text>
+							<Text className="text-primaryBlack">Add To Cart</Text>
 						</Button>
 						<Button
 							classNames={{ label: "space-x-2" }}
-							className={`h-12 w-10/12 lg:w-64 border-2 border-violet text-violet hover:bg-transparent hover:border-black hover:text-black ${
+							className={`h-12 w-10/12 lg:w-64 border-2 border-primaryBlack text-primaryBlack hover:bg-transparent hover:border-primary hover:text-black ${
 								isWishlisted && "bg-violet text-white"
 							}`}
 							onClick={() => product && handleWishlist(product)}
