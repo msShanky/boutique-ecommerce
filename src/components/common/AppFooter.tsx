@@ -95,6 +95,12 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 						<Link href="/payment-method" passHref>
 							<a className="text-sm underline">Payment method</a>
 						</Link>
+						<Link href="/terms-conditions" passHref>
+							<a className="text-sm underline">Terms &amp; conditions</a>
+						</Link>
+						<Link href="/contact-us" passHref>
+							<a className="text-sm underline">Contact Us</a>
+						</Link>
 					</div>
 				</article>
 			</section>
