@@ -6,6 +6,8 @@ import React, { FC } from "react";
 import { increaseQuantity, decreaseQuantity } from "reducer/cart";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { getSellingPrice } from "../../../helpers/price-calculator";
+import { DeleteWarningModal } from "@/components/feature/admin/warning";
+import { useDisclosure } from "@mantine/hooks";
 
 type SelectedSizeProps = {
 	variantText: string;
@@ -29,6 +31,8 @@ const SelectedSize: FC<SelectedSizeProps> = ({ variantText }) => {
 
 const CartTable = () => {
 	const { products } = useAppSelector((state) => state.cart);
+
+	const [opened, { open, close }] = useDisclosure(false);
 	const dispatch = useAppDispatch();
 
 	const rows = products.map((productState: CartProduct, index: number) => {
@@ -42,15 +46,22 @@ const CartTable = () => {
 				dispatch(decreaseQuantity(productState));
 				return;
 			}
-			/* TODO: If quantity is less than zero then remove the product from cart */
-			showNotification({
-				title: "Default notification",
-				message: "Hey there, your code is awesome! 🤥",
-			});
+			open();
+		};
+
+		const confirmRemovalOfProduct = () => {
+			dispatch(decreaseQuantity(productState));
+			close();
 		};
 
 		return (
 			<tr key={`PRODUCT_${id}_suffix_${(index + 5) * 255}_`}>
+				<DeleteWarningModal
+					modelType="cart"
+					onDelete={confirmRemovalOfProduct}
+					opened={opened}
+					toggleOpen={(isClose) => !isClose && close()}
+				/>
 				<td className="flex flex-row space-x-2">
 					<div className="relative flex flex-row">
 						<Image src={baseImage} alt={`Product Image ${id}`} width={100} height={100} fit="contain" />

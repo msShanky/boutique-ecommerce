@@ -64,8 +64,6 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 			}
 		});
 
-	console.log("The user value ===> ", user);
-
 	return (
 		<section className="flex flex-col gap-10 p-6">
 			<div className="flex justify-between w-full ">

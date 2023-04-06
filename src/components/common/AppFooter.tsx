@@ -1,5 +1,6 @@
 import { Button, Text, TextInput, Title, Image } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import Link from "next/link";
 import React, { FC } from "react";
 
 type AppFooterProps = {
@@ -13,10 +14,10 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 	const { menuLinks } = props;
 
 	return (
-		<footer className="w-full bg-primary h-[532px] ">
-			{/* TODO: [3] [Cosmetic] add more space on mobile after the content is rendered  */}
-			<section className="container flex flex-col gap-12 p-10 mx-auto md:pt-24 md:flex-row md:gap-20">
-				<div className="flex flex-col w-1/3 gap-y-4">
+		<footer className="w-full bg-primary min-h-[532px] flex flex-col gap-y-10">
+			{/* <section className="container flex flex-col gap-12 p-10 mx-auto md:pt-24 md:flex-row md:gap-20"> */}
+			<section className="container flex flex-col gap-12 p-10 mx-auto align-top md:pt-24 md:flex-row md:gap-20 md:p-0">
+				<div className="flex flex-col w-2/12 gap-y-4">
 					<Image
 						src="/images/breeze_logo_v2.svg"
 						width={80}
@@ -28,7 +29,7 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 					<Text>Contact Info</Text>
 					<Text>care@breezeboutique.in</Text>
 				</div>
-				<div>
+				<div className="flex flex-col w-fit">
 					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>
 					{/* FIXME: [1] [Prod] Clicking on category Women on footer is not working  */}
 					<div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
@@ -82,6 +83,20 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 							})}
 					</div>
 				</div>
+				<article className="container flex flex-col w-full lg:w-2/12 gap-y-4">
+					<Title className="text-2xl font-semibold text-primaryBlack">Quick Links</Title>
+					<div className="flex flex-col gap-6">
+						<Link href="/privacy-policy" passHref>
+							<a className="text-sm underline">Privacy policy</a>
+						</Link>
+						<Link href="/returns-exchange" passHref>
+							<a className="text-sm underline">Returns &amp; exchanges</a>
+						</Link>
+						<Link href="/payment-method" passHref>
+							<a className="text-sm underline">Payment method</a>
+						</Link>
+					</div>
+				</article>
 			</section>
 		</footer>
 	);
