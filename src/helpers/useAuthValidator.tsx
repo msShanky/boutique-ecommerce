@@ -12,8 +12,6 @@ export const useAuthValidator = () => {
 	let isWaitingForSignIn = false;
 	let refreshToken: string;
 
-	console.log("Is the user signed in ?? ", isSignedIn);
-
 	if (!isSignedIn) {
 		/**
 		 * Get fragment params. Will only exist if bug happens in supabase helpers -
@@ -40,13 +38,10 @@ export const useAuthValidator = () => {
 
 	useEffect(() => {
 		if (shouldRedirect && !isWaitingForSignIn) {
-			console.log(" ++++++++ the use should be redirected to the respective page ++++++++ ");
 			if (shouldRedirect && router.query.referrer) {
 				router.replace(router.query.referrer as string, undefined);
-				console.log(" ++++++++ PUSH TO REFERRER ++++++++ ");
 			} else {
 				router.replace(router.pathname, undefined);
-				console.log(" ++++++++ Default ++++++++ ");
 			}
 		}
 	}, [shouldRedirect, router, isWaitingForSignIn]);
