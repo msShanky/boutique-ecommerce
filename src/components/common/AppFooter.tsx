@@ -101,6 +101,9 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 						<Link href="/contact-us" passHref>
 							<a className="text-sm underline">Contact Us</a>
 						</Link>
+						<Link href="/shipping-delivery" passHref>
+							<a className="text-sm underline">Shipping &amp; Delivery Policy</a>
+						</Link>
 					</div>
 				</article>
 			</section>
