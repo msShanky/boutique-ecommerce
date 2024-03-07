@@ -103,7 +103,7 @@ const Checkout: NextPage = () => {
 							<div className="flex flex-col items-center justify-center w-11/12 select-none">
 								<Image height={450} src="/images/404.svg" alt="No Orders Found" />
 								<Title className="text-4xl font-thin text-primaryBlack">The Cart Is Empty</Title>
-								<Link href="/products">
+								<Link href="/">
 									<Text className="mt-8 text-black underline hover:cursor-pointer hover:text-primary">
 										View Products
 									</Text>
@@ -116,7 +116,7 @@ const Checkout: NextPage = () => {
 								<CartTotal />
 							</div>
 						)}
-						{true && (
+						{isSuccess && paymentOrderSuccess && (
 							<div className="flex flex-col items-center justify-center w-10/12 gap-4 text-center select-none md:w-3/5">
 								{/* <Image width={350} src="/images/success_icon.svg" alt="Cart Success Icon" /> */}
 								<div>{View}</div>

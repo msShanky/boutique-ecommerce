@@ -49,15 +49,7 @@ const GenderGroupPage: NextPage<GenderGroupPageProps> = (props) => {
 							{category.category} for {category.gender_group.gender}
 						</Title>
 						<section className="flex flex-col w-full gap-10 mt-10 lg:flex-row">
-							<aside className="flex flex-col w-11/12 gap-10 p-4 mx-auto rounded-lg lg:w-1/4 bg-primary">
-								<h3>Filters</h3>
-								<div className="flex flex-row gap-4 lg:flex-col">
-									{subCategories.map((categoryFilter, index) => {
-										return <CategoryFilterFacet key={`${(index + 10) * 789546}`} categoryFilter={categoryFilter} />;
-									})}
-								</div>
-							</aside>
-							<div className="container flex flex-wrap lg:justify-start justify-center w-full gap-10 mx-auto mb-20 min-h-[60vh]">
+							<div className="container flex flex-wrap lg:justify-start justify-center w-full gap-10 mx-auto mb-20 min-h-[60vh] px-4">
 								{products.map((product) => {
 									const isWishlisted = wishlist.includes(product.id);
 									return (

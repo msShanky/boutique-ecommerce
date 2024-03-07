@@ -6,7 +6,9 @@ type ProductDetailsImageProps = {
 	product: ProductWithRelations;
 };
 
-const OPTIONS: EmblaOptionsType = {};
+const OPTIONS: EmblaOptionsType = {
+	loop: true,
+};
 
 export const ProductDetailsImage: FC<ProductDetailsImageProps> = ({ product }) => {
 	const { images } = product;

@@ -45,6 +45,7 @@ type ProductInformationProps = {
 type ProductCartType = {
 	product: ProductWithRelations;
 	variant: import("../types/supabase").definitions["product_variant"];
+	addOn?: ProductAddOn;
 };
 
 type UserWishListItem = import("../types/supabase").definitions["user_wishlist"] & {
@@ -168,4 +169,11 @@ type ProductPageSlugs = {
 		category: string;
 		page_link: string;
 	};
+};
+
+type ProductAddOn = {
+	id: string;
+	isDefault: boolean;
+	label: string;
+	price: number;
 };

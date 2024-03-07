@@ -72,7 +72,7 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 				</ActionIcon>
 				<div className={`flex justify-end w-6/12 p-2 ${!user ? "bg-transparent" : "bg-primary"} rounded-xl`}>
 					{user && !userLoading ? (
-						<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} theme="white" />
+						<UserAvatar handleToggle={() => null} user={user} theme="white" />
 					) : (
 						<Link href="/login">{LinkText("login")}</Link>
 					)}

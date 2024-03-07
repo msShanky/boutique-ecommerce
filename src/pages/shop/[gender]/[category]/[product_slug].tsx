@@ -1,4 +1,4 @@
-import { Button, Divider, Image, Loader, Text, Title } from "@mantine/core";
+import { Button, Divider, Highlight, Radio, Text, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import type { GetStaticPropsContext, NextPage } from "next";
 import { useRouter } from "next/router";
@@ -10,12 +10,13 @@ import { AppLayout } from "@/components/layout";
 import { addProductToCart } from "../../../../reducer/cart";
 import { definitions } from "../../../../types/supabase";
 import { getSellingPrice } from "helpers/price-calculator";
-import { getImageUrl } from "helpers/supabase-helper";
 import { useWishlist } from "hooks";
-import { Carousel } from "@mantine/carousel";
 import { getAllProductSlugs, getProductDetailsForSlugs } from "@/helpers/static_builder/productsHandler";
 import { getCategoryMenuLinks } from "@/helpers/static_builder";
-import { PriceWithDiscount, ProductDetailsImage } from "@/components/feature/product";
+import { ProductDetailsImage } from "@/components/feature/product";
+
+
+const highlightList = ["#IkkatFashion", "#CottonMidiDress", "#WomensFashion", "#ShopNow", "#BreezeBoutique", "#IkkatMidiDress", "#FashionOnABudget"]
 
 type ProductPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -27,6 +28,7 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const { user } = useUser();
 	const router = useRouter();
 
+	const [selectedAddon, setAddOn] = useState<ProductAddOn>();
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
@@ -52,13 +54,13 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 		} else {
 			setCartErrorState(false);
 		}
-		dispatch(addProductToCart({ product: product as ProductWithRelations, variant: selectedVariant }));
+		dispatch(addProductToCart({ product: product as ProductWithRelations, variant: selectedVariant, addOn: selectedAddon }));
 		showNotification({
 			title: "Added Product",
 			message: `${product?.title} has been added, and size selected is ${selectedVariant.size}`,
 		});
 	};
-	
+
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Product" menuLinks={props.menuLinks}>
 			<section className="container flex flex-col flex-wrap items-center mx-auto my-20 lg:items-start lg:flex-row">
@@ -73,14 +75,16 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 					<Divider my="md" />
 					<div className="flex items-center mt-6 space-x-4">
 						<Text className="font-sans text-xl text-primaryBlack">Rs. {getSellingPrice(product)}</Text>
-						<Text className="font-sans text-xl line-through text-primary">Rs. {product?.msrp}</Text>
-						{product?.product_discount && (
+						{product?.product_discount && product?.product_discount > 0 ? (
+							<Text className="font-sans text-xl line-through text-primary">Rs. {product?.msrp}</Text>
+						) : null}
+						{product?.product_discount ? (
 							<Text className="font-sans text-xl text-success">{`(${product?.product_discount}% OFF)`}</Text>
-						)}
+						) : null}
 					</div>
 					<div className="flex flex-col mt-8 space-y-4">
 						<Text className="font-sans text-lg font-semibold uppercase text-dark-blue">Select Size:</Text>
-						<div className={`flex mt-8 space-x-4 animate-pulse`}>
+						<div className={`flex flex-wrap w-11/12 gap-4 mt-8`}>
 							{product?.variants?.map((variant) => {
 								const variantKey = `variant_key_${variant.id}`;
 								const isSelected = selectedVariant?.id === variant.id;
@@ -104,8 +108,9 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 					<div className="flex flex-col items-center justify-between w-full gap-4 mt-12 lg:flex-row min-w-14">
 						<Button
 							classNames={{ label: "space-x-2" }}
-							className="flex justify-center w-10/12 h-12 lg:w-64 items-top bg-primary hover:bg-opacity-80 hover:bg-primary/60"
+							className="flex justify-center w-10/12 h-12 lg:w-64 items-top bg-primary hover:bg-opacity-80 hover:bg-primary/60 disabled:hover:cursor-not-allowed"
 							onClick={handleAddToCart}
+							disabled={cartErrorState}
 						>
 							<div>
 								<IconShoppingCart size={20} className="stroke-primaryBlack" />
@@ -125,6 +130,59 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 							<Text>{isWishlisted ? "Wishlisted" : "Wishlist"}</Text>
 						</Button>
 					</div>
+					{product.description && (
+						<div className="w-full pt-12 leading-loose tracking-wide prose">
+							<Highlight
+								highlight={highlightList}
+								className="flex flex-row flex-wrap gap-x-2 gap-y-4"
+								highlightStyles={{}}
+							>
+								{product.description}
+							</Highlight>
+						</div>
+					)}
+					{product.add_on ? (
+						<Radio.Group
+							value={selectedAddon ? selectedAddon.id : "no_lining"}
+							onChange={(value) => {
+								// @ts-ignore
+								const activeAddOn = product.add_on.filter((addOn) => addOn.id === value)[0];
+								if (!activeAddOn) return;
+								setAddOn(activeAddOn);
+							}}
+							name="productAddOn"
+							label="Select your required AddON for the product"
+							className="mt-10"
+							classNames={{
+								label: 'text-xl font-bold my-2'
+							}}
+						>
+							{/* @ts-ignore */}
+							{product.add_on.map((addOnData) => {
+								return (
+									<Radio key={addOnData.id} value={addOnData.id} label={`${addOnData.label} [Rs.${addOnData.price}]`} />
+								);
+							})}
+						</Radio.Group>
+					) : null}
+					{product.specification ? (
+						<div className="mt-10">
+							<h4 className="mb-4 font-sans text-xl font-bold">Specifications</h4>
+							{/* @ts-ignore */}
+							{product.specification.map((spec) => (
+								<li key={spec}>{spec}</li>
+							))}
+						</div>
+					) : null}
+					{product.care_specs ? (
+						<div className="mt-10">
+							<h4 className="mb-4 font-sans text-xl font-bold">Wash Care</h4>
+							{/* @ts-ignore */}
+							{product.care_specs.map((careSpec) => (
+								<li key={careSpec}>{careSpec}</li>
+							))}
+						</div>
+					) : null}
 				</div>
 			</section>
 		</AppLayout>

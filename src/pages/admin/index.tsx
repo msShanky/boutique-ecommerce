@@ -3,6 +3,7 @@ import Head from "next/head";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { AdminLayout } from "@/components/layout";
 import { Title } from "@mantine/core";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const AdminPage = () => {
 	return (

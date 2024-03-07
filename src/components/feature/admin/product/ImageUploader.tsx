@@ -12,19 +12,24 @@ type ImageUploaderProps = {
 	code: string | number;
 };
 
+const IMAGE_MAX_SIZE = 20;
+
 const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 	const { isDisabled, handleImageSuccess, code, type } = props;
 	const openRef = useRef<() => void>(null);
+	const [isUploadError, setUploadError] = useState<boolean>(false);
 	const [isLoading, setLoading] = useState<boolean>(false);
 
 	// TODO: Upload the product image to the desired folder in supabase
 	const handleFileUpload = async (files: File[]) => {
+		setUploadError(false);
 		const storage = type || "product-image";
 		setLoading(true);
 		if (!code) {
 			setLoading(false);
 			return;
 		}
+
 		// Always upload the first file
 		const imageFile = files[0];
 		const fileExt = imageFile.type.split("/")[1];
@@ -37,20 +42,26 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 	};
 
 	return (
-		<div className="relative mb-10">			
+		<div className="relative mb-10">
 			<Dropzone
 				openRef={openRef}
 				disabled={isDisabled}
 				onDrop={handleFileUpload}
+				onReject={(files) => {
+					if (files.length > 0) {
+						setUploadError(true);
+					}
+				}}
 				loading={isLoading}
 				className={`border-2 ${!type && isDisabled && "cursor-not-allowed text-black group"}`}
 				classNames={{
-					root: isDisabled ? "bg-error opacity-60 text-white hover:bg-error hover:opacity-40" : "bg-white",
-					inner: isDisabled ? "text-white" : "text-black",
+					root:
+						isDisabled || isUploadError ? "bg-error opacity-60 text-white hover:bg-error hover:opacity-40" : "bg-white",
+					inner: isDisabled || isUploadError ? "text-white" : "text-black",
 				}}
 				radius="md"
 				accept={IMAGE_MIME_TYPE}
-				maxSize={5 * 1024 ** 2}
+				maxSize={IMAGE_MAX_SIZE * 1024 ** 2}
 			>
 				<div style={{ pointerEvents: "none" }}>
 					<Group position="center">
@@ -76,11 +87,16 @@ const ImageUploader: FunctionComponent<ImageUploaderProps> = (props) => {
 					) : (
 						<Text align="center" size="sm" mt="xs">
 							Drag&apos;n&apos;drop files here to upload. We can accept only <i>.png</i>, <i>.jpg</i>, <i>.webp</i>,
-							files that are less than 2mb in size.
+							files that are less than {IMAGE_MAX_SIZE}mb in size.
 						</Text>
 					)}
 				</div>
 			</Dropzone>
+			{isUploadError && (
+				<p className="w-10/12 mx-auto mt-6 font-sans text-base text-center text-red-500">
+					Product image could not be uploaded, please check the image size meets the requirements.
+				</p>
+			)}
 		</div>
 	);
 };

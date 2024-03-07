@@ -4,6 +4,7 @@ import CategoryRow from "./CategoryRow";
 
 type CategoryTableProps = {
 	toggleEdit: (category: ProductCategory) => void;
+	toggleDelete: (category: ProductCategory) => void;
 	categories: Array<ProductCategory>;
 };
 
@@ -17,15 +18,17 @@ const columns: TableColumns = [
 ];
 
 const CategoryTable: FunctionComponent<CategoryTableProps> = (props) => {
-	const { toggleEdit, categories } = props;
+	const { toggleEdit, toggleDelete, categories } = props;
 
 	const rows = categories?.map((category) => {
 		const key = `CATEGORY_ROW_${category.category}`;
-		return <CategoryRow columns={columns} key={key} data={category} toggleEdit={toggleEdit} />;
+		return (
+			<CategoryRow columns={columns} key={key} data={category} toggleEdit={toggleEdit} toggleDelete={toggleDelete} />
+		);
 	});
 
 	return (
-		<Table className="mt-8 mb-20 w-12/12">
+		<Table className="mt-8 mb-20 w-12/12" highlightOnHover>
 			<thead>
 				<tr>
 					{columns.map((column) => {

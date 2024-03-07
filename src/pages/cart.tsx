@@ -28,9 +28,9 @@ const Cart: NextPage = () => {
 							</div>
 						)}
 						{cartState.products.length > 0 && (
-							<div className="flex flex-col items-start justify-center w-full gap-10 p-4 lg:flex-row">
+							<div className="flex flex-col items-start justify-center w-full gap-10 p-2 md:p-4 lg:flex-row">
 								<CartTable />
-								<CartTotal />
+								{/* <CartTotal /> */}
 							</div>
 						)}
 					</>

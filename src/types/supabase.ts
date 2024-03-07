@@ -571,6 +571,12 @@ export interface paths {
           page_link?: parameters["rowFilter.product.page_link"];
           /** The column to track if the product is published or not */
           is_published?: parameters["rowFilter.product.is_published"];
+          /** The add on option available and the price */
+          add_on?: parameters["rowFilter.product.add_on"];
+          /** The specification of the product and the details behind the product */
+          specification?: parameters["rowFilter.product.specification"];
+          /** Post care tips and specifications to maintain the quality of the product schema */
+          care_specs?: parameters["rowFilter.product.care_specs"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -645,6 +651,12 @@ export interface paths {
           page_link?: parameters["rowFilter.product.page_link"];
           /** The column to track if the product is published or not */
           is_published?: parameters["rowFilter.product.is_published"];
+          /** The add on option available and the price */
+          add_on?: parameters["rowFilter.product.add_on"];
+          /** The specification of the product and the details behind the product */
+          specification?: parameters["rowFilter.product.specification"];
+          /** Post care tips and specifications to maintain the quality of the product schema */
+          care_specs?: parameters["rowFilter.product.care_specs"];
         };
         header: {
           /** Preference */
@@ -683,6 +695,12 @@ export interface paths {
           page_link?: parameters["rowFilter.product.page_link"];
           /** The column to track if the product is published or not */
           is_published?: parameters["rowFilter.product.is_published"];
+          /** The add on option available and the price */
+          add_on?: parameters["rowFilter.product.add_on"];
+          /** The specification of the product and the details behind the product */
+          specification?: parameters["rowFilter.product.specification"];
+          /** Post care tips and specifications to maintain the quality of the product schema */
+          care_specs?: parameters["rowFilter.product.care_specs"];
         };
         body: {
           /** product */
@@ -1548,6 +1566,21 @@ export interface definitions {
      * @default false
      */
     is_published: boolean;
+    /**
+     * Format: jsonb
+     * @description The add on option available and the price
+     */
+    add_on?: unknown;
+    /**
+     * Format: jsonb
+     * @description The specification of the product and the details behind the product
+     */
+    specification?: unknown;
+    /**
+     * Format: jsonb
+     * @description Post care tips and specifications to maintain the quality of the product schema
+     */
+    care_specs?: unknown;
   };
   profiles: {
     /**
@@ -1907,6 +1940,21 @@ export interface parameters {
    * @description The column to track if the product is published or not
    */
   "rowFilter.product.is_published": string;
+  /**
+   * Format: jsonb
+   * @description The add on option available and the price
+   */
+  "rowFilter.product.add_on": string;
+  /**
+   * Format: jsonb
+   * @description The specification of the product and the details behind the product
+   */
+  "rowFilter.product.specification": string;
+  /**
+   * Format: jsonb
+   * @description Post care tips and specifications to maintain the quality of the product schema
+   */
+  "rowFilter.product.care_specs": string;
   /** @description profiles */
   "body.profiles": definitions["profiles"];
   /** Format: uuid */

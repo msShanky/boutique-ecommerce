@@ -101,7 +101,7 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 			/>
 			<TextInput placeholder="Product link" label="Product Link" readOnly {...getInputProps("page_link")} />
 			{/* <TextInput placeholder="Product link" label="Product Link" readOnly value={constructPageLink()} /> */}
-			<Textarea placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
+			<Textarea autosize minRows={6} placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
 			<div className="flex items-center justify-between gap-4">
 				{isSuccess && genderGroupData && (
 					<Select
@@ -141,7 +141,6 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 						className="inline-block w-full"
 						label="Sub Category"
 						placeholder="Select a sub category"
-						required
 						value={values.sub_category_id?.toString()}
 						onChange={(event) => setFieldValue("sub_category_id", parseInt(event as string, 10))}
 						data={subCategoriesData?.map(({ id, name }) => {

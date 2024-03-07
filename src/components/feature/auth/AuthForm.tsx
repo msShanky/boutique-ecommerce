@@ -71,66 +71,6 @@ export const AuthForm: FunctionComponent<AuthFormProps> = (props) => {
 					Google
 				</Button>
 			</div>
-			<Divider label="Or continue with email" labelPosition="center" my="lg" />
-			<form onSubmit={form.onSubmit(handleFormSubmit)}>
-				<Stack>
-					{type === "register" && (
-						<TextInput
-							label="Name"
-							placeholder="Your name"
-							value={form.values.name}
-							onChange={(event) => form.setFieldValue("name", event.currentTarget.value)}
-							classNames={{ wrapper: "w-full", input: "w-full" }}
-						/>
-					)}
-					<TextInput
-						required
-						label="Email"
-						placeholder="sample@example.dev"
-						value={form.values.email}
-						onChange={(event) => form.setFieldValue("email", event.currentTarget.value)}
-						error={form.errors.email && "Invalid email"}
-					/>
-					<PasswordInput
-						required
-						label="Password"
-						placeholder="your secret password"
-						value={form.values.password}
-						onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
-						error={form.errors.password && "Password should include at least 6 characters"}
-					/>
-					{type === "register" && (
-						<Checkbox
-							label="I accept terms and conditions"
-							checked={form.values.terms}
-							classNames={{
-								input: "bg-primary",
-							}}
-							onChange={(event) => form.setFieldValue("terms", event.currentTarget.checked)}
-						/>
-					)}
-				</Stack>
-				<Group position="apart" mt="xl">
-					<div className="flex items-center gap-2">
-						<Text className="font-sans text-xs">
-							{type === "register" ? "Already have an account?" : "Don't have an account?"}
-						</Text>
-						<Anchor
-							className="underline text-primaryBlack decoration-primary decoration-2"
-							component="button"
-							type="button"
-							color="gray"
-							onClick={() => toggle()}
-							size="sm"
-						>
-							{type === "register" ? "Login" : "Register"}
-						</Anchor>
-					</div>
-					<Button className="w-40 bg-black hover:bg-primary/60 hover:text-primaryBlack" type="submit">
-						{upperFirst(type)}
-					</Button>
-				</Group>
-			</form>
 		</Paper>
 	);
 };

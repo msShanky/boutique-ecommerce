@@ -15,8 +15,12 @@ export const PriceWithDiscount: FC<PriceWithDiscountTypes> = (props) => {
 	return (
 		<div className="flex items-center mt-6 space-x-4">
 			<Text className="font-sans text-base text-primaryBlack">Rs. {getSellingPrice(product)}</Text>
-			<Text className="font-sans text-sm line-through text-primary">Rs. {msrp}</Text>
-			{product_discount && <Text className="font-sans text-sm text-success">{`(${product_discount}% OFF)`}</Text>}
+			{product_discount && product_discount !== 0 ? (
+				<Text className="font-sans text-sm line-through text-primary">Rs. {msrp}</Text>
+			) : null}
+			{product_discount && product_discount > 0 ? (
+				<Text className="font-sans text-sm text-success">{`(${product_discount}% OFF)`}</Text>
+			) : null}
 		</div>
 	);
 };

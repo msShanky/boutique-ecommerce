@@ -2,7 +2,7 @@ import { AppLayout, AppSection } from "@/components/layout";
 import Link from "next/link";
 import React from "react";
 
-const PrivacyPolicyPage = () => {
+const PaymentMethodPage = () => {
 	return (
 		<AppLayout isContained pageTitle="Payment Methods & Orders">
 			<article className="container p-6 prose-sm prose 2xl:prose-sm md:p-0">
@@ -20,4 +20,4 @@ const PrivacyPolicyPage = () => {
 	);
 };
 
-export default PrivacyPolicyPage;
+export default PaymentMethodPage;
