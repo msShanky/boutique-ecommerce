@@ -3,7 +3,7 @@ import { Divider } from "@mantine/core";
 
 import React from "react";
 
-const PrivacyPolicyPage = () => {
+const ShippingDeliveryPage = () => {
 	return (
 		<AppLayout isContained pageTitle="Shipping & Delivery Policy">
 			<article className="container p-6 prose-sm prose 2xl:prose-sm md:p-0">
@@ -35,4 +35,4 @@ const PrivacyPolicyPage = () => {
 	);
 };
 
-export default PrivacyPolicyPage;
+export default ShippingDeliveryPage;

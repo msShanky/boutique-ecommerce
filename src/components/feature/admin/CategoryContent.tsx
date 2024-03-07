@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { LoadingOverlay } from "@mantine/core";
-import { useLazyGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
+import { useGetProductCategoriesQuery, useLazyGetProductCategoriesQuery } from "@/reducer/breezeBaseApi";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { formatCategoryFormForUpdate } from "helpers/supabase-helper";
 import { PostgrestError } from "@supabase/supabase-js";
 import { CategoryList, CategoryManager } from "@/components/feature/admin/category";
+import { DeleteWarningModal } from "./warning";
+import { useToggle } from "@mantine/hooks";
 // TODO: Add parent category for gender and child categories for different types
 
 const CategoryContent = () => {
+	const [deleteModalOpened, setDeleteModalOpened] = useToggle();
 	const [crudState, setCrudState] = useState<AdminCRUDContent>("read");
 	const [activeCategory, setActiveCategory] = useState<ProductCategory>();
 	const [categoryApiState, setCategoryApiState] = useState<ApiStatus>("idle");
-	const [getProductCategories, { data: categories, isLoading }] = useLazyGetProductCategoriesQuery();
+	const { data: categories, isLoading } = useGetProductCategoriesQuery(undefined, {
+		refetchOnFocus: true,
+	});
 
 	const toggleCategoryAdd = () => {
 		setCrudState("create");
@@ -20,6 +25,11 @@ const CategoryContent = () => {
 	const toggleCategoryEdit = (category: ProductCategory) => {
 		setActiveCategory(category);
 		setCrudState("update");
+	};
+
+	const toggleCategoryDelete = (category: ProductCategory) => {
+		setDeleteModalOpened(true);
+		setActiveCategory(category);
 	};
 
 	// TODO: If there is an error when creating a new product delete the image created for the same product
@@ -35,14 +45,23 @@ const CategoryContent = () => {
 		const { ...coreCategory } = category;
 		const { data, error } = await supabaseClient.from("product_category").insert(coreCategory);
 
-		getProductCategories();
+		// getProductCategories();
+	};
+
+	const handleCategoryDelete = async () => {
+		if (!activeCategory) {
+			return;
+		}
+
+		const deletedData = await supabaseClient.from("product_category").delete().match({ id: activeCategory.id });
+		// getProductCategories();
 	};
 
 	const handleCategoryEdit = async (category: ProductCategory) => {
 		const { ...coreCategory } = formatCategoryFormForUpdate(category);
 		const { data, error } = await supabaseClient.from("product_category").update(coreCategory).eq("id", category.id);
 		handleCategoryApiResponse(data, error);
-		getProductCategories();
+		// getProductCategories();
 	};
 
 	const handleCategoryUpdate = async (category: CategoryPostBody | ProductCategory) => {
@@ -61,7 +80,7 @@ const CategoryContent = () => {
 	};
 
 	useEffect(() => {
-		getProductCategories();
+		// getProductCategories();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -78,7 +97,22 @@ const CategoryContent = () => {
 
 	// Display the list of products if the state is read
 	if (crudState === "read" && !shouldShowLoader) {
-		return <CategoryList categories={categories?.body} toggleEdit={toggleCategoryEdit} toggleAdd={toggleCategoryAdd} />;
+		return (
+			<>
+				<DeleteWarningModal
+					modelType="category"
+					onDelete={() => handleCategoryDelete()}
+					opened={deleteModalOpened}
+					toggleOpen={setDeleteModalOpened}
+				/>
+				<CategoryList
+					categories={categories?.body}
+					toggleEdit={toggleCategoryEdit}
+					toggleDelete={toggleCategoryDelete}
+					toggleAdd={toggleCategoryAdd}
+				/>
+			</>
+		);
 	}
 
 	// Returns the product form for managing the product edit and add

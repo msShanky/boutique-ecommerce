@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 
 import { cartQuantitySelector } from "@/reducer/cart";
 
@@ -11,6 +11,7 @@ import { HoverMenuItem, LinkIcon, MobileMenu } from "./header";
 import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "./user";
 import { useRouter } from "next/router";
+import { IconLogout } from "@tabler/icons-react";
 
 // import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 
@@ -23,7 +24,7 @@ type AppHeaderProps = {
 };
 
 const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
-	const [opened, { toggle, close }] = useDisclosure(false);	
+	const [opened, { toggle, close }] = useDisclosure(false);
 	const { user, isLoading: userLoading } = useUser();
 	const rootState = useAppSelector((state) => state);
 	const router = useRouter();
@@ -73,13 +74,20 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 				</Link>
 				<div className="flex-row hidden gap-12 md:flex">
 					<Group position="right" className={"mr-4 gap-6"}>
-						{menuItems}
+						{/* {menuItems} */}
 					</Group>
 					<Group position="right" className={"mr-4 gap-6"}>
 						{user && !userLoading ? (
-							<UserAvatar handleToggle={() => console.log("The user button is clicked")} user={user} theme="black" />
+							<UserAvatar handleToggle={() => null} user={user} theme="black" />
 						) : (
 							<Link href="/login">{menuItem("login")}</Link>
+						)}
+						{user && !userLoading && (
+							<LinkIcon
+								icon={<IconLogout size={20} className="stroke-white" />}
+								link="/api/auth/logout"
+								label="logout"
+							/>
 						)}
 						<LinkIcon icon={<IconHeart size={20} className="stroke-white" />} link="/wishlist" label="WishList" />
 						{/* TODO: [2] [Prod_mvp] the cart dock count should be based on the total quantity  */}

@@ -73,13 +73,16 @@ const selectSelf = (state: RootState) => state.cart;
 export const cartTotalSelector = createDraftSafeSelector(selectSelf, (state) => {
 	let totalValue = 0;
 	state.products.forEach((stateValue) => {
-		const { product, quantity } = stateValue;
+		const { product, quantity, addOn } = stateValue;
 		const mrp = product.msrp as number;
+		const addOnPrice = addOn?.price;
 		const discountPrice = mrp * ((product.product_discount as number) / 100);
 		const productPrice = mrp - parseInt(discountPrice?.toFixed(), 10);
-		const productTotalPrice = quantity * productPrice;
+		const productWithAddOnPrice = addOnPrice ? productPrice + addOnPrice : productPrice;
+		const productTotalPrice = quantity * productWithAddOnPrice;
 		totalValue = productTotalPrice + totalValue;
 	});
+
 	return totalValue;
 });
 

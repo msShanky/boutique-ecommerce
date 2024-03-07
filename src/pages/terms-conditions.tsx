@@ -2,7 +2,7 @@ import { AppLayout, AppSection } from "@/components/layout";
 import Link from "next/link";
 import React from "react";
 
-const PrivacyPolicyPage = () => {
+const TermsAndConditionsPage = () => {
 	return (
 		<AppLayout isContained pageTitle="Terms & Conditions">
 			<article className="container p-6 prose-sm prose 2xl:prose-sm md:p-0">
@@ -80,4 +80,4 @@ const PrivacyPolicyPage = () => {
 	);
 };
 
-export default PrivacyPolicyPage;
+export default TermsAndConditionsPage;

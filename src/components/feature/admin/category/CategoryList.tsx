@@ -7,17 +7,20 @@ type CategoryListProps = {
 	categories?: Array<definitions["product_category"]>;
 	toggleAdd: () => void;
 	toggleEdit: (category: ProductCategory) => void;
+	toggleDelete: (category: ProductCategory) => void;
 };
 
 const CategoryList: FunctionComponent<CategoryListProps> = (props) => {
-	const { categories, toggleAdd, toggleEdit } = props;
+	const { categories, toggleAdd, toggleEdit, toggleDelete } = props;
 
 	return (
 		<div>
 			<div className="flex items-end space-x-8">
 				<CategoryFloatingBar toggleAdd={toggleAdd} />
 			</div>
-			{categories && categories.length > 0 && <CategoryTable categories={categories} toggleEdit={toggleEdit} />}
+			{categories && categories.length > 0 && (
+				<CategoryTable categories={categories} toggleEdit={toggleEdit} toggleDelete={toggleDelete} />
+			)}
 		</div>
 	);
 };

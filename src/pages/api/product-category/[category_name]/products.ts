@@ -42,7 +42,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const { category_name, isAdmin, from, to } = req.query;
 		const { data: categoryData } = await getCategoryIdByName(category_name as string);
 		const _categoryId = categoryData ? categoryData[0].id : undefined;
-		if (!_categoryId) res.status(404).send({ message: "Category not found" });
+		
+		if (!_categoryId) {
+			return res.status(404).send({ message: "Category not found" });
+		}
+
 		const { data, ...response } = await getProductsForCategory(
 			_categoryId as number,
 			!!isAdmin,
@@ -50,6 +54,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			parseInt(to as string)
 		);
 
-		res.status(200).json(response);
+		return res.status(200).json(response);
 	}
 }

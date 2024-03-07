@@ -54,7 +54,7 @@ export const getProductDetailsForSlugs = async (productSlug: string) => {
 	const productDetails = await supabaseClient
 		.from<definitions["product"]>("product")
 		.select(
-			`id,code,images,category_id,msrp,title,sub_title,product_discount,page_link,
+			`id,code,images,category_id,msrp,title,sub_title,product_discount,page_link,description,add_on,specification,care_specs,
 			variants:product_variant(id,sku,size,inventory_count),
 			category:category_id (*),
 			gender_group(*),

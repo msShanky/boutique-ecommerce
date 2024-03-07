@@ -1,12 +1,9 @@
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent } from "react";
 import { AuthForm, AuthFormLoader } from "@/components/feature/auth";
 import AppLayout from "../components/layout/AppLayout";
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 import { useAuthValidator } from "../helpers";
-// import Head from "next/head";
-// import { Loader } from "@mantine/core";
-
 // TODO: [4] Handle email login
 // TODO: [4] Handle email sign up
 
@@ -37,7 +34,7 @@ const Login = () => {
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Login" menuLinks={[]}>
 			<>
-				<main className="container mx-auto mt-40">					
+				<main className="container mx-auto mt-40">
 					{isLoading || isWaitingForSignIn ? <AuthFormLoader /> : <AuthForm handleGoogleLogin={handleGoogleLogin} />}
 				</main>
 			</>

@@ -37,4 +37,4 @@ type AdminFormVariant = {
 	inventory_count: number | null;
 };
 
-type DeleteWarningModalTypes = "product" | "variant" | "cart";
+type DeleteWarningModalTypes = "product" | "variant" | "cart" | "category";

@@ -2,7 +2,7 @@ import { AppLayout, AppSection } from "@/components/layout";
 import Link from "next/link";
 import React from "react";
 
-const PrivacyPolicyPage = () => {
+const ReturnExchangePage = () => {
 	return (
 		<AppLayout isContained pageTitle="Returns & Exchanges">
 			<article className="container p-6 prose-sm prose md:p-0 2xl:prose-sm">
@@ -73,4 +73,4 @@ const PrivacyPolicyPage = () => {
 	);
 };
 
-export default PrivacyPolicyPage;
+export default ReturnExchangePage;

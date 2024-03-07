@@ -31,8 +31,13 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 				</div>
 				<div className="flex flex-col w-fit">
 					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>
-					{/* FIXME: [1] [Prod] Clicking on category Women on footer is not working  */}
 					<div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
+						<Link href="/shop/women/kurta">
+							<p className="text-sm underline text-primaryBlack hover:cursor-pointer">Kurta</p>
+						</Link>
+					</div>
+					{/* FIXME: [1] [Prod] Clicking on category Women on footer is not working  */}
+					{/* <div className="flex flex-col mt-8 text-primary text-opacity-30 gap-y-4">
 						{menuLinks &&
 							menuLinks.map((menuItem, index) => {
 								const { categories, menuLabel, menuLink } = menuItem;
@@ -55,7 +60,7 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 															</Text>
 															<IconChevronRight size={16} className="text-primaryAlt" />
 														</a>
-														{/* TODO: [4] [Accessibility] Construct the links with Link href object for performance  */}
+														TODO: [4] [Accessibility] Construct the links with Link href object for performance 
 														<div className="flex flex-col gap-4">
 															{product_sub_category.map((subCategory, subCategoryIndex) => {
 																const { name, category_id, id } = subCategory;
@@ -81,12 +86,12 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 									</div>
 								);
 							})}
-					</div>
+					</div> */}
 				</div>
 				<article className="container flex flex-col w-full lg:w-2/12 gap-y-4">
 					<Title className="text-2xl font-semibold text-primaryBlack">Quick Links</Title>
 					<div className="flex flex-col gap-6">
-						<Link href="/privacy-policy" passHref>
+						<Link href="/privacy" passHref>
 							<a className="text-sm underline">Privacy policy</a>
 						</Link>
 						<Link href="/returns-exchange" passHref>

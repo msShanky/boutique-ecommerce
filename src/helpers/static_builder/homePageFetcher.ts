@@ -30,34 +30,42 @@ const homeCarousal = [
 ];
 
 export const getHomePageData = async () => {
-	const getFeaturedProducts = await supabaseClient
-		.from<definitions["product"]>("product")
-		.select(
-			`id,code,images,category_id,msrp,title,sub_title,product_discount,page_link,
+	try {
+		const getFeaturedProducts = await supabaseClient
+			.from<definitions["product"]>("product")
+			.select(
+				`id,code,images,category_id,msrp,title,sub_title,product_discount,page_link,
 			variants:product_variant(id,sku,size,inventory_count),
 			category:category_id (*),
 			gender_group(*),
 			sub_category:sub_category_id(*)`
-		)
+			)
+			// @ts-ignore
+			.order("size", { foreignTable: "product_variant", ascending: false });
+
+		const allProductCategories = await supabaseClient
+			.from<definitions["product_category"]>("product_category")
+			.select("*, gender_group (*)")
+			.eq("is_published", true)
+			.limit(5);
+
+		const { data: categoryData, ...categoryResponse } = allProductCategories;
+		const { data, ...response } = getFeaturedProducts;
+
 		// @ts-ignore
-		.order("size", { foreignTable: "product_variant", ascending: false });
+		const featuredProducts = response.body?.filter((item) => item?.variants.length > 0) || [];
 
-	const allProductCategories = await supabaseClient
-		.from<definitions["product_category"]>("product_category")
-		.select("*, gender_group (*)")
-		.eq("is_published", true)
-		.limit(5);
-
-	const { data: categoryData, ...categoryResponse } = allProductCategories;
-	const { data, ...response } = getFeaturedProducts;
-
-	// @ts-ignore
-	const featuredProducts = response.body?.filter((item) => item?.variants.length > 0) || [];
-
-	// TODO: Update this logic to fetch the featured products
-	return {
-		featured: featuredProducts,
-		categories: categoryResponse.body,
-		bannerContent: homeCarousal,
-	};
+		// TODO: Update this logic to fetch the featured products
+		return {
+			featured: featuredProducts,
+			categories: categoryResponse.body,
+			bannerContent: homeCarousal,
+		};
+	} catch (error) {
+		return {
+			featured: null,
+			categories: null,
+			bannerContent: homeCarousal,
+		};
+	}
 };

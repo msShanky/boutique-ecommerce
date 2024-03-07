@@ -1,20 +1,16 @@
 import { ActionIcon, Button, Image, Table, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { getImageUrl } from "helpers/supabase-helper";
 import React, { FC } from "react";
-import { increaseQuantity, decreaseQuantity } from "reducer/cart";
+import { increaseQuantity, decreaseQuantity, cartTotalSelector } from "reducer/cart";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { getSellingPrice } from "../../../helpers/price-calculator";
 import { DeleteWarningModal } from "@/components/feature/admin/warning";
 import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
 
 type SelectedSizeProps = {
 	variantText: string;
-};
-
-const styles = {
-	variantDesktop: `rounded-full w-10 text-md h-10 capitalize border-primaryBlack text-primaryBlack bg-primary flex justify-center items-center absolute md:flex`,
 };
 
 const SelectedSize: FC<SelectedSizeProps> = ({ variantText }) => {
@@ -31,12 +27,13 @@ const SelectedSize: FC<SelectedSizeProps> = ({ variantText }) => {
 
 const CartTable = () => {
 	const { products } = useAppSelector((state) => state.cart);
-
 	const [opened, { open, close }] = useDisclosure(false);
 	const dispatch = useAppDispatch();
+	const state = useAppSelector((state) => state);
+	const cartTotal = cartTotalSelector(state);
 
 	const rows = products.map((productState: CartProduct, index: number) => {
-		const { product, variant, quantity } = productState;
+		const { product, variant, quantity, addOn } = productState;
 		const sellingPrice = getSellingPrice(product);
 		const { id, images } = product;
 		const baseImage = getImageUrl(images && images.length > 0 ? (images[0] as string) : "");
@@ -62,7 +59,7 @@ const CartTable = () => {
 					opened={opened}
 					toggleOpen={(isClose) => !isClose && close()}
 				/>
-				<td className="flex flex-row space-x-2">
+				<td className="flex flex-row flex-grow">
 					<div className="relative flex flex-row">
 						<Image src={baseImage} alt={`Product Image ${id}`} width={100} height={100} fit="contain" />
 						{/* TODO: [4] [GoodToHave] A user should be able to change the variant of the product in cart page */}
@@ -71,6 +68,16 @@ const CartTable = () => {
 						</div>
 					</div>
 				</td>
+				{addOn && (
+					<td className="">
+						<div className="flex flex-col items-center gap-2 md:flex-row">
+							<p className="text-xs md:text-base">{addOn?.label}</p>
+							<p className="p-0 m-0 text-xs whitespace-nowrap">
+								&#40;<span className="text-sm text-green-500 md:text-lg">+ {addOn?.price}</span>&#41;
+							</p>
+						</div>
+					</td>
+				)}
 				<td>{sellingPrice}</td>
 				<td>
 					<Button.Group className="flex items-center">
@@ -86,23 +93,42 @@ const CartTable = () => {
 					</Button.Group>
 				</td>
 				{/* TODO: Price should be updated as per the quantity  */}
-				<td>{quantity * sellingPrice}</td>
+				<td>{addOn?.price ? quantity * (addOn?.price + sellingPrice) : sellingPrice}</td>
 			</tr>
 		);
 	});
 
 	return (
-		<Table className="w-7/12">
-			<thead>
-				<tr>
-					<th className="text-xl font-bold text-primary">Product</th>
-					<th className="text-xl font-bold text-primary">Price</th>
-					<th className="text-xl font-bold text-primary">Quantity</th>
-					<th className="text-xl font-bold text-primary">Total</th>
-				</tr>
-			</thead>
-			<tbody>{rows}</tbody>
-		</Table>
+		<section className="flex flex-col w-full min-h-[65vh] gap-4 md:w-7/12 relative">
+			<Table className="">
+				<thead>
+					<tr>
+						<th className="text-xl font-bold text-primary">Product</th>
+						{products.length > 0 && products.some((row) => Object.hasOwn(row, "addOn")) && (
+							<th className="text-xl font-bold text-primary">AddOn</th>
+						)}
+						<th className="text-xl font-bold text-primary">Price</th>
+						<th className="text-xl font-bold text-primary">Quantity</th>
+						<th className="text-xl font-bold text-primary">Total</th>
+					</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</Table>
+
+			<div className="absolute bottom-0 flex flex-col-reverse items-center w-full gap-2 md:justify-between md:flex-row">
+				<div className="flex w-full md:w-3/12">
+					<Link href="/checkout" passHref>
+						<Button className="w-full text-white bg-success active:bg-primary hover:text-primaryBlack active:text-primaryBlack">
+							Proceed To Checkout
+						</Button>
+					</Link>
+				</div>
+				<div className="flex items-center self-end justify-end w-full px-4 py-2 text-black align-bottom rounded-full md:w-4/12 bg-primary gap-x-8">
+					<p>Total</p>
+					<p className="text-xl font-bold">Rs.{cartTotal}</p>
+				</div>
+			</div>
+		</section>
 	);
 };
 

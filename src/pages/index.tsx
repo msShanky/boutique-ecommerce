@@ -1,6 +1,5 @@
 import type { NextPage, NextPageContext } from "next";
 import { Loader } from "@mantine/core";
-import Head from "next/head";
 import { AppLayout } from "@/components/layout";
 import { HomeCarousal, CarousalCardSlider, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
 import { useAuthValidator } from "../helpers";
