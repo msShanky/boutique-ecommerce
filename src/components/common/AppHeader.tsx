@@ -84,20 +84,20 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						)}
 						{user && !userLoading && (
 							<LinkIcon
-								icon={<IconLogout size={20} className="stroke-white" />}
+								icon={<IconLogout size={20} className="stroke-primary fill-primaryBlack" />}
 								link="/api/auth/logout"
 								label="logout"
 							/>
 						)}
-						<LinkIcon icon={<IconHeart size={20} className="stroke-white" />} link="/wishlist" label="WishList" />
+						<LinkIcon icon={<IconHeart size={20} className="stroke-primary fill-primaryBlack" />} link="user/wishlist" label="WishList" />
 						<LinkIcon
-							icon={<IconTruckDelivery size={20} className="stroke-white" />}
+							icon={<IconTruckDelivery size={20} className="stroke-primary fill-primaryBlack" />}
 							link="/user/orders"
 							label="Orders"
 						/>
 						{/* TODO: [2] [Prod_mvp] the cart dock count should be based on the total quantity  */}
 						<LinkIcon
-							icon={<IconShoppingCart size={25} className="stroke-white" />}
+							icon={<IconShoppingCart size={25} className="stroke-primary fill-primaryBlack" />}
 							link="/cart"
 							dockCount={cartItemCount}
 						/>
@@ -105,11 +105,11 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 				</div>
 				<div className="flex gap-8 md:hidden">
 					<LinkIcon
-						icon={<IconShoppingCart size={25} className="stroke-white" />}
+						icon={<IconShoppingCart size={25} className="stroke-primary fill-primaryBlack" />}
 						link="/cart"
 						dockCount={cartItemCount}
 					/>
-					<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" />
+					{/* <LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="user/wishlist" /> */}
 					<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />
 					<Drawer
 						withCloseButton={false}

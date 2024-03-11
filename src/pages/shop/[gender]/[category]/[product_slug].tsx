@@ -36,13 +36,13 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const router = useRouter();
 	const product = props.productDetails;
 	// @ts-ignore
-	const [selectedAddon, setAddOn] = useState<ProductAddOn>(product.add_on ? product.add_on.filter((addOn) => addOn.id === 'no_lining')[0]: null);
+	const [selectedAddon, setAddOn] = useState<ProductAddOn>(
+		product.add_on ? product.add_on.filter((addOn) => addOn.id === "no_lining")[0] : null
+	);
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
 	const { wishlist, handleWishlist } = useWishlist(user?.id);
-
-
 
 	const isWishlisted = wishlist.includes(product?.id || 0);
 
@@ -68,6 +68,7 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 		showNotification({
 			title: "Added Product",
 			message: `${product?.title} has been added, and size selected is ${selectedVariant.size}`,
+			color: "green",
 		});
 	};
 

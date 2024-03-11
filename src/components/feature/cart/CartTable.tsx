@@ -100,13 +100,13 @@ const CartTable = () => {
 				<td>{sellingPrice}</td>
 				<td>
 					<Button.Group className="flex items-center">
-						<ActionIcon onClick={handleQuantityDecrease} className="h-9">
+						<ActionIcon onClick={handleQuantityDecrease} className="h-4 bg-primaryAlt md:h-9">
 							<IconMinus size="1.125rem" />
 						</ActionIcon>
 						<div className="flex items-center justify-center w-8 border md:w-12 h-9">
 							<Text className="text-center align-middle ">{quantity}</Text>
 						</div>
-						<ActionIcon onClick={() => dispatch(increaseQuantity(productState))} className="h-9">
+						<ActionIcon onClick={() => dispatch(increaseQuantity(productState))} className="h-4 md:h-9 bg-primaryAlt">
 							<IconPlus size="1.125rem" />
 						</ActionIcon>
 					</Button.Group>
@@ -118,20 +118,22 @@ const CartTable = () => {
 	});
 
 	return (
-		<section className="flex flex-col w-full min-h-[80vh] gap-4 md:w-7/12 relative">
-			<Table className="">
-				<thead>
-					<tr>
-						<th className="text-xl font-bold text-primary">Product</th>
-						{anyProductItemHasAddOn && <th className="text-xl font-bold text-primary">AddOn</th>}
-						<th className="text-xl font-bold text-primary">Price</th>
-						<th className="text-xl font-bold text-primary">Quantity</th>
-						<th className="text-xl font-bold text-primary">Total</th>
-					</tr>
-				</thead>
-				<tbody className="">{rows}</tbody>
-			</Table>
-			<div className="absolute bottom-0 flex flex-col-reverse items-center w-full gap-2 bottom-45 md:justify-between md:flex-row">
+		<section className="flex flex-col w-full gap-4 md:w-7/12">
+			<div className="max-h-[60vh] md:max-h-[70vh] overflow-hidden  overflow-y-scroll scrollbar-none px-2">
+				<Table verticalSpacing="xs" fontSize="xs" className="mb-40 bg-stone-200 rounded-2xl" withBorder={false}>
+					<thead className="w-full table-fixed bg-primary ">
+						<tr className="text-left">
+							<th className="text-xl font-bold text-primary">Product</th>
+							{anyProductItemHasAddOn && <th className="text-xl font-bold text-primary">AddOn</th>}
+							<th className="text-xl font-bold text-primary">Price</th>
+							<th className="text-xl font-bold text-primary">Quantity</th>
+							<th className="text-xl font-bold text-primary">Total</th>
+						</tr>
+					</thead>
+					<tbody className="">{rows}</tbody>
+				</Table>
+			</div>
+			<div className="flex flex-col-reverse items-center w-full gap-2 px-2 bottom-45 md:justify-between md:flex-row">
 				<div className="flex w-full md:w-3/12"></div>
 				<div className="flex flex-col items-center w-full p-4 md:flex-row md:justify-end bg-primary gap-x-8 gap-y-4 rounded-2xl">
 					<div className="flex flex-row items-center gap-2 md:flex-col">

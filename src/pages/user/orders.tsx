@@ -99,6 +99,8 @@ const OrdersPage = () => {
 							);
 						})}
 				</>
+				{!userOrders ||
+					(userOrders.length <= 0 && <p>There are no orders for the user, please order to view the updates.</p>)}
 			</section>
 		</AppLayout>
 	);
