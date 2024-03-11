@@ -81,6 +81,15 @@ export const breezeBaseApi = createApi({
 		getUserWishlist: builder.query<SupaBaseResponse<Array<UserWishListItem>>, string>({
 			query: (id: string) => `wishlist/${id}`,
 		}),
+		getUserAddress: builder.query<SupaBaseResponse<Array<any>>, string>({
+			query: (id: string) => `user/shipping-address/${id}`,
+		}),
+		getUserAddressWithID: builder.query<SupaBaseResponse<Array<any>>, string>({
+			query: (id: string) => `user/${id}/shipping-address`,
+		}),
+		getUserOrders: builder.query<SupaBaseResponse<Array<any>>, string>({
+			query: (id: string) => `shipping/${id}`,
+		}),
 	}),
 });
 
@@ -98,5 +107,8 @@ export const {
 	useGetOrderItemsByOrderIdQuery,
 	useSetOrderStatusMutation,
 	useLazyGetUserWishlistQuery,
+	useLazyGetUserAddressQuery,
 	useInitiatePaymentMutation,
+	useGetUserAddressQuery,
+	useLazyGetUserAddressWithIDQuery,
 } = breezeBaseApi;

@@ -25,6 +25,8 @@ export interface paths {
           razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
           razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
+          /** The relationship between an user order and their shipping information */
+          user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -84,6 +86,8 @@ export interface paths {
           razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
           razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
+          /** The relationship between an user order and their shipping information */
+          user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
         };
         header: {
           /** Preference */
@@ -107,6 +111,8 @@ export interface paths {
           razorpay_order_id?: parameters["rowFilter.user_order.razorpay_order_id"];
           razorpay_payment_id?: parameters["rowFilter.user_order.razorpay_payment_id"];
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
+          /** The relationship between an user order and their shipping information */
+          user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
         };
         body: {
           /** user_order */
@@ -138,6 +144,8 @@ export interface paths {
           city?: parameters["rowFilter.user_shipping_address.city"];
           country?: parameters["rowFilter.user_shipping_address.country"];
           pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+          /** State of the the country that the user resides in */
+          state?: parameters["rowFilter.user_shipping_address.state"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -199,6 +207,8 @@ export interface paths {
           city?: parameters["rowFilter.user_shipping_address.city"];
           country?: parameters["rowFilter.user_shipping_address.country"];
           pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+          /** State of the the country that the user resides in */
+          state?: parameters["rowFilter.user_shipping_address.state"];
         };
         header: {
           /** Preference */
@@ -224,6 +234,8 @@ export interface paths {
           city?: parameters["rowFilter.user_shipping_address.city"];
           country?: parameters["rowFilter.user_shipping_address.country"];
           pin_code?: parameters["rowFilter.user_shipping_address.pin_code"];
+          /** State of the the country that the user resides in */
+          state?: parameters["rowFilter.user_shipping_address.state"];
         };
         body: {
           /** user_shipping_address */
@@ -936,6 +948,9 @@ export interface paths {
           price?: parameters["rowFilter.order_item.price"];
           discount?: parameters["rowFilter.order_item.discount"];
           quantity?: parameters["rowFilter.order_item.quantity"];
+          add_on_details?: parameters["rowFilter.order_item.add_on_details"];
+          /** Item price is  the sum of Addon Price and Items Price */
+          item_price?: parameters["rowFilter.order_item.item_price"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -994,6 +1009,9 @@ export interface paths {
           price?: parameters["rowFilter.order_item.price"];
           discount?: parameters["rowFilter.order_item.discount"];
           quantity?: parameters["rowFilter.order_item.quantity"];
+          add_on_details?: parameters["rowFilter.order_item.add_on_details"];
+          /** Item price is  the sum of Addon Price and Items Price */
+          item_price?: parameters["rowFilter.order_item.item_price"];
         };
         header: {
           /** Preference */
@@ -1016,6 +1034,9 @@ export interface paths {
           price?: parameters["rowFilter.order_item.price"];
           discount?: parameters["rowFilter.order_item.discount"];
           quantity?: parameters["rowFilter.order_item.quantity"];
+          add_on_details?: parameters["rowFilter.order_item.add_on_details"];
+          /** Item price is  the sum of Addon Price and Items Price */
+          item_price?: parameters["rowFilter.order_item.item_price"];
         };
         body: {
           /** order_item */
@@ -1378,6 +1399,14 @@ export interface definitions {
     razorpay_payment_id?: string;
     /** Format: character varying */
     razorpay_signature?: string;
+    /**
+     * Format: bigint
+     * @description The relationship between an user order and their shipping information
+     *
+     * Note:
+     * This is a Foreign Key to `user_shipping_address.id`.<fk table='user_shipping_address' column='id'/>
+     */
+    user_shipping_address_id?: number;
   };
   /** @description Contains the user shipping information for each instance created */
   user_shipping_address: {
@@ -1410,6 +1439,11 @@ export interface definitions {
     country?: string;
     /** Format: text */
     pin_code?: string;
+    /**
+     * Format: text
+     * @description State of the the country that the user resides in
+     */
+    state?: string;
   };
   user_wishlist: {
     /**
@@ -1666,6 +1700,13 @@ export interface definitions {
     discount?: number;
     /** Format: bigint */
     quantity?: number;
+    /** Format: jsonb */
+    add_on_details?: unknown;
+    /**
+     * Format: numeric
+     * @description Item price is  the sum of Addon Price and Items Price
+     */
+    item_price?: number;
   };
   /** @description Maintains the product inventory for variants */
   product_inventory: {
@@ -1817,6 +1858,11 @@ export interface parameters {
   "rowFilter.user_order.razorpay_payment_id": string;
   /** Format: character varying */
   "rowFilter.user_order.razorpay_signature": string;
+  /**
+   * Format: bigint
+   * @description The relationship between an user order and their shipping information
+   */
+  "rowFilter.user_order.user_shipping_address_id": string;
   /** @description user_shipping_address */
   "body.user_shipping_address": definitions["user_shipping_address"];
   /** Format: bigint */
@@ -1841,6 +1887,11 @@ export interface parameters {
   "rowFilter.user_shipping_address.country": string;
   /** Format: text */
   "rowFilter.user_shipping_address.pin_code": string;
+  /**
+   * Format: text
+   * @description State of the the country that the user resides in
+   */
+  "rowFilter.user_shipping_address.state": string;
   /** @description user_wishlist */
   "body.user_wishlist": definitions["user_wishlist"];
   /** Format: bigint */
@@ -2004,6 +2055,13 @@ export interface parameters {
   "rowFilter.order_item.discount": string;
   /** Format: bigint */
   "rowFilter.order_item.quantity": string;
+  /** Format: jsonb */
+  "rowFilter.order_item.add_on_details": string;
+  /**
+   * Format: numeric
+   * @description Item price is  the sum of Addon Price and Items Price
+   */
+  "rowFilter.order_item.item_price": string;
   /** @description product_inventory */
   "body.product_inventory": definitions["product_inventory"];
   /** Format: bigint */

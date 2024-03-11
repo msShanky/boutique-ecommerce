@@ -4,7 +4,13 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import CartTotal from "../components/feature/cart/CartTotal";
 import CheckoutForm from "../components/feature/checkout/CheckoutForm";
 import { AppSection, AppLayout } from "@/components/layout";
-import { useCheckoutProductMutation, useInitiatePaymentMutation } from "reducer/breezeBaseApi";
+import {
+	useCheckoutProductMutation,
+	useGetUserAddressQuery,
+	useInitiatePaymentMutation,
+	useLazyGetUserAddressQuery,
+	useLazyGetUserAddressWithIDQuery,
+} from "reducer/breezeBaseApi";
 import { useUser } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import useRazorpay from "react-razorpay";
@@ -13,7 +19,7 @@ import { cartTotalSelector, clearCart } from "@/reducer/cart";
 import { useEffect, useState } from "react";
 import { useLottie } from "lottie-react";
 
-import orderPlacedAnimation from "animations/72243-order-placed.json";
+import orderPlacedAnimation from "animations/1708-success.json";
 
 const orderPlacedAnimationProps = {
 	animationData: orderPlacedAnimation,
@@ -29,13 +35,20 @@ const Checkout: NextPage = () => {
 	const state = useAppSelector((state) => state);
 	const dispatch = useAppDispatch();
 	const cartTotal = cartTotalSelector(state);
-
 	const { View } = useLottie(orderPlacedAnimationProps);
+	const [getUserAddress, userAddressListResponse] = useLazyGetUserAddressWithIDQuery();
 
 	const { user } = useUser();
+	// const userAddress = useGetUserAddressQuery(user?.id ?? '');
 	const [checkoutCart, { isLoading, isSuccess }] = useCheckoutProductMutation();
 	const [initiatePayment, paymentOrderState] = useInitiatePaymentMutation();
 	const { data: paymentOrder, isSuccess: paymentOrderSuccess, isLoading: isPaymentLoading } = paymentOrderState;
+
+	useEffect(() => {
+		if (user && user?.id) {
+			getUserAddress(user.id);
+		}
+	}, [getUserAddress, user]);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -112,7 +125,13 @@ const Checkout: NextPage = () => {
 						)}
 						{products.length > 0 && !isSuccess && (
 							<div className="relative flex flex-col items-start justify-center w-full gap-10 p-4 md:flex-row">
-								<CheckoutForm handleCheckout={handleCheckout} isLoading={isLoading || isPaymentLoading} user={user} />
+								<CheckoutForm
+									handleCheckout={handleCheckout}
+									handleCheckoutWithExistingAddress={handleCheckout}
+									isLoading={isLoading || isPaymentLoading}
+									user={user}
+									userAddressList={userAddressListResponse}
+								/>
 								<CartTotal />
 							</div>
 						)}

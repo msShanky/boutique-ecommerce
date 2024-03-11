@@ -61,6 +61,7 @@ type CheckoutFormValue = {
 	city: string;
 	country: string;
 	pin_code: string;
+	id?: number;
 };
 
 type PaymentOrderPostBody = {

@@ -45,31 +45,31 @@ const OrderManagementPage = () => {
 				</Head>
 				<section className="w-full">
 					<div>OrderManagement</div>
-				</section>
-				<OrderFilter values={filters} onSubmit={handleFilterChange} />
-				{ordersData?.body ? (
-					<OrderTable data={ordersData.body} refreshData={() => refreshOrders(filters)} />
-				) : (
-					<div className="flex justify-center w-full h-56 mt-20">
-						<Loader size={60} />
-					</div>
-				)}
-				<Pagination
-					page={currentPage}
-					onChange={setCurrentPage}
-					total={maxPages}
-					radius="xl"
-					withEdges
-					className="mt-10"
-					position="center"
-					styles={() => ({
-						item: {
-							"&[data-active]": {
-								backgroundColor: "#7E33E0",
+					<OrderFilter values={filters} onSubmit={handleFilterChange} />
+					{ordersData?.body ? (
+						<OrderTable data={ordersData.body} refreshData={() => refreshOrders(filters)} />
+					) : (
+						<div className="flex justify-center w-full h-56 mt-20">
+							<Loader size={60} />
+						</div>
+					)}
+					<Pagination
+						page={currentPage}
+						onChange={setCurrentPage}
+						total={maxPages}
+						radius="xl"
+						withEdges
+						className="mt-10"
+						position="center"
+						styles={() => ({
+							item: {
+								"&[data-active]": {
+									backgroundColor: "#7E33E0",
+								},
 							},
-						},
-					})}
-				/>
+						})}
+					/>
+				</section>
 			</>
 		</AdminLayout>
 	);
