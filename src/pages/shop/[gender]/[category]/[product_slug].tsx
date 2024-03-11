@@ -35,8 +35,8 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const { user } = useUser();
 	const router = useRouter();
 	const product = props.productDetails;
-	// @ts-ignore
 	const [selectedAddon, setAddOn] = useState<ProductAddOn>(
+		// @ts-ignore
 		product.add_on ? product.add_on.filter((addOn) => addOn.id === "no_lining")[0] : null
 	);
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
