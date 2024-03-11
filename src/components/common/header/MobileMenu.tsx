@@ -3,8 +3,9 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "../user";
 import Link from "next/link";
 import { Text, ActionIcon, Accordion } from "@mantine/core";
-import { IconX } from "@tabler/icons-react";
+import { IconHeart, IconTruckDelivery, IconX } from "@tabler/icons-react";
 import { getCategoryLink, getSubCategoryLink } from "@/helpers/supabase-helper";
+import LinkIcon from "./LinkIcon";
 
 type MobileMenuProps = {
 	handleClose: () => void;
@@ -78,7 +79,11 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 					)}
 				</div>
 			</div>
-			<div>{menuItems}</div>
+			{/* <div>{menuItems}</div> */}
+			<div>
+				<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" label="Wishlist" />
+				<LinkIcon icon={<IconTruckDelivery size={20} className="stroke-white" />} link="/user/orders" label="Orders" />
+			</div>
 		</section>
 	);
 };

@@ -30,6 +30,7 @@ export const cartSlice = createSlice({
 			// If the product already exists then increase the quantity by 1
 			if (existingIndex >= 0) {
 				state.products[existingIndex].quantity = state.products[existingIndex].quantity + 1;
+				state.products[existingIndex].addOn = payload.addOn;
 				return;
 			}
 			state.products.push({ ...payload, quantity: 1 });
@@ -38,6 +39,7 @@ export const cartSlice = createSlice({
 			const existingIndex = getProductIndexFromCart(state.products, payload);
 			if (existingIndex >= 0) {
 				state.products[existingIndex].quantity = state.products[existingIndex].quantity + 1;
+
 				return;
 			}
 		},

@@ -11,7 +11,7 @@ import { HoverMenuItem, LinkIcon, MobileMenu } from "./header";
 import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "./user";
 import { useRouter } from "next/router";
-import { IconLogout } from "@tabler/icons-react";
+import { IconLogout, IconTruckDelivery } from "@tabler/icons-react";
 
 // import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 
@@ -90,6 +90,11 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 							/>
 						)}
 						<LinkIcon icon={<IconHeart size={20} className="stroke-white" />} link="/wishlist" label="WishList" />
+						<LinkIcon
+							icon={<IconTruckDelivery size={20} className="stroke-white" />}
+							link="/user/orders"
+							label="Orders"
+						/>
 						{/* TODO: [2] [Prod_mvp] the cart dock count should be based on the total quantity  */}
 						<LinkIcon
 							icon={<IconShoppingCart size={25} className="stroke-white" />}

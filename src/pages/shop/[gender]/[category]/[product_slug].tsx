@@ -15,8 +15,15 @@ import { getAllProductSlugs, getProductDetailsForSlugs } from "@/helpers/static_
 import { getCategoryMenuLinks } from "@/helpers/static_builder";
 import { ProductDetailsImage } from "@/components/feature/product";
 
-
-const highlightList = ["#IkkatFashion", "#CottonMidiDress", "#WomensFashion", "#ShopNow", "#BreezeBoutique", "#IkkatMidiDress", "#FashionOnABudget"]
+const highlightList = [
+	"#IkkatFashion",
+	"#CottonMidiDress",
+	"#WomensFashion",
+	"#ShopNow",
+	"#BreezeBoutique",
+	"#IkkatMidiDress",
+	"#FashionOnABudget",
+];
 
 type ProductPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -27,14 +34,15 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const dispatch = useAppDispatch();
 	const { user } = useUser();
 	const router = useRouter();
-
-	const [selectedAddon, setAddOn] = useState<ProductAddOn>();
+	const product = props.productDetails;
+	// @ts-ignore
+	const [selectedAddon, setAddOn] = useState<ProductAddOn>(product.add_on ? product.add_on.filter((addOn) => addOn.id === 'no_lining')[0]: null);
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
 	const { wishlist, handleWishlist } = useWishlist(user?.id);
 
-	const product = props.productDetails;
+
 
 	const isWishlisted = wishlist.includes(product?.id || 0);
 
@@ -54,7 +62,9 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 		} else {
 			setCartErrorState(false);
 		}
-		dispatch(addProductToCart({ product: product as ProductWithRelations, variant: selectedVariant, addOn: selectedAddon }));
+		dispatch(
+			addProductToCart({ product: product as ProductWithRelations, variant: selectedVariant, addOn: selectedAddon })
+		);
 		showNotification({
 			title: "Added Product",
 			message: `${product?.title} has been added, and size selected is ${selectedVariant.size}`,
@@ -154,7 +164,7 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 							label="Select your required AddON for the product"
 							className="mt-10"
 							classNames={{
-								label: 'text-xl font-bold my-2'
+								label: "text-xl font-bold my-2",
 							}}
 						>
 							{/* @ts-ignore */}

@@ -1,14 +1,17 @@
-import { Button, LoadingOverlay, Text, TextInput, Title } from "@mantine/core";
+import { Badge, Button, Card, LoadingOverlay, Text, TextInput, Title } from "@mantine/core";
+import { IconCheck } from "@tabler/icons-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { z } from "zod";
 
 type CheckoutFormProps = {
 	handleCheckout: (value: CheckoutFormValue) => void;
+	handleCheckoutWithExistingAddress: (value: CheckoutFormValue) => void;
 	isLoading: boolean;
 	user: User | null;
+	userAddressList: any;
 };
 
 const schema = z.object({
@@ -31,7 +34,9 @@ const schema = z.object({
 });
 
 const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
-	const { handleCheckout, isLoading, user } = props;
+	const { handleCheckout, isLoading, user, userAddressList, handleCheckoutWithExistingAddress } = props;
+	const [overrideAddressForm, setOverrideAddressForm] = useState(false);
+	const [selectedAddress, setSelectedAddress] = useState<CheckoutFormValue | undefined>();
 	const { getInputProps, isValid, onSubmit, errors } = useForm<CheckoutFormValue>({
 		validate: zodResolver(schema),
 		validateInputOnBlur: true,
@@ -54,48 +59,123 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 		handleCheckout(formValues);
 	};
 
+	const renderAddressList = () => {
+		if (!userAddressList || !userAddressList.data || !userAddressList.data.body) {
+			return <p>No address found</p>;
+		}
+
+		const {
+			data: { body },
+		} = userAddressList;
+
+		return (
+			<>
+				<div className="flex items-start justify-between w-full mb-6">
+					<Text className="text-sm text-primaryBlack ">Please select an address for delivery</Text>
+					<Button
+						className="bg-primaryAlt hover:cursor-pointer hover:bg-primaryBlack"
+						onClick={() => setOverrideAddressForm(true)}
+					>
+						Add new
+					</Button>
+				</div>
+				<div>
+					{body.map((savedAddress: any) => {
+						// @ts-ignore
+						const isActiveAddress = selectedAddress ? savedAddress.id === selectedAddress.id : false;
+
+						return (
+							<Card
+								key={`Address-list-${savedAddress.id}`}
+								onClick={() => {
+									setSelectedAddress(savedAddress);
+								}}
+								className="relative w-full md:w-2/4 drop-shadow-xl"
+							>
+								{isActiveAddress && (
+									<Badge variant="filled" fullWidth className="absolute w-6 h-6 p-0 right-2 top-2">
+										<IconCheck className="w-4 h-4" />
+									</Badge>
+								)}
+								<h4>
+									{savedAddress.first_name} {savedAddress.last_name}
+								</h4>
+								<p>{savedAddress.address}</p>
+								{savedAddress.address_line_two && <p>{savedAddress.address_line_two}</p>}
+								<p>{savedAddress.city}</p>
+								<p>{savedAddress.pin_code}</p>
+								<p> {savedAddress.country} </p>
+								<p>Phone: {savedAddress.phone_number}</p>
+							</Card>
+						);
+					})}
+				</div>
+				<Button
+					className="mt-6 bg-primaryBlack hover:cursor-pointer hover:bg-primaryAlt"
+					onClick={() => (selectedAddress ? handleCheckoutWithExistingAddress(selectedAddress) : null)}
+				>
+					Proceed to payment
+				</Button>
+			</>
+		);
+	};
+
+	const renderContactForm = () => {
+		return (
+			<>
+				<div>
+					<Text className="mb-10 text-sm text-primaryBlack">*Currently shipping only for Chennai</Text>
+				</div>
+				{/* Contact Information */}
+				<div className="flex flex-row justify-between ">
+					<Title className="text-lg font-bold text-primaryBlack">Contact Information</Title>
+					<div className="space-y-8">
+						{!user && (
+							<Text className="flex flex-row items-end">
+								Already have an account?
+								<Link href="/login" passHref>
+									<Text className="ml-2 text-lg underline text-primaryBlack hover:cursor-pointer">Log in</Text>
+								</Link>
+							</Text>
+						)}
+					</div>
+				</div>
+				{/* Contact Form */}
+				<form className="mt-4 space-y-8" onSubmit={onSubmit(handleFormCheckout)}>
+					<TextInput withAsterisk placeholder="894578****" {...getInputProps("phone_number")} />
+					<Title className="text-lg font-bold text-primaryBlack">Shipping Address</Title>
+					<div className="flex flex-row justify-between gap-8">
+						<TextInput className="w-6/12" placeholder="First Name" withAsterisk {...getInputProps("first_name")} />
+						<TextInput className="w-6/12" placeholder="Last Name (Optional)" {...getInputProps("last_name")} />
+					</div>
+					<TextInput withAsterisk placeholder="Address" {...getInputProps("address")} />
+					<TextInput placeholder="Apartment, suit, street (Optional)" {...getInputProps("address_line_two")} />
+					<TextInput disabled readOnly placeholder="City" {...getInputProps("city")} />
+					<div className="flex flex-row justify-center gap-8">
+						<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
+						<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />
+					</div>
+					<Button disabled={!isValid} className="text-white bg-primaryBlack hover:bg-primaryBlack/60" type="submit">
+						Proceed For Payment
+					</Button>
+					<Button
+						disabled={!isValid}
+						className="text-white md:mx-4 bg-primaryBlack hover:bg-primaryBlack/60"
+						onClick={() => setOverrideAddressForm(false)}
+						type="reset"
+					>
+						Select Address
+					</Button>
+				</form>
+			</>
+		);
+	};
+
 	return (
 		<div className="w-full px-8 py-16 md:w-7/12 max-h-max bg-primary/60">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
-			<div>
-				<Text className="mb-10 text-sm text-primaryBlack">*Currently shipping only for Chennai</Text>
-			</div>
-			{/* Contact Information */}
-			<div className="flex flex-row justify-between ">
-				<Title className="text-lg font-bold text-primaryBlack">Contact Information</Title>
-				<div className="space-y-8">
-					{!user && (
-						<Text className="flex flex-row items-end">
-							Already have an account?
-							<Link href="/login" passHref>
-								<Text className="ml-2 text-lg underline text-primaryBlack hover:cursor-pointer">Log in</Text>
-							</Link>
-						</Text>
-					)}
-				</div>
-			</div>
-			<form className="mt-4 space-y-8" onSubmit={onSubmit(handleFormCheckout)}>
-				<TextInput withAsterisk placeholder="894578****" {...getInputProps("phone_number")} />
-				<Title className="text-lg font-bold text-primaryBlack">Shipping Address</Title>
-				<div className="flex flex-row justify-between gap-8">
-					<TextInput className="w-6/12" placeholder="First Name" withAsterisk {...getInputProps("first_name")} />
-					<TextInput className="w-6/12" placeholder="Last Name (Optional)" {...getInputProps("last_name")} />
-				</div>
-				<TextInput withAsterisk placeholder="Address" {...getInputProps("address")} />
-				<TextInput placeholder="Apartment, suit, street (Optional)" {...getInputProps("address_line_two")} />
-				<TextInput disabled readOnly placeholder="City" {...getInputProps("city")} />
-				<div className="flex flex-row justify-center gap-8">
-					<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
-					<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />
-				</div>
-				<Button
-					disabled={!isValid}
-					className="text-white bg-primaryBlack hover:bg-primaryBlack/60"
-					type="submit"
-				>
-					Proceed For Payment
-				</Button>
-			</form>
+
+			{userAddressList && !overrideAddressForm ? renderAddressList() : renderContactForm()}
 		</div>
 	);
 };

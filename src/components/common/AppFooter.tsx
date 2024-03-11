@@ -16,7 +16,7 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 	return (
 		<footer className="w-full bg-primary min-h-[532px] flex flex-col gap-y-10">
 			{/* <section className="container flex flex-col gap-12 p-10 mx-auto md:pt-24 md:flex-row md:gap-20"> */}
-			<section className="container flex flex-col gap-12 p-10 mx-auto align-top md:pt-24 md:flex-row md:gap-20 md:p-0">
+			<section className="container flex flex-col gap-12 p-10 mx-auto mb-20 align-top md:pt-24 md:flex-row md:gap-20 md:p-0">
 				<div className="flex flex-col w-2/12 gap-y-4">
 					<Image
 						src="/images/breeze_logo_v2.svg"

@@ -1,18 +1,17 @@
 import { MouseEvent, useEffect, useState } from "react";
-import type { NextPage, InferGetServerSidePropsType, GetServerSideProps } from "next";
+import type { NextPage, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
-import Head from "next/head";
+// import Head from "next/head";
 import { AppLayout } from "@/components/layout";
 import { Loader, Title } from "@mantine/core";
 import { User } from "@supabase/supabase-js";
-import { supabaseClient, withPageAuth } from "@supabase/auth-helpers-nextjs";
+import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { WishListCard } from "@/components/feature";
 import { useLazyGetUserWishlistQuery } from "@/reducer/breezeBaseApi";
+import { useWishlist } from "hooks";
 // import { getUser, withPageAuth } from "@supabase/auth-helpers-nextjs";
 
-type WishListProps = {
-	user: User;
-};
+// type WishListProps = { user: User };
 
 // TODO: Disable the initial call to fetch the wishlist count
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -21,6 +20,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	const { user } = props;
 	const router = useRouter();
 	const [isLoading, setLoading] = useState(false);
+	const { wishlist, handleWishlist } = useWishlist(user?.id);
 	const [getUserWishlist, userWishlistResponse] = useLazyGetUserWishlistQuery();
 	const [wishlistProducts, setWishListProducts] = useState<Array<UserWishListItem> | null>();
 
@@ -45,7 +45,6 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	};
 
 	const handleProductRedirection = (product: ProductWithRelations) => {
-
 		const { gender_group, category, page_link } = product;
 
 		if (!page_link) return;
@@ -63,7 +62,7 @@ const WishListPage: NextPage<PageProps> = (props) => {
 	return (
 		<AppLayout pageTitle="Breeze Boutique | WishList" menuLinks={[]}>
 			<>
-				<main className="container flex flex-col min-h-screen gap-10 mx-auto my-20">
+				<main className="container flex flex-col min-h-screen gap-10 px-6 mx-auto my-20">
 					<Title className="text-xl font-bold text-violet" order={1}>
 						My Wishlist
 					</Title>
@@ -81,12 +80,19 @@ const WishListPage: NextPage<PageProps> = (props) => {
 										key={`${wishlistItem.id}_WISHLIST_ITEM`}
 										handleProductRedirection={() => handleProductRedirection(product)}
 										handleAddToCart={(event) => handleAddToCart(event, product)}
+										handleWishlist={() => handleWishlist(product)}
 										product={product}
 									/>
 								);
 							})}
 						</section>
 					)}
+					{!wishlistProducts ||
+						(wishlistProducts.length <= 0 && (
+							<section className="container flex flex-wrap gap-10 mx-auto">
+								<p>No wishlisted items found</p>
+							</section>
+						))}
 				</main>
 			</>
 		</AppLayout>

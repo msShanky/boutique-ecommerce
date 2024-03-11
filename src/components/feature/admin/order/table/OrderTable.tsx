@@ -73,6 +73,7 @@ const OrderTable = ({ data, refreshData }: OrderTableProps) => {
 
 	const handleOrderStatusChange = (values: OrderEditFormValues, _event: React.FormEvent<HTMLFormElement>) => {
 		setOrderStatus(values);
+		handleModalClose();
 	};
 
 	const handleOrderEditError = (
@@ -83,7 +84,7 @@ const OrderTable = ({ data, refreshData }: OrderTableProps) => {
 
 	return (
 		<>
-			<Modal opened={editOpen} onClose={handleModalClose} title="Order Details">
+			<Modal opened={editOpen} onClose={handleModalClose} title="Order Details" size="lg">
 				<OrderEdit
 					orderDetails={selectedOrder}
 					onSubmit={handleOrderStatusChange}
