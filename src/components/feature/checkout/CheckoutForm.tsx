@@ -3,7 +3,7 @@ import { IconCheck } from "@tabler/icons-react";
 import { useForm, zodResolver } from "@mantine/form";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { z } from "zod";
 
 type CheckoutFormProps = {
@@ -58,6 +58,17 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const handleFormCheckout = (formValues: CheckoutFormValue) => {
 		handleCheckout(formValues);
 	};
+
+	useEffect(() => {
+		if (
+			!userAddressList ||
+			!userAddressList.data ||
+			!userAddressList.data.body ||
+			userAddressList.data.body.length <= 0
+		) {
+			setOverrideAddressForm(true);
+		}
+	}, [userAddressList]);
 
 	const renderAddressList = () => {
 		if (!userAddressList || !userAddressList.data || !userAddressList.data.body) {
@@ -158,14 +169,16 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					<Button disabled={!isValid} className="text-white bg-primaryBlack hover:bg-primaryBlack/60" type="submit">
 						Proceed For Payment
 					</Button>
-					<Button
-						disabled={!isValid}
-						className="text-white md:mx-4 bg-primaryBlack hover:bg-primaryBlack/60"
-						onClick={() => setOverrideAddressForm(false)}
-						type="reset"
-					>
-						Select Address
-					</Button>
+					{userAddressList && userAddressList.data.body && userAddressList.data.body.length > 0 && (
+						<Button
+							disabled={!isValid}
+							className="text-white md:mx-4 bg-primaryBlack hover:bg-primaryBlack/60"
+							onClick={() => setOverrideAddressForm(false)}
+							type="reset"
+						>
+							Select Address
+						</Button>
+					)}
 				</form>
 			</>
 		);

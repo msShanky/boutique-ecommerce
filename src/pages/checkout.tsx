@@ -6,9 +6,7 @@ import CheckoutForm from "../components/feature/checkout/CheckoutForm";
 import { AppSection, AppLayout } from "@/components/layout";
 import {
 	useCheckoutProductMutation,
-	useGetUserAddressQuery,
 	useInitiatePaymentMutation,
-	useLazyGetUserAddressQuery,
 	useLazyGetUserAddressWithIDQuery,
 } from "reducer/breezeBaseApi";
 import { useUser } from "@supabase/auth-helpers-react";
@@ -16,7 +14,7 @@ import Link from "next/link";
 import useRazorpay from "react-razorpay";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { cartTotalSelector, clearCart } from "@/reducer/cart";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLottie } from "lottie-react";
 
 import orderPlacedAnimation from "animations/1708-success.json";

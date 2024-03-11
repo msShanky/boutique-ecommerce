@@ -27,7 +27,7 @@ const HeaderHighlightBar = () => {
 				<div className="relative flex flex-row items-center space-x-8">
 					<UserIcon />
 					{/* TODO: Should we display the count of wishlist items by the user */}
-					<LinkIcon icon={<IconHeart size={20} />} link="/wishlist" label="WishList" />
+					<LinkIcon icon={<IconHeart size={20} />} link="user/wishlist" label="WishList" />
 					{/* TODO: Should include the total count of the cart items */}
 					<LinkIcon icon={<IconShoppingCart size={25} />} link="/cart" dockCount={products.length} />
 				</div>

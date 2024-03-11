@@ -24,7 +24,7 @@ const AppLayout: FunctionComponent<AppLayoutProps> = (props) => {
 			</Head>
 			<main className={isLanding ? "mb-32" : "my-32"}>{children}</main>
 			<AppFooter menuLinks={menuLinks} />
-			<div className="fixed flex flex-row gap-1 bottom-4 md:left-10 left-2">
+			<div className="fixed flex flex-row gap-1 md:flex-col bottom-4 md:left-10 left-2">
 				<Link passHref legacyBehavior href="https://wa.me/message/ZDVSMN5VC3SCO1">
 					<a target="_blank" rel="noreferrer" href="https://wa.me/message/ZDVSMN5VC3SCO1">
 						<div className="flex items-center justify-center w-10 h-10 rounded-full md:w-12 md:h-12 bg-secondary">

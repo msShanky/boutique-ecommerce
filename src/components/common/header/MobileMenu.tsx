@@ -3,7 +3,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "../user";
 import Link from "next/link";
 import { Text, ActionIcon, Accordion } from "@mantine/core";
-import { IconHeart, IconTruckDelivery, IconX } from "@tabler/icons-react";
+import { IconHeart, IconLogout, IconTruckDelivery, IconX } from "@tabler/icons-react";
 import { getCategoryLink, getSubCategoryLink } from "@/helpers/supabase-helper";
 import LinkIcon from "./LinkIcon";
 
@@ -80,9 +80,29 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 				</div>
 			</div>
 			{/* <div>{menuItems}</div> */}
-			<div>
-				<LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="/wishlist" label="Wishlist" />
-				<LinkIcon icon={<IconTruckDelivery size={20} className="stroke-white" />} link="/user/orders" label="Orders" />
+			<div className="flex flex-col gap-4 text-black">
+				<Link href={"/user/wishlist"}>
+					<a className="flex flex-row items-center gap-2 text-xl text-black underline">
+						<p>Wishlist</p>
+						<IconHeart size={30} className="stroke-black fill-primary" />
+					</a>
+				</Link>
+				<Link href={"/user/orders"}>
+					<a className="flex flex-row items-center gap-2 text-xl text-black underline">
+						<p>Orders</p>
+						<IconTruckDelivery size={30} className="stroke-black fill-primary" />
+					</a>
+				</Link>
+				{user && !userLoading && (
+					// <LinkIcon icon={<IconLogout size={30} className="stroke-white" />} link="/api/auth/logout" label="logout" />
+					<Link href={"/api/auth/logout"}>
+						<a className="flex flex-row items-center gap-2 text-xl text-black underline">
+							<p>Logout</p>
+							<IconLogout size={30} className="stroke-black fill-primary " />
+						</a>
+					</Link>
+				)}
+				{/* <LinkIcon icon={<IconTruckDelivery size={20} className="stroke-white" />} link="/user/orders" label="Orders" /> */}
 			</div>
 		</section>
 	);
