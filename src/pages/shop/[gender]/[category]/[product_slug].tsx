@@ -23,7 +23,15 @@ const highlightList = [
 	"#BreezeBoutique",
 	"#IkkatMidiDress",
 	"#FashionOnABudget",
+	"#AJRAKMidiDress",
 ];
+
+const defaultAddOn = {
+	id: "no_lining",
+	isDefault: true,
+	label: "No Lining",
+	price: 0,
+};
 
 type ProductPageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -33,12 +41,10 @@ type ProductPageProps = {
 const ProductPage: NextPage<ProductPageProps> = (props) => {
 	const dispatch = useAppDispatch();
 	const { user } = useUser();
-	const router = useRouter();
 	const product = props.productDetails;
-	const [selectedAddon, setAddOn] = useState<ProductAddOn>(
-		// @ts-ignore
-		product.add_on ? product.add_on.filter((addOn) => addOn.id === "no_lining")[0] : null
-	);
+	const productAddOn: Array<ProductAddOn> | undefined = product ? product.add_on : [defaultAddOn];
+	const defaultAddOnDB = product && productAddOn && productAddOn.filter((addOn) => addOn.id === "no_lining")[0];
+	const [selectedAddon, setAddOn] = useState<ProductAddOn>(defaultAddOnDB ?? defaultAddOn);
 	const [selectedVariant, setVariant] = useState<definitions["product_variant"]>();
 	const [cartErrorState, setCartErrorState] = useState<boolean>(false);
 
@@ -71,6 +77,22 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 			color: "green",
 		});
 	};
+
+	if (!product) {
+		return (
+			<AppLayout pageTitle="Breeze Boutique | Product" menuLinks={props.menuLinks}>
+				<section className="container flex flex-col flex-wrap items-center mx-auto my-20 lg:items-start lg:flex-row">
+					<div className="w-full p-1 lg:w-8/12"></div>
+					<div className="w-full px-4 py-2 lg:w-4/12">
+						<Title order={1} className="font-sans text-4xl text-primary">
+							No product
+						</Title>
+						<Text className="mt-4 font-sans text-xl text-violet-subtext">{"No product Found"}</Text>
+					</div>
+				</section>
+			</AppLayout>
+		);
+	}
 
 	return (
 		<AppLayout pageTitle="Breeze Boutique | Product" menuLinks={props.menuLinks}>
@@ -115,7 +137,30 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 						</div>
 						{cartErrorState && <p className="font-sans text-red-600">Please select a size</p>}
 					</div>
+					{product && product.add_on ? (
+						<Radio.Group
+							value={selectedAddon ? selectedAddon.id : "no_lining"}
+							onChange={(value) => {
+								if (!productAddOn) return;
 
+								const activeAddOn = productAddOn.filter((addOn) => addOn.id === value)[0];
+								if (!activeAddOn) return;
+								setAddOn(activeAddOn);
+							}}
+							name="productAddOn"
+							label="Select your required AddON for the product"
+							className="mt-10"
+							classNames={{
+								label: "text-xl font-bold my-2",
+							}}
+						>
+							{product.add_on.map((addOnData) => {
+								return (
+									<Radio key={addOnData.id} value={addOnData.id} label={`${addOnData.label} [Rs.${addOnData.price}]`} />
+								);
+							})}
+						</Radio.Group>
+					) : null}
 					<div className="flex flex-col items-center justify-between w-full gap-4 mt-12 lg:flex-row min-w-14">
 						<Button
 							classNames={{ label: "space-x-2" }}
@@ -141,7 +186,7 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 							<Text>{isWishlisted ? "Wishlisted" : "Wishlist"}</Text>
 						</Button>
 					</div>
-					{product.description && (
+					{product && product.description && (
 						<div className="w-full pt-12 leading-loose tracking-wide prose">
 							<Highlight
 								highlight={highlightList}
@@ -152,34 +197,10 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 							</Highlight>
 						</div>
 					)}
-					{product.add_on ? (
-						<Radio.Group
-							value={selectedAddon ? selectedAddon.id : "no_lining"}
-							onChange={(value) => {
-								// @ts-ignore
-								const activeAddOn = product.add_on.filter((addOn) => addOn.id === value)[0];
-								if (!activeAddOn) return;
-								setAddOn(activeAddOn);
-							}}
-							name="productAddOn"
-							label="Select your required AddON for the product"
-							className="mt-10"
-							classNames={{
-								label: "text-xl font-bold my-2",
-							}}
-						>
-							{/* @ts-ignore */}
-							{product.add_on.map((addOnData) => {
-								return (
-									<Radio key={addOnData.id} value={addOnData.id} label={`${addOnData.label} [Rs.${addOnData.price}]`} />
-								);
-							})}
-						</Radio.Group>
-					) : null}
+
 					{product.specification ? (
 						<div className="mt-10">
 							<h4 className="mb-4 font-sans text-xl font-bold">Specifications</h4>
-							{/* @ts-ignore */}
 							{product.specification.map((spec) => (
 								<li key={spec}>{spec}</li>
 							))}
@@ -188,7 +209,6 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 					{product.care_specs ? (
 						<div className="mt-10">
 							<h4 className="mb-4 font-sans text-xl font-bold">Wash Care</h4>
-							{/* @ts-ignore */}
 							{product.care_specs.map((careSpec) => (
 								<li key={careSpec}>{careSpec}</li>
 							))}

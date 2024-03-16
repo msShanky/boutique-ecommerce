@@ -10,7 +10,7 @@ type LinkIconProps = {
 
 const NumberDocked = (props: { count: number }) => {
 	return (
-		<div className="absolute flex items-center justify-center w-4 h-4 rounded-full -top-1 -right-1 bg-pink animate-pulse">
+		<div className="absolute flex items-center justify-center w-5 h-5 rounded-full -top-2 -right-2 bg-pink animate-pulse">
 			<span className="font-sans text-xs text-white">{props.count}</span>
 		</div>
 	);
@@ -23,7 +23,7 @@ const LinkIcon: FunctionComponent<LinkIconProps> = (props) => {
 		<Link href={props.link} passHref>
 			<div className="relative flex flex-row items-center space-x-2 hover:cursor-pointer">
 				{(dockCount ? dockCount > 0 : false) && <NumberDocked count={dockCount as number} />}
-				{label && <p className="text-white">{label}</p>}
+				{label && <p className="text-base text-white md:text-xs lg:text-base">{label}</p>}
 				{props.icon}
 			</div>
 		</Link>

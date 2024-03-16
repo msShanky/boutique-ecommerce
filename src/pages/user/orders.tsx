@@ -18,7 +18,7 @@ const orderBadgeColor = {
 	order_placed: "bg-primary text-black",
 	// Stage 2
 	order_acknowledged: "text-black bg-amber-400",
-	order_cancelled: "text-black bg-red-500",
+	order_cancelled: "text-white bg-red-500",
 	// Stage 3
 	order_packed: "text-black bg-lime-300",
 	// Stage 4
@@ -86,7 +86,7 @@ const OrdersPage = () => {
 											<Text>{dayjs(created_at).format(`DD-MMM-YYYY hh:mm A`)}</Text>
 										</div>
 										{/* @ts-ignore */}
-										<Badge className={`${orderBadgeColor[order_status.status]} w-6/12 md:w-60 mx-auto`}>
+										<Badge className={`${orderBadgeColor[order_status.status]} w-6/12 md:w-60 mx-auto select-none`}>
 											{getFormattedStatus(order_status.status as string)}
 										</Badge>
 									</div>

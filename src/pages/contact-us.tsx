@@ -71,9 +71,7 @@ function ContactUs() {
 		<AppLayout pageTitle="Breeze Boutique | Contact Us">
 			<>
 				<AppSection>
-					<div
-						className={`w-10/12 rounded-xl bg-gradient-to-r from-primary to-primaryBlack ${classes.wrapper}`}
-					>
+					<div className={`w-10/12 rounded-xl bg-gradient-to-r from-primary to-primaryBlack ${classes.wrapper}`}>
 						<SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
 							<div>
 								<Title className="leading-none text-white">Contact us</Title>

@@ -3,3 +3,5 @@ export * from "./CarousalCardSlider";
 export * from "./CategorySection";
 export * from "./HeroCarousal";
 export * from "./SiteFeatureIcon";
+export * from "./CarousalCardSliderNew";
+export * from "./HeroCarousalNew";

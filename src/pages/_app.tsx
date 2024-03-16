@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import "../styles/embla.css";
+// import "../styles/embla.css";
 import { MantineProvider, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import type { AppProps } from "next/app";

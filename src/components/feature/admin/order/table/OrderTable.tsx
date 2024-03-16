@@ -74,13 +74,16 @@ const OrderTable = ({ data, refreshData }: OrderTableProps) => {
 	const handleOrderStatusChange = (values: OrderEditFormValues, _event: React.FormEvent<HTMLFormElement>) => {
 		setOrderStatus(values);
 		handleModalClose();
+		refreshData();
 	};
 
 	const handleOrderEditError = (
 		error: FormErrors,
 		_values: OrderEditFormValues,
 		_event: React.FormEvent<HTMLFormElement>
-	) => {};
+	) => {
+		console.log(error, "ON ERROR/Reject");
+	};
 
 	return (
 		<>

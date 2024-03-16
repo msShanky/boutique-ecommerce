@@ -1,5 +1,5 @@
 import { Button, Text, TextInput, Title, Image } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconBrandFacebook, IconBrandWhatsapp, IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { FC } from "react";
 
@@ -16,8 +16,8 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 	return (
 		<footer className="w-full bg-primary min-h-[532px] flex flex-col gap-y-10">
 			{/* <section className="container flex flex-col gap-12 p-10 mx-auto md:pt-24 md:flex-row md:gap-20"> */}
-			<section className="container flex flex-col gap-12 p-10 mx-auto mb-20 align-top md:pt-24 md:flex-row md:gap-20 md:p-0">
-				<div className="flex flex-col w-2/12 gap-y-4">
+			<section className="container flex flex-col gap-2 p-10 mx-auto mb-20 align-top lg:gap-12 md:pt-24 md:flex-row md:gap-20 md:p-4">
+				<div className="flex flex-col w-2/12 md:w-4/12 gap-y-4">
 					<Image
 						src="/images/breeze_logo_v2.svg"
 						width={80}
@@ -26,8 +26,35 @@ const AppFooter: FC<AppFooterProps> = (props) => {
 					>
 						Logo
 					</Image>
-					<Text>Contact Info</Text>
-					<Text>care@breezeboutique.in</Text>
+					<Text className="text-base font-semibold">Contact Info</Text>
+					<a href="mailto:care@breezeboutique.in" className="underline">
+						care@breezeboutique.in
+					</a>
+					<Text className="text-base font-semibold lg:hidden">Social Links</Text>
+					<div className="flex flex-row gap-1 lg:hidden">
+						<Link passHref legacyBehavior href="https://wa.me/message/YDU5CC6W2247I1">
+							<a target="_blank" rel="noreferrer" href="https://wa.me/message/YDU5CC6W2247I1">
+								<div className="flex items-center justify-center w-10 h-10 rounded-full md:w-12 md:h-12 bg-secondary">
+									<IconBrandWhatsapp className=" stroke-primaryBlack" size={30} />
+								</div>
+							</a>
+						</Link>
+						<Link
+							passHref
+							legacyBehavior
+							href="https://www.facebook.com/profile.php?id=100083119281213&mibextid=ZbWKwL"
+						>
+							<a
+								target="_blank"
+								rel="noreferrer"
+								href="https://www.facebook.com/profile.php?id=100083119281213&mibextid=ZbWKwL"
+							>
+								<div className="flex items-center justify-center w-10 h-10 rounded-full md:w-12 md:h-12 bg-secondary">
+									<IconBrandFacebook className="fill-primaryBlack" />
+								</div>
+							</a>
+						</Link>
+					</div>
 				</div>
 				<div className="flex flex-col w-fit">
 					<Title className="text-2xl font-semibold text-primaryBlack">Categories</Title>

@@ -26,6 +26,9 @@ type ProductVariants = {
 	category?: import("../types/supabase").definitions["product_category"];
 	gender_group?: import("../types/supabase").definitions["gender_group"];
 	sub_category?: import("../types/supabase").definitions["product_sub_category"];
+	add_on?: Array<ProductAddOn>;
+	specification?: Array<string>;
+	care_specs?: Array<string>;
 };
 
 type ProductCategory = import("../types/supabase").definitions["product_category"];
@@ -59,6 +62,7 @@ type CheckoutFormValue = {
 	address: string;
 	address_line_two: string;
 	city: string;
+	state: string;
 	country: string;
 	pin_code: string;
 	id?: number;
