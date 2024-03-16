@@ -12,7 +12,7 @@ const getDashboardData = async (req: NextApiRequest, res: NextApiResponse) => {
 	let { data: order_status_count } = await supabaseServerClient({ req, res })
 		.from("order_status_count")
 		.select("*,order_status (*)");
-	let { data: top_10_products } = await supabaseServerClient({ req, res }).from("top_10_products").select("*,product (*)");
+	// let { data: top_10_products } = await supabaseServerClient({ req, res }).from("top_10_products").select("*,product (*)");
 	let { data: variant_count_by_size } = await supabaseServerClient({ req, res })
 		.from("variant_count_by_size")
 		.select("*");
@@ -22,7 +22,6 @@ const getDashboardData = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	let { data: total_order_price } = await supabaseServerClient({ req, res }).from("total_order_price").select("*");
 
-	console.log("The total order price ====> ", total_order_price);
 
 	// TODO: Monthly order count for each year
 	// TODO: Group by order status
@@ -38,7 +37,7 @@ const getDashboardData = async (req: NextApiRequest, res: NextApiResponse) => {
 		dailyOrders: daily_orders,
 		monthlyOrders: monthly_orders,
 		orderStatusCount: order_status_count,
-		topTenProducts: top_10_products,
+		// topTenProducts: top_10_products,
 		variantCountBySize: variant_count_by_size,
 		soldAggregation: sold_aggregation,
 	};
@@ -56,7 +55,6 @@ export default withApiAuth(async function handler(req: NextApiRequest, res: Next
 
 		if (req.method === "GET") {
 			const responseDB = await getDashboardData(req, res);
-			console.log("backend response ------>  ", responseDB);
 			return res.status(200).json({ ...responseDB });
 		}
 		return res.status(404).json({ error: "The route is not available" });

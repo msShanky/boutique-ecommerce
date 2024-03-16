@@ -59,7 +59,6 @@ const Checkout: NextPage = () => {
 
 	const RazorPay = useRazorpay();
 
-	console.log("THE ADDRESS LIST", userAddressData);
 
 	const handlePaymentSuccess = (res: RazorPaySuccess, formValues: CheckoutFormValue) => {
 		checkoutCart({

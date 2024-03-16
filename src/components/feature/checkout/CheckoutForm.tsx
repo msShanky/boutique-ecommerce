@@ -61,7 +61,6 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	};
 
 	useEffect(() => {
-		console.log("userAddressList useEffect ==== ", userAddressList);
 		if (!userAddressList || !userAddressList.body || userAddressList.body.length <= 0) {
 			setOverrideAddressForm(true);
 		}
