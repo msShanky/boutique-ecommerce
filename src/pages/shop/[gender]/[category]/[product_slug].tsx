@@ -142,7 +142,6 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 							value={selectedAddon ? selectedAddon.id : "no_lining"}
 							onChange={(value) => {
 								if (!productAddOn) return;
-
 								const activeAddOn = productAddOn.filter((addOn) => addOn.id === value)[0];
 								if (!activeAddOn) return;
 								setAddOn(activeAddOn);
@@ -156,7 +155,19 @@ const ProductPage: NextPage<ProductPageProps> = (props) => {
 						>
 							{product.add_on.map((addOnData) => {
 								return (
-									<Radio key={addOnData.id} value={addOnData.id} label={`${addOnData.label} [Rs.${addOnData.price}]`} />
+									<Radio
+										key={addOnData.id}
+										color="brand-yellow"
+										classNames={{
+											radio:
+												"bg-primary checked:bg-primaryBlack focus:bg-primary hover:bg-primary focus:outline focus:outline-primary",
+											inner:
+												"flex items-center justify-center checked:bg-primaryBlack focus:bg-primary focus:outline focus:outline-primary",
+											icon: "text-primary ",
+										}}
+										value={addOnData.id}
+										label={`${addOnData.label} [Rs.${addOnData.price}]`}
+									/>
 								);
 							})}
 						</Radio.Group>

@@ -10,5 +10,5 @@ export const ProductDetailsImage: FC<ProductDetailsImageProps> = ({ product }) =
 
 	if (!images || images?.length <= 0) return null;
 
-	return <>Product Details Image</>;
+	return <EmblaCarousel slides={images} />;
 };
