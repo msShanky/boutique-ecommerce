@@ -15,9 +15,7 @@ export const HomeCarousal = (props: HomeCarousalProps) => {
 
 	const carousalItems = carousalContent.map((hero, index) => {
 		const uniqueKey = `${(index + 99) * 55}_carousal_image`;
-		console.log("The carousal items retrieved from the database ", hero);
 		const heroImage = getImageUrl(hero.sourceURI);
-		console.log("constructed image URL ", heroImage);
 		return (
 			<Image
 				key={uniqueKey}

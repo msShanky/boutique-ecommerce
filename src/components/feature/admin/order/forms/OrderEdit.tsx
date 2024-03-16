@@ -23,7 +23,6 @@ const OrderEdit = (props: OrderEditProps) => {
 	} = orderDetails;
 
 	const orderStatusOptions = useOrderStatus();
-	console.log("The order details ", orderDetails);
 
 	const orderEditForm = useForm<OrderEditFormValues>({
 		initialValues: {
@@ -51,7 +50,6 @@ const OrderEdit = (props: OrderEditProps) => {
 		orderEditForm.setFieldValue("status_id", statusId);
 	};
 
-	console.log("orderEditForm.values.id", orderEditForm.values.id)
 
 	const renderRestrictedOrderOptions = () => {
 		switch (status_id) {

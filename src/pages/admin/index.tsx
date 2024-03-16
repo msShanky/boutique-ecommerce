@@ -9,7 +9,6 @@ import { DetailedSection } from "@/components/feature/admin/dashboard";
 const AdminPage = () => {
 	const { isLoading, data } = useGetDashboardDataQuery();
 
-	console.log("The data from the backend ", data);
 	return (
 		<AdminLayout>
 			<>
