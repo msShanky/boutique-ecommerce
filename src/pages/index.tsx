@@ -1,10 +1,11 @@
 import type { NextPage, NextPageContext } from "next";
 import { Loader } from "@mantine/core";
 import { AppLayout } from "@/components/layout";
-import { HomeCarousal, CarousalCardSlider, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
+import { HomeCarousalNew, CarousalCardSliderNew, CategorySection, SiteFeatureIcon } from "@/components/feature/home";
 import { useAuthValidator } from "../helpers";
 import { getHomePageData } from "../helpers/static_builder";
 import { getCategoryMenuLinks } from "@/helpers/static_builder/menuLinks";
+import {  } from "@/components/feature/home/HeroCarousalNew";
 
 type HomePageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
@@ -22,20 +23,20 @@ const Home: NextPage<HomePageProps> = (props) => {
 			<>
 				{/* TODO: [4] Replace this loader with something decent with animations */}
 				{isLoading && isWaitingForSignIn && (
-					<section className="container mx-auto my-20 h-80">
+					<section className="container flex justify-center my-20 mt-60 h-80">
 						<Loader size={300} />
 					</section>
 				)}
 				{!isLoading && !isWaitingForSignIn && (
 					<>
 						{/* FIXME: [1] [Prod] Replace the images or optimize the banner images, the page load times are high with the Images  */}
-						{props.bannerContent.length > 0 && <HomeCarousal carousalContent={props.bannerContent} />}
+						{props.bannerContent.length > 0 && <HomeCarousalNew carousalContent={props.bannerContent} />}
 						{/* TODO: [3] [Accessibility] featured products does not display link when hovered */}
 						{/* TODO: [2] [Cosmetic] display additional information (subtitle) in the featured  */}
 						{/* TODO: [2] [Functionality] product wishlist does nor work  */}
-						{props.featured.length > 0 && <CarousalCardSlider items={props.featured} />}
+						{props.featured.length > 0 && <CarousalCardSliderNew items={props.featured} />}
 						{/* TODO: [2] [ReUsability] Re use same components for gender listing page and home page */}
-						{props.categories && <CategorySection items={props.categories} />}
+						{/* {props.categories && <CategorySection items={props.categories} />} */}
 						<div className="container flex flex-col gap-6 mx-auto mt-20 md:flex-row justify-evenly">
 							<SiteFeatureIcon
 								icon="selected_with_love"

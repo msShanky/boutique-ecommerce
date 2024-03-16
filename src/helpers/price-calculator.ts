@@ -5,6 +5,8 @@ export const getSellingPriceFromDiscount = (mrp: number, discount: number): numb
 };
 
 export const getSellingPrice = (product: ProductWithRelations): number => {
+	if (!product) return 0;
+	
 	const { msrp, product_discount } = product;
 	return getSellingPriceFromDiscount(msrp as number, product_discount as number);
 	// const _mrp = msrp as number;

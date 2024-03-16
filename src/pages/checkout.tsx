@@ -15,16 +15,16 @@ import useRazorpay from "react-razorpay";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { cartTotalSelector, clearCart } from "@/reducer/cart";
 import { useEffect } from "react";
+
 import { useLottie } from "lottie-react";
 
 import orderPlacedAnimation from "animations/1708-success.json";
 
-const orderPlacedAnimationProps = {
+const successAnimationProps = {
 	animationData: orderPlacedAnimation,
 	loop: true,
 	style: {
 		width: "350px",
-		height: "350px",
 	},
 };
 
@@ -33,8 +33,8 @@ const Checkout: NextPage = () => {
 	const state = useAppSelector((state) => state);
 	const dispatch = useAppDispatch();
 	const cartTotal = cartTotalSelector(state);
-	const { View } = useLottie(orderPlacedAnimationProps);
-	const [getUserAddress, userAddressListResponse] = useLazyGetUserAddressWithIDQuery();
+	const { View } = useLottie(successAnimationProps);
+	const [getUserAddress, { data: userAddressData }] = useLazyGetUserAddressWithIDQuery();
 
 	const { user } = useUser();
 	// const userAddress = useGetUserAddressQuery(user?.id ?? '');
@@ -58,6 +58,8 @@ const Checkout: NextPage = () => {
 	}, [isSuccess]);
 
 	const RazorPay = useRazorpay();
+
+	console.log("THE ADDRESS LIST", userAddressData);
 
 	const handlePaymentSuccess = (res: RazorPaySuccess, formValues: CheckoutFormValue) => {
 		checkoutCart({
@@ -113,7 +115,7 @@ const Checkout: NextPage = () => {
 						{products.length === 0 && !isSuccess && (
 							<div className="flex flex-col items-center justify-center w-11/12 select-none">
 								<Image height={450} src="/images/404.svg" alt="No Orders Found" />
-								<Title className="text-4xl font-thin text-primaryBlack">The Cart Is Empty</Title>
+								<Title className="pt-4 text-4xl font-thin text-primaryBlack">The Cart Is Empty</Title>
 								<Link href="/">
 									<Text className="mt-8 text-black underline hover:cursor-pointer hover:text-primary">
 										View Products
@@ -122,19 +124,19 @@ const Checkout: NextPage = () => {
 							</div>
 						)}
 						{products.length > 0 && !isSuccess && (
-							<div className="relative flex flex-col items-start justify-center w-full gap-10 p-4 md:flex-row">
+							<div className="relative flex flex-col items-start justify-center w-full gap-6 p-4 lg:flex-row">
 								<CheckoutForm
 									handleCheckout={handleCheckout}
 									handleCheckoutWithExistingAddress={handleCheckout}
 									isLoading={isLoading || isPaymentLoading}
 									user={user}
-									userAddressList={userAddressListResponse}
+									userAddressList={userAddressData}
 								/>
 								<CartTotal />
 							</div>
 						)}
 						{isSuccess && paymentOrderSuccess && (
-							<div className="flex flex-col items-center justify-center w-10/12 gap-4 text-center select-none md:w-3/5">
+							<div className="flex flex-col items-center justify-center w-10/12 gap-4 text-center select-none lg:w-3/5">
 								{/* <Image width={350} src="/images/success_icon.svg" alt="Cart Success Icon" /> */}
 								<div>{View}</div>
 								<Title className="mt-0 text-4xl font-bold text-primary">Your Order Is Completed!</Title>

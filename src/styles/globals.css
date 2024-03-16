@@ -21,3 +21,11 @@ a {
 * {
 	box-sizing: border-box;
 }
+
+.slick-slide > div {
+	@apply flex justify-center items-center;
+}
+
+.slick-arrow {
+	@apply flex justify-center items-center;
+}

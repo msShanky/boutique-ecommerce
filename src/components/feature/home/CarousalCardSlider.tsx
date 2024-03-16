@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Title } from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
+// import { Carousel } from "@mantine/carousel";
 import { FeaturedProductCard } from "@/components/common/cards";
 import { useWishlist } from "hooks";
 import { useUser } from "@supabase/auth-helpers-react";
@@ -26,14 +26,14 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 			const isWishlisted = wishlist.includes(product.id);
 			const uniqueKey = `unique_card_carousal_${(index + 46) * 99}_${product.id}}`;
 			return (
-				<Carousel.Slide key={uniqueKey}>
+				// <Carousel.Slide key={uniqueKey}>
 					<FeaturedProductCard
 						handleWishList={() => handleWishlist(product)}
 						product={product}
 						isWishlisted={isWishlisted}
-						key={product.id}
+						key={uniqueKey + product.id}
 					/>
-				</Carousel.Slide>
+				// </Carousel.Slide>
 			);
 		});
 
@@ -43,7 +43,7 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 				Featured Products
 			</Title>
 			{/* For mobile devices */}
-			<Carousel
+			{/* <Carousel
 				className="bg-opacity-25 md:hidden"
 				sx={{ maxWidth: 344 }}
 				classNames={{
@@ -60,9 +60,9 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 				loop
 			>
 				{itemCards}
-			</Carousel>
+			</Carousel> */}
 			{/* For desktop devices */}
-			<Carousel
+			{/* <Carousel
 				className="hidden w-full md:flex"
 				classNames={{
 					control: "bg-primary/90 w-10 h-20 rounded-none border-none ",
@@ -78,7 +78,7 @@ export const CarousalCardSlider = (props: CarousalCardSliderProps) => {
 				loop
 			>
 				{itemCards}
-			</Carousel>
+			</Carousel> */}
 		</div>
 	);
 };

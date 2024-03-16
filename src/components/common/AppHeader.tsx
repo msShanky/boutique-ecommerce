@@ -11,7 +11,7 @@ import { HoverMenuItem, LinkIcon, MobileMenu } from "./header";
 import { useUser } from "@supabase/auth-helpers-react";
 import { UserAvatar } from "./user";
 import { useRouter } from "next/router";
-import { IconLogout, IconTruckDelivery } from "@tabler/icons-react";
+import { IconLogout, IconTruckDelivery, IconPhone } from "@tabler/icons-react";
 
 // import { getUserProfileFromGoogle } from "@/helpers/authHelper";
 
@@ -30,9 +30,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	const router = useRouter();
 
 	const cartItemCount = cartQuantitySelector(rootState);
-
 	const { menuLinks } = props;
-
 	const isMobile = useMediaQuery("(max-width: 600px)");
 
 	// Closes the drawer when a user is redirected
@@ -44,7 +42,8 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	const menuItem = (label: string) => {
 		return (
 			<Text
-				className={`md:flex flex-col justify-between hover:text-primary lg:text-white md:text-primaryBlack hover:cursor-pointer hover:underline`}
+				// className={`md:flex flex-col justify-between hover:text-primary lg:text-white hover:cursor-pointer hover:underline`}
+				className="text-base text-white md:text-xs lg:text-base"
 			>
 				{label}
 			</Text>
@@ -65,18 +64,20 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
 				<Link href="/" passHref>
-					<Image
-						width={isMobile ? 55 : 75}
-						className="hover:cursor-pointer"
-						src="/images/breeze_logo_v2_white.svg"
-						alt="Breeze Logo"
-					/>
+					<div className="flex items-start gap-4 md:items-center">
+						<Image
+							width={isMobile ? 55 : 75}
+							className="select-none hover:cursor-pointer"
+							src="/images/breeze_logo_v2_white.svg"
+							alt="Breeze Logo"
+						/>
+						<Text className="w-24 font-sans text-base font-light select-none lg:text-3xl md:text-xl md:w-36 text-primary drop-shadow-2xl shadow-primary">
+							Breeze Boutique
+						</Text>
+					</div>
 				</Link>
-				<div className="flex-row hidden gap-12 md:flex">
-					<Group position="right" className={"mr-4 gap-6"}>
-						{/* {menuItems} */}
-					</Group>
-					<Group position="right" className={"mr-4 gap-6"}>
+				<div className="flex-row justify-end hidden gap-12 md:w-6/12 lg:w-11/12 lg:flex">
+					<Group position="right" className="gap-1 mr-4 md:gap-2 lg:gap-6">
 						{user && !userLoading ? (
 							<UserAvatar handleToggle={() => null} user={user} theme="black" />
 						) : (
@@ -89,7 +90,23 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 								label="logout"
 							/>
 						)}
-						<LinkIcon icon={<IconHeart size={20} className="stroke-primary fill-primaryBlack" />} link="user/wishlist" label="WishList" />
+						{user && !userLoading && (
+							<LinkIcon
+								icon={<IconTruckDelivery size={20} className="stroke-primary fill-primaryBlack" />}
+								link="/user/orders"
+								label="Orders"
+							/>
+						)}
+						<LinkIcon
+							icon={<IconHeart size={20} className="stroke-primary fill-primaryBlack" />}
+							link="user/wishlist"
+							label="WishList"
+						/>
+						<LinkIcon
+							icon={<IconPhone size={20} className="stroke-primary fill-primaryBlack" />}
+							link="/contact-us"
+							label="Contact Us"
+						/>
 						<LinkIcon
 							icon={<IconTruckDelivery size={20} className="stroke-primary fill-primaryBlack" />}
 							link="/user/orders"
@@ -103,14 +120,14 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 						/>
 					</Group>
 				</div>
-				<div className="flex gap-8 md:hidden">
+				<div className="flex items-center gap-8 lg:hidden">
+					{!user && !userLoading && <Link href="/login">{menuItem("login")}</Link>}
 					<LinkIcon
 						icon={<IconShoppingCart size={25} className="stroke-primary fill-primaryBlack" />}
 						link="/cart"
 						dockCount={cartItemCount}
 					/>
-					{/* <LinkIcon icon={<IconHeart size={25} className="stroke-white" />} link="user/wishlist" /> */}
-					<Burger opened={opened} onClick={toggle} className="md:hidden" color="#fff" size="md" />
+					<Burger opened={opened} onClick={toggle} className="lg:hidden" color="#fff" size="md" />
 					<Drawer
 						withCloseButton={false}
 						opened={opened}

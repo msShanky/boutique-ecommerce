@@ -10,7 +10,8 @@ const OrderItem = (props: { orderItem: OrderItemWithRelations }) => {
 		category: { category },
 	} = product;
 	const { sku, size, inventory_count } = product_variant;
-
+	
+	// FIXME: The product link is not working correctly
 	const productLink = `/products/${category?.toLowerCase()}/${poduct_code}`;
 
 	return (

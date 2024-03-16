@@ -27,6 +27,7 @@ export interface paths {
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
           /** The relationship between an user order and their shipping information */
           user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
+          cancel_reason?: parameters["rowFilter.user_order.cancel_reason"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -88,6 +89,7 @@ export interface paths {
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
           /** The relationship between an user order and their shipping information */
           user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
+          cancel_reason?: parameters["rowFilter.user_order.cancel_reason"];
         };
         header: {
           /** Preference */
@@ -113,6 +115,7 @@ export interface paths {
           razorpay_signature?: parameters["rowFilter.user_order.razorpay_signature"];
           /** The relationship between an user order and their shipping information */
           user_shipping_address_id?: parameters["rowFilter.user_order.user_shipping_address_id"];
+          cancel_reason?: parameters["rowFilter.user_order.cancel_reason"];
         };
         body: {
           /** user_order */
@@ -951,6 +954,7 @@ export interface paths {
           add_on_details?: parameters["rowFilter.order_item.add_on_details"];
           /** Item price is  the sum of Addon Price and Items Price */
           item_price?: parameters["rowFilter.order_item.item_price"];
+          inventory_action?: parameters["rowFilter.order_item.inventory_action"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -1012,6 +1016,7 @@ export interface paths {
           add_on_details?: parameters["rowFilter.order_item.add_on_details"];
           /** Item price is  the sum of Addon Price and Items Price */
           item_price?: parameters["rowFilter.order_item.item_price"];
+          inventory_action?: parameters["rowFilter.order_item.inventory_action"];
         };
         header: {
           /** Preference */
@@ -1037,106 +1042,11 @@ export interface paths {
           add_on_details?: parameters["rowFilter.order_item.add_on_details"];
           /** Item price is  the sum of Addon Price and Items Price */
           item_price?: parameters["rowFilter.order_item.item_price"];
+          inventory_action?: parameters["rowFilter.order_item.inventory_action"];
         };
         body: {
           /** order_item */
           order_item?: definitions["order_item"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-  };
-  "/product_inventory": {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.product_inventory.id"];
-          created_at?: parameters["rowFilter.product_inventory.created_at"];
-          stock?: parameters["rowFilter.product_inventory.stock"];
-          variant_id?: parameters["rowFilter.product_inventory.variant_id"];
-          /** Filtering Columns */
-          select?: parameters["select"];
-          /** Ordering */
-          order?: parameters["order"];
-          /** Limiting and Pagination */
-          offset?: parameters["offset"];
-          /** Limiting and Pagination */
-          limit?: parameters["limit"];
-        };
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters["range"];
-          /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
-          /** Preference */
-          Prefer?: parameters["preferCount"];
-        };
-      };
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions["product_inventory"][];
-        };
-        /** Partial Content */
-        206: unknown;
-      };
-    };
-    post: {
-      parameters: {
-        body: {
-          /** product_inventory */
-          product_inventory?: definitions["product_inventory"];
-        };
-        query: {
-          /** Filtering Columns */
-          select?: parameters["select"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferPost"];
-        };
-      };
-      responses: {
-        /** Created */
-        201: unknown;
-      };
-    };
-    delete: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.product_inventory.id"];
-          created_at?: parameters["rowFilter.product_inventory.created_at"];
-          stock?: parameters["rowFilter.product_inventory.stock"];
-          variant_id?: parameters["rowFilter.product_inventory.variant_id"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-    patch: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.product_inventory.id"];
-          created_at?: parameters["rowFilter.product_inventory.created_at"];
-          stock?: parameters["rowFilter.product_inventory.stock"];
-          variant_id?: parameters["rowFilter.product_inventory.variant_id"];
-        };
-        body: {
-          /** product_inventory */
-          product_inventory?: definitions["product_inventory"];
         };
         header: {
           /** Preference */
@@ -1407,6 +1317,8 @@ export interface definitions {
      * This is a Foreign Key to `user_shipping_address.id`.<fk table='user_shipping_address' column='id'/>
      */
     user_shipping_address_id?: number;
+    /** Format: text */
+    cancel_reason?: string;
   };
   /** @description Contains the user shipping information for each instance created */
   user_shipping_address: {
@@ -1707,28 +1619,11 @@ export interface definitions {
      * @description Item price is  the sum of Addon Price and Items Price
      */
     item_price?: number;
-  };
-  /** @description Maintains the product inventory for variants */
-  product_inventory: {
     /**
-     * Format: bigint
-     * @description Note:
-     * This is a Primary Key.<pk/>
+     * Format: boolean
+     * @default false
      */
-    id: number;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at?: string;
-    /** Format: bigint */
-    stock?: number;
-    /**
-     * Format: bigint
-     * @description Note:
-     * This is a Foreign Key to `product_variant.id`.<fk table='product_variant' column='id'/>
-     */
-    variant_id?: number;
+    inventory_action?: boolean;
   };
   /** @description Maintains the gender group available within the application */
   gender_group: {
@@ -1863,6 +1758,8 @@ export interface parameters {
    * @description The relationship between an user order and their shipping information
    */
   "rowFilter.user_order.user_shipping_address_id": string;
+  /** Format: text */
+  "rowFilter.user_order.cancel_reason": string;
   /** @description user_shipping_address */
   "body.user_shipping_address": definitions["user_shipping_address"];
   /** Format: bigint */
@@ -2062,16 +1959,8 @@ export interface parameters {
    * @description Item price is  the sum of Addon Price and Items Price
    */
   "rowFilter.order_item.item_price": string;
-  /** @description product_inventory */
-  "body.product_inventory": definitions["product_inventory"];
-  /** Format: bigint */
-  "rowFilter.product_inventory.id": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.product_inventory.created_at": string;
-  /** Format: bigint */
-  "rowFilter.product_inventory.stock": string;
-  /** Format: bigint */
-  "rowFilter.product_inventory.variant_id": string;
+  /** Format: boolean */
+  "rowFilter.order_item.inventory_action": string;
   /** @description gender_group */
   "body.gender_group": definitions["gender_group"];
   /** Format: bigint */

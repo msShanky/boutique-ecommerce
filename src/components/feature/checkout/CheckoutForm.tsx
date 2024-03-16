@@ -47,6 +47,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 			address: "",
 			address_line_two: "",
 			city: "Chennai",
+			state: "Tamil Nadu",
 			country: "India",
 			pin_code: "",
 		},
@@ -60,24 +61,19 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	};
 
 	useEffect(() => {
-		if (
-			!userAddressList ||
-			!userAddressList.data ||
-			!userAddressList.data.body ||
-			userAddressList.data.body.length <= 0
-		) {
+		console.log("userAddressList useEffect ==== ", userAddressList);
+		if (!userAddressList || !userAddressList.body || userAddressList.body.length <= 0) {
 			setOverrideAddressForm(true);
 		}
+		setOverrideAddressForm(false);
 	}, [userAddressList]);
 
 	const renderAddressList = () => {
-		if (!userAddressList || !userAddressList.data || !userAddressList.data.body) {
+		if (!userAddressList || !userAddressList.body) {
 			return <p>No address found</p>;
 		}
 
-		const {
-			data: { body },
-		} = userAddressList;
+		const { body } = userAddressList;
 
 		return (
 			<>
@@ -90,7 +86,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 						Add new
 					</Button>
 				</div>
-				<div>
+				<div className="flex flex-wrap gap-2">
 					{body.map((savedAddress: any) => {
 						// @ts-ignore
 						const isActiveAddress = selectedAddress ? savedAddress.id === selectedAddress.id : false;
@@ -101,7 +97,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 								onClick={() => {
 									setSelectedAddress(savedAddress);
 								}}
-								className="relative w-full md:w-2/4 drop-shadow-xl"
+								className="relative w-full md:w-5/12 drop-shadow-xl"
 							>
 								{isActiveAddress && (
 									<Badge variant="filled" fullWidth className="absolute w-6 h-6 p-0 right-2 top-2">
@@ -124,6 +120,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 				<Button
 					className="mt-6 bg-primaryBlack hover:cursor-pointer hover:bg-primaryAlt"
 					onClick={() => (selectedAddress ? handleCheckoutWithExistingAddress(selectedAddress) : null)}
+					disabled={!selectedAddress}
 				>
 					Proceed to payment
 				</Button>
@@ -162,6 +159,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					<TextInput withAsterisk placeholder="Address" {...getInputProps("address")} />
 					<TextInput placeholder="Apartment, suit, street (Optional)" {...getInputProps("address_line_two")} />
 					<TextInput disabled readOnly placeholder="City" {...getInputProps("city")} />
+					<TextInput disabled readOnly placeholder="State" {...getInputProps("state")} />
 					<div className="flex flex-row justify-center gap-8">
 						<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
 						<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />
@@ -169,7 +167,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					<Button disabled={!isValid} className="text-white bg-primaryBlack hover:bg-primaryBlack/60" type="submit">
 						Proceed For Payment
 					</Button>
-					{userAddressList && userAddressList.data.body && userAddressList.data.body.length > 0 && (
+					{userAddressList && userAddressList.data && userAddressList.data.body.length > 0 && (
 						<Button
 							disabled={!isValid}
 							className="text-white md:mx-4 bg-primaryBlack hover:bg-primaryBlack/60"
@@ -185,9 +183,8 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	};
 
 	return (
-		<div className="w-full px-8 py-16 md:w-7/12 max-h-max bg-primary/60">
+		<div className="w-full px-8 py-16 lg:w-8/12 max-h-max bg-primary/60">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
-
 			{userAddressList && !overrideAddressForm ? renderAddressList() : renderContactForm()}
 		</div>
 	);

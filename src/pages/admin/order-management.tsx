@@ -4,7 +4,7 @@ import Head from "next/head";
 import { OrderTable } from "@/components/feature/admin/order/table";
 import { useLazyGetOrdersQuery } from "@/reducer/breezeBaseApi";
 import OrderFilter from "@/components/feature/admin/order/forms/OrderFilter";
-import { OrderData, OrderFilterFormValues } from "@/components/feature/admin/order/types";
+import { OrderFilterFormValues } from "@/components/feature/admin/order/types";
 import { Pagination } from "@mantine/core";
 import { Loader } from "@mantine/core";
 
@@ -46,13 +46,15 @@ const OrderManagementPage = () => {
 				<section className="w-full">
 					<div>OrderManagement</div>
 					<OrderFilter values={filters} onSubmit={handleFilterChange} />
-					{ordersData?.body ? (
-						<OrderTable data={ordersData.body} refreshData={() => refreshOrders(filters)} />
-					) : (
-						<div className="flex justify-center w-full h-56 mt-20">
-							<Loader size={60} />
-						</div>
-					)}
+					<div className="min-h-[70vh]">
+						{ordersData?.body ? (
+							<OrderTable data={ordersData.body} refreshData={() => refreshOrders(filters)} />
+						) : (
+							<div className="flex justify-center w-full h-56 mt-20">
+								<Loader size={60} />
+							</div>
+						)}
+					</div>
 					<Pagination
 						page={currentPage}
 						onChange={setCurrentPage}

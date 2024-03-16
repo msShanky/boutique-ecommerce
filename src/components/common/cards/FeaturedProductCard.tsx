@@ -1,6 +1,6 @@
 import React, { FunctionComponent, MouseEvent } from "react";
 import Link from "next/link";
-import { ActionIcon, Title, Image } from "@mantine/core";
+import { ActionIcon, Title, Image, Anchor } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { IconHeart } from "@tabler/icons";
 import { getImageUrl, getProductSlug } from "@/helpers/supabase-helper";
@@ -25,29 +25,29 @@ export const FeaturedProductCard: FunctionComponent<FeaturedProductCardProps> = 
 	const pageSlug = getProductSlug(product);
 
 	return (
-		<Link href={pageSlug} passHref>
-			<div className="relative w-[344px] h-[620px] hover:cursor-pointer group mb-4">
-				<Image
-					width={344}
-					height={500}
-					classNames={{
-						image: "object-top",
-					}}
-					src={images ? getImageUrl(images?.[0]) : ""}
-					alt={`PRODUCT_${id}`}
-					fit="cover"
-				/>
-				{/* TODO: Fetch the wishlist status from the API call */}
-				<div className="absolute flex flex-row space-x-4 top-2 left-2">
-					<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
-						<IconHeart className={`${isWishlisted ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
-					</ActionIcon>
-				</div>
-				<div className="mt-4 space-y-2 bg-white">
-					<Title className="font-sans text-xl text-dark-blue cla">{title}</Title>
-				</div>
-				<PriceWithDiscount product={product} />
+		<div className="relative w-[344px] h-[620px] hover:cursor-pointer group mb-4">
+			<Image
+				width={344}
+				height={500}
+				classNames={{
+					image: "object-top",
+				}}
+				src={images ? getImageUrl(images?.[0]) : ""}
+				alt={`PRODUCT_${id}`}
+				fit="cover"
+			/>
+			{/* TODO: Fetch the wishlist status from the API call */}
+			<div className="absolute flex flex-row space-x-4 top-2 left-2">
+				<ActionIcon className="hover:bg-transparent " onClick={_handleWishList}>
+					<IconHeart className={`${isWishlisted ? "fill-pink" : "fill-transparent"} stroke-pink`} size={40} />
+				</ActionIcon>
 			</div>
-		</Link>
+			<div className="mt-4 space-y-2 bg-white">
+				<Link href={pageSlug} passHref>
+					<Anchor className="font-sans text-xl underline uppercase text-dark-blue">{title}</Anchor>
+				</Link>
+			</div>
+			<PriceWithDiscount product={product} />
+		</div>
 	);
 };

@@ -6,6 +6,7 @@ import { Text, ActionIcon, Accordion } from "@mantine/core";
 import { IconHeart, IconLogout, IconTruckDelivery, IconX } from "@tabler/icons-react";
 import { getCategoryLink, getSubCategoryLink } from "@/helpers/supabase-helper";
 import LinkIcon from "./LinkIcon";
+import { IconPhone } from "@tabler/icons";
 
 type MobileMenuProps = {
 	handleClose: () => void;
@@ -68,9 +69,6 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 	return (
 		<section className="flex flex-col gap-10 p-6">
 			<div className="flex justify-between w-full ">
-				<ActionIcon onClick={handleClose}>
-					<IconX size="6rem" className="text-primaryBlack" />
-				</ActionIcon>
 				<div className={`flex justify-end w-6/12 p-2 ${!user ? "bg-transparent" : "bg-primary"} rounded-xl`}>
 					{user && !userLoading ? (
 						<UserAvatar handleToggle={() => null} user={user} theme="white" />
@@ -78,6 +76,9 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 						<Link href="/login">{LinkText("login")}</Link>
 					)}
 				</div>
+				<ActionIcon onClick={handleClose}>
+					<IconX size="6rem" className="text-primaryBlack" />
+				</ActionIcon>
 			</div>
 			{/* <div>{menuItems}</div> */}
 			<div className="flex flex-col gap-4 text-black">
@@ -91,6 +92,12 @@ export const MobileMenu: FC<MobileMenuProps> = (props) => {
 					<a className="flex flex-row items-center gap-2 text-xl text-black underline">
 						<p>Orders</p>
 						<IconTruckDelivery size={30} className="stroke-black fill-primary" />
+					</a>
+				</Link>
+				<Link href={"/contact-us"}>
+					<a className="flex flex-row items-center gap-2 text-xl text-black underline">
+						<p>Contact Us</p>
+						<IconPhone size={30} className="stroke-black fill-primary" />
 					</a>
 				</Link>
 				{user && !userLoading && (

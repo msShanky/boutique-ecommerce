@@ -18,6 +18,9 @@ export const breezeAdminBaseApi = createApi({
 		getNodeCategoryByCategoryId: builder.query<Array<definitions["product_sub_category"]>, number>({
 			query: (categoryId) => `product-management/sub-categories?category=${categoryId}`,
 		}),
+		getDashboardData: builder.query<any, void>({
+			query: () => `/admin/dashboard`,
+		}),
 	}),
 });
 
@@ -26,4 +29,5 @@ export const {
 	useLazyGetCategoriesByGenderIdQuery,
 	useLazyGetSubCategoryByCategoryIdQuery,
 	useLazyGetNodeCategoryByCategoryIdQuery,
+	useGetDashboardDataQuery,
 } = breezeAdminBaseApi;

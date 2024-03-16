@@ -32,6 +32,7 @@ export const getImageUrl = (value: any): string => {
 	// return `${process.env.NEXT_PUBLIC_CDN}/${value[0]}`;
 	if (value.includes("https")) return value;
 	return `${process.env.NEXT_PUBLIC_CDN}/${value}`;
+	// return `assets/${value}`;
 };
 
 // type ProductVariantCallBack = {

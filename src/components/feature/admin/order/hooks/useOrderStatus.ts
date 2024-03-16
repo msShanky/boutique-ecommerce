@@ -13,12 +13,17 @@ export function useOrderStatus() {
 
 	useEffect(() => {
 		if (orderStatusResponse?.data?.body) {
-			const options = orderStatusResponse.data.body.map((status: definitions["order_status"]) => {
-				return {
-					value: status.id,
-					label: status.status_text,
-				};
-			});
+			const options = orderStatusResponse.data.body
+				.map((status: definitions["order_status"]) => {
+					return {
+						value: status.id,
+						label: status.status_text,
+					};
+				})
+				// Remove Acknowledge and Reject status
+				.filter(({ value }) => value !== 2)
+				.filter(({ value }) => value !== 6);
+
 			setOrderStatusOptions(options);
 		}
 	}, [orderStatusResponse.data]);

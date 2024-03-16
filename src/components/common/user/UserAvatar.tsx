@@ -19,7 +19,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 			unstyled
 			classNames={{
 				root: ":focus-visible:border-none",
-				label: "relative flex flex-row items-center space-x-4 ",
+				label: "relative flex flex-row items-center space-x-4 md:text-xs lg:text-base text-base",
 			}}
 			className=" hover:cursor-pointer"
 			onClick={handleToggle}
@@ -29,7 +29,7 @@ const UserAvatar: FunctionComponent<UserAvatarProps> = (props): ReactElement => 
 				<Image
 					alt="user icon"
 					src={userImage}
-					width={40}
+					width={30}
 					classNames={{
 						imageWrapper: "rounded-full",
 						image: "rounded-full",
