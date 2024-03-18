@@ -41,20 +41,20 @@ export const EmblaCarousel: React.FC<PropType> = (props) => {
 		emblaMainApi.on("reInit", onSelect);
 	}, [emblaMainApi, onSelect]);
 
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			const maxSliderIndex = slides.length - 1;
-			setSelectedIndex((prevCount) => {
-				if (prevCount + 1 === maxSliderIndex) return 0;
-				return prevCount + 1;
-			});
-		}, 5000); // Increment count every 1000ms (1 second)
+	// useEffect(() => {
+	// 	const intervalId = setInterval(() => {
+	// 		const maxSliderIndex = slides.length - 1;
+	// 		setSelectedIndex((prevCount) => {
+	// 			if (prevCount + 1 === maxSliderIndex) return 0;
+	// 			return prevCount + 1;
+	// 		});
+	// 	}, 5000); // Increment count every 1000ms (1 second)
 
-		// Cleanup function to clear the interval when the component unmounts
-		return () => {
-			clearInterval(intervalId);
-		};
-	}, []);
+	// 	// Cleanup function to clear the interval when the component unmounts
+	// 	return () => {
+	// 		clearInterval(intervalId);
+	// 	};
+	// }, []);
 
 	return (
 		<div className="embla">

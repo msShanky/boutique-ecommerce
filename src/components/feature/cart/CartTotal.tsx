@@ -34,6 +34,16 @@ const CartTotal = () => {
 					</Title>
 				</div>
 				<div className="flex flex-row items-center justify-between">
+					<div className="flex flex-col">
+						<Title className="flex items-center space-x-4 text-lg font-semibold">Delivery:</Title>
+						<Title className="flex items-center text-xs font-semibold">Delivery free within India</Title>
+					</div>
+					<Title className="flex items-center space-x-4 text-base">
+						<IconCurrencyRupee className="w-4 h-4" />
+						{"0.00"}
+					</Title>
+				</div>
+				<div className="flex flex-row items-center justify-between">
 					<Title className="flex items-center space-x-4 text-lg font-semibold">Cart Total:</Title>
 					<Title className="flex items-center space-x-4 text-base">
 						<IconCurrencyRupee className="w-4 h-4" />

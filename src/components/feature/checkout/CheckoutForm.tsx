@@ -31,11 +31,13 @@ const schema = z.object({
 		.string()
 		.min(6, { message: "Pin code should be 6 digits" })
 		.max(6, { message: "Pin code should be 6 digits" }),
+	city: z.string().min(3, { message: "City value should be greater than 3 characters" }),
+	state: z.string().min(3, { message: "State value should be greater than 3 characters" }),
 });
 
 const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const { handleCheckout, isLoading, user, userAddressList, handleCheckoutWithExistingAddress } = props;
-	const [overrideAddressForm, setOverrideAddressForm] = useState(false);
+	const [overrideAddressForm, setOverrideAddressForm] = useState(true);
 	const [selectedAddress, setSelectedAddress] = useState<CheckoutFormValue | undefined>();
 	const { getInputProps, isValid, onSubmit, errors } = useForm<CheckoutFormValue>({
 		validate: zodResolver(schema),
@@ -46,8 +48,8 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 			last_name: "",
 			address: "",
 			address_line_two: "",
-			city: "Chennai",
-			state: "Tamil Nadu",
+			city: "",
+			state: "",
 			country: "India",
 			pin_code: "",
 		},
@@ -62,10 +64,12 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 
 	useEffect(() => {
 		if (!userAddressList || !userAddressList.body || userAddressList.body.length <= 0) {
-			setOverrideAddressForm(true);
+			setOverrideAddressForm(false);
 		}
-		setOverrideAddressForm(false);
+		setOverrideAddressForm(true);
 	}, [userAddressList]);
+
+	console.log("The userAddressList", userAddressList && !overrideAddressForm);
 
 	const renderAddressList = () => {
 		if (!userAddressList || !userAddressList.body) {
@@ -130,9 +134,9 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const renderContactForm = () => {
 		return (
 			<>
-				<div>
+				{/* <div>
 					<Text className="mb-10 text-sm text-primaryBlack">*Currently shipping only for Chennai</Text>
-				</div>
+				</div> */}
 				{/* Contact Information */}
 				<div className="flex flex-row justify-between ">
 					<Title className="text-lg font-bold text-primaryBlack">Contact Information</Title>
@@ -157,8 +161,8 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					</div>
 					<TextInput withAsterisk placeholder="Address" {...getInputProps("address")} />
 					<TextInput placeholder="Apartment, suit, street (Optional)" {...getInputProps("address_line_two")} />
-					<TextInput disabled readOnly placeholder="City" {...getInputProps("city")} />
-					<TextInput disabled readOnly placeholder="State" {...getInputProps("state")} />
+					<TextInput placeholder="City" {...getInputProps("city")} />
+					<TextInput placeholder="State" {...getInputProps("state")} />
 					<div className="flex flex-row justify-center gap-8">
 						<TextInput disabled readOnly className="w-6/12" placeholder="Country" {...getInputProps("country")} />
 						<TextInput withAsterisk className="w-6/12" placeholder="Pin Code" {...getInputProps("pin_code")} />

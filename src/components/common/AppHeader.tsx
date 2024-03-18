@@ -43,7 +43,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 		return (
 			<Text
 				// className={`md:flex flex-col justify-between hover:text-primary lg:text-white hover:cursor-pointer hover:underline`}
-				className="text-base text-white md:text-xs lg:text-base"
+				className="text-base text-white md:text-xs lg:text-base hover:cursor-pointer hover:underline"
 			>
 				{label}
 			</Text>
