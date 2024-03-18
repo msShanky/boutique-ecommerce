@@ -86,7 +86,7 @@ const OrdersPage = () => {
 											<Text>{dayjs(created_at).format(`DD-MMM-YYYY hh:mm A`)}</Text>
 										</div>
 										{/* @ts-ignore */}
-										<Badge className={`${orderBadgeColor[order_status.status]} w-6/12 md:w-60 mx-auto select-none`}>
+										<Badge className={`${orderBadgeColor[order_status.status]} w-6/12 md:w-60 lg:min-w-fit mx-auto select-none`}>
 											{getFormattedStatus(order_status.status as string)}
 										</Badge>
 									</div>

@@ -11,7 +11,7 @@ type CardWithIconProps = { value: number; label: string };
 
 const CardWithIcon = (props: CardWithIconProps) => {
 	return (
-		<Card className="max-w-xs mx-auto bg-primaryAlt">
+		<Card className="max-w-xs mx-auto bg-black">
 			<div className="flex items-center space-x-6">
 				<Icon
 					icon={RiCashFill}
@@ -41,7 +41,10 @@ export const DetailedSection: FC<DetailedSectionProps> = (props) => {
 			<div className="flex flex-wrap w-full">
 				<CardWithIcon label="Total Order Prize" value={data.totalOrderPrice} />
 				<CardWithIcon label="Average Order Value" value={data.averageOrderValue} />
-				<CardWithIcon label="Monthly Order Count" value={data.monthlyOrders[0].monthly_orders ?? 0} />
+				<CardWithIcon
+					label="Monthly Order Count"
+					value={data.monthlyOrders.length > 0 ? data.monthlyOrders[0].monthly_orders : 0}
+				/>
 			</div>
 			<div className="flex flex-wrap w-full">
 				<h3 className="my-6 text-xl font-semibold">Daily Orders</h3>
