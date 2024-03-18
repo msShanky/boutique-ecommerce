@@ -47,10 +47,7 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 
 		let userShippingID = body.shipping_address.id ?? undefined;
 
-		const shippingAddressBody = {
-			user_id: body.user_id,
-			...body.shipping_address,
-		};
+		const shippingAddressBody = { user_id: body.user_id, ...body.shipping_address };
 
 		try {
 			// Create the user shipping address first
@@ -64,6 +61,8 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 				}
 			}
 
+			const { status_code, ...paymentBody } = body.payment;
+
 			// Tag the created user shipping address to the user order
 			const orderPostBody: Partial<definitions["user_order"]> = {
 				code: nanoid(),
@@ -71,7 +70,7 @@ export default withApiAuth(async function ProtectedRoute(req: ExtendedApiRequest
 				shipment_ref: "",
 				user_id: body.user_id,
 				user_shipping_address_id: userShippingID,
-				...body.payment,
+				...paymentBody,
 			};
 			const { data: order, error } = await supabaseServerClient({ req, res }).from("user_order").insert(orderPostBody);
 

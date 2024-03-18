@@ -124,6 +124,7 @@ type RazorPaySuccess = {
 	razorpay_order_id: string;
 	razorpay_payment_id: string;
 	razorpay_signature: string;
+	status_code?: number;
 };
 
 type HomeCarousal = {

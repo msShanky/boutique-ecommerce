@@ -60,7 +60,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	return (
 		<Header
 			height={HEADER_HEIGHT}
-			className={`fixed transition-colors z-10 w-full mx-auto border-none bg-primaryBlack/80`}
+			className={`fixed transition-colors z-10 w-full mx-auto border-none bg-black`}
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
 				<Link href="/" passHref>
@@ -71,7 +71,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 							src="/images/breeze_logo_v2_white.svg"
 							alt="Breeze Logo"
 						/>
-						<Text className="w-24 font-sans text-base font-light select-none lg:text-3xl md:text-xl md:w-36 text-primary drop-shadow-2xl shadow-primary">
+						<Text className="w-24 font-sans text-base font-bold select-none lg:text-3xl md:text-xl md:w-36 text-primary drop-shadow-2xl shadow-primary">
 							Breeze Boutique
 						</Text>
 					</div>
