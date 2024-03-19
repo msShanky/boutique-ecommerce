@@ -37,7 +37,8 @@ const schema = z.object({
 
 const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const { handleCheckout, isLoading, user, userAddressList, handleCheckoutWithExistingAddress } = props;
-	const [overrideAddressForm, setOverrideAddressForm] = useState(true);
+	const [overrideAddressForm, setOverrideAddressForm] = useState(false);
+	const [addressAvailable, setAddressAvailable] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<CheckoutFormValue | undefined>();
 	const { getInputProps, isValid, onSubmit, errors } = useForm<CheckoutFormValue>({
 		validate: zodResolver(schema),
@@ -63,13 +64,16 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	};
 
 	useEffect(() => {
-		if (!userAddressList || !userAddressList.body || userAddressList.body.length <= 0) {
-			setOverrideAddressForm(false);
+		// There is a success response from the server
+		if (userAddressList && userAddressList.status === 200) {
+			if (userAddressList?.body?.length > 0) {
+				setAddressAvailable(true);
+				return;
+			}
 		}
-		setOverrideAddressForm(true);
+		// There is an error response from the server
+		setAddressAvailable(false);
 	}, [userAddressList]);
-
-	console.log("The userAddressList", userAddressList && !overrideAddressForm);
 
 	const renderAddressList = () => {
 		if (!userAddressList || !userAddressList.body) {
@@ -100,7 +104,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 								onClick={() => {
 									setSelectedAddress(savedAddress);
 								}}
-								className="relative w-full md:w-5/12 drop-shadow-xl"
+								className="relative w-full md:w-5/12 drop-shadow-xl hover:cursor-pointer"
 							>
 								{isActiveAddress && (
 									<Badge variant="filled" fullWidth className="absolute w-6 h-6 p-0 right-2 top-2">
@@ -134,9 +138,6 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	const renderContactForm = () => {
 		return (
 			<>
-				{/* <div>
-					<Text className="mb-10 text-sm text-primaryBlack">*Currently shipping only for Chennai</Text>
-				</div> */}
 				{/* Contact Information */}
 				<div className="flex flex-row justify-between ">
 					<Title className="text-lg font-bold text-primaryBlack">Contact Information</Title>
@@ -170,7 +171,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 					<Button disabled={!isValid} className="text-white bg-primaryBlack hover:bg-primaryBlack/60" type="submit">
 						Proceed For Payment
 					</Button>
-					{userAddressList && userAddressList.data && userAddressList.data.body.length > 0 && (
+					{addressAvailable && (
 						<Button
 							disabled={!isValid}
 							className="text-white md:mx-4 bg-primaryBlack hover:bg-primaryBlack/60"
@@ -188,7 +189,7 @@ const CheckoutForm: FunctionComponent<CheckoutFormProps> = (props) => {
 	return (
 		<div className="w-full px-8 py-16 lg:w-8/12 max-h-max bg-primary/60">
 			<LoadingOverlay visible={isLoading} overlayBlur={2} />
-			{userAddressList && !overrideAddressForm ? renderAddressList() : renderContactForm()}
+			{addressAvailable && !overrideAddressForm ? renderAddressList() : renderContactForm()}
 		</div>
 	);
 };

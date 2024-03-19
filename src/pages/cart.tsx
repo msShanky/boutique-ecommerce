@@ -27,11 +27,7 @@ const Cart: NextPage = () => {
 								</Link>
 							</div>
 						)}
-						{cartState.products.length > 0 && (
-							// <div className="flex flex-col items-start justify-center w-full gap-10 p-2 md:p-4 lg:flex-row">
-							<CartTable />
-							// </div>
-						)}
+						{cartState.products.length > 0 && <CartTable />}
 					</>
 				</AppSection>
 			</>
