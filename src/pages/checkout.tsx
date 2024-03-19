@@ -18,13 +18,14 @@ import { useEffect } from "react";
 
 import { useLottie } from "lottie-react";
 
-import orderPlacedAnimation from "animations/1708-success.json";
+import successAnimation from "animations/1708-success.json";
 
 const successAnimationProps = {
-	animationData: orderPlacedAnimation,
+	animationData: successAnimation,
 	loop: true,
 	style: {
 		width: "350px",
+		height: "350px",
 	},
 };
 
@@ -58,7 +59,6 @@ const Checkout: NextPage = () => {
 	}, [isSuccess]);
 
 	const RazorPay = useRazorpay();
-
 
 	const handlePaymentSuccess = (res: RazorPaySuccess, formValues: CheckoutFormValue) => {
 		checkoutCart({
@@ -136,18 +136,26 @@ const Checkout: NextPage = () => {
 						)}
 						{isSuccess && paymentOrderSuccess && (
 							<div className="flex flex-col items-center justify-center w-10/12 gap-4 text-center select-none lg:w-3/5">
-								{/* <Image width={350} src="/images/success_icon.svg" alt="Cart Success Icon" /> */}
-								<div>{View}</div>
+								<div>
+									<Image src='/images/undraw_order_confirmed_re_g0if.svg' alt='success-order' width={450} fit="contain" height={350} />
+								</div>
 								<Title className="mt-0 text-4xl font-bold text-primary">Your Order Is Completed!</Title>
 								<Text className="text-base font-semibold text-violet-subtext">
-									Thank you for your order! Your order is being processed and will be completed within 3-6 hours. You
-									will receive an email confirmation when your order is completed.
+									Thank you for your order! Your order is being processed and will be completed within 3 working days. You
+									can track your orders by clicking the &quot;Track Orders&quot; button.
 								</Text>
-								<Link href="/" passHref>
-									<Button className="text-white border-none bg-primaryBlack hover:bg-primary hover:text-primaryBlack">
-										Continue Shopping
-									</Button>
-								</Link>
+								<div className="flex flex-col justify-around w-full gap-6 md:flex-row">
+									<Link href="/" passHref>
+										<Button className="text-white border-none bg-primaryBlack hover:bg-primary hover:text-primaryBlack">
+											Continue Shopping
+										</Button>
+									</Link>
+									<Link href="/user/orders" passHref>
+										<Button className="text-white border-none bg-primaryBlack hover:bg-primary hover:text-primaryBlack">
+											Track orders
+										</Button>
+									</Link>
+								</div>
 							</div>
 						)}
 					</>

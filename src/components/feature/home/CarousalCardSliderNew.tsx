@@ -19,7 +19,7 @@ const NextArrow = (props: any) => {
 	const { className, onClick } = props;
 	return (
 		<div
-			className={`${className} bg-primary flex justify-center items-center hover:bg-primaryAlt hover:text-primary w-12 h-24 text-black before:hidden after:hidden z-50 -right-2`}
+			className={`${className} bg-primary flex justify-center items-center hover:bg-primaryAlt hover:text-primary w-12 h-24 text-black before:hidden after:hidden z-30 -right-2`}
 			onClick={onClick}
 		>
 			<IconChevronRight />
@@ -31,7 +31,7 @@ const PrevArrow = (props: any) => {
 	const { className, onClick } = props;
 	return (
 		<div
-			className={`${className} bg-primary flex justify-center items-center hover:bg-primaryAlt hover:text-primary text-black w-12 h-24 rounded-none border-none before:hidden after:hidden z-50 -left-2`}
+			className={`${className} bg-primary flex justify-center items-center hover:bg-primaryAlt hover:text-primary text-black w-12 h-24 rounded-none border-none before:hidden after:hidden z-30 -left-2`}
 			onClick={onClick}
 		>
 			<IconChevronLeft />

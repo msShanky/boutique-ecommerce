@@ -60,14 +60,14 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 	return (
 		<Header
 			height={HEADER_HEIGHT}
-			className={`fixed transition-colors z-10 w-full mx-auto border-none bg-black`}
+			className={`fixed transition-colors z-50 w-full mx-auto border-none bg-black`}
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
 				<Link href="/" passHref>
-					<div className="flex items-start gap-4 md:items-center">
+					<div className="flex items-start gap-4 md:items-center hover:cursor-pointer">
 						<Image
 							width={isMobile ? 55 : 75}
-							className="select-none hover:cursor-pointer"
+							className="select-none"
 							src="/images/breeze_logo_v2_white.svg"
 							alt="Breeze Logo"
 						/>
