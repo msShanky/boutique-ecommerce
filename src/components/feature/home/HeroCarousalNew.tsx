@@ -28,17 +28,8 @@ export const HomeCarousalNew = (props: HomeCarousalProps) => {
 
 		return (
 			<div key={uniqueKey} className=" bg-primary/10">
-				<AspectRatio ratio={16 / 9} p={0} className="">
-					<Image
-						key={uniqueKey}
-						classNames={{
-							figure: "container h-auto",
-						}}
-						width="100%"
-						alt="home_carousal"
-						src={hero.sourceURI}
-						fit={isMobile ? "scale-down" : "cover"}
-					/>
+				<AspectRatio ratio={16 / 9}>
+					<Image key={uniqueKey} alt="home_carousal" src={hero.sourceURI} />
 				</AspectRatio>
 			</div>
 		);
@@ -46,7 +37,7 @@ export const HomeCarousalNew = (props: HomeCarousalProps) => {
 
 	// TODO: Reduce the image quality to improve the performance
 	return (
-		<Slider className="mt-[100px]" {...settings}>
+		<Slider className="md:mt-[100px] mt-[80px]" {...settings}>
 			{carousalItems}
 		</Slider>
 	);
