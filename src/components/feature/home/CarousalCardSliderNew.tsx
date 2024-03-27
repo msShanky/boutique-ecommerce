@@ -48,8 +48,8 @@ export const CarousalCardSliderNew = (props: CarousalCardSliderProps) => {
 		dots: true,
 		arrows: true,
 		autoplay: true,
-		slidesToShow: 4,
-		slidesToScroll: 4,
+		slidesToShow: 3,
+		slidesToScroll: 3,
 		autoplaySpeed: 8000,
 		pauseOnHover: true,
 		pauseOnFocus: true,
@@ -57,12 +57,10 @@ export const CarousalCardSliderNew = (props: CarousalCardSliderProps) => {
 		touchMove: true,
 		responsive: [
 			{
-				breakpoint: 1024,
+				breakpoint: 480,
 				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2,
-					infinite: true,
-					dots: true,
+					slidesToShow: 1,
+					slidesToScroll: 1,
 				},
 			},
 			{
@@ -74,10 +72,22 @@ export const CarousalCardSliderNew = (props: CarousalCardSliderProps) => {
 				},
 			},
 			{
-				breakpoint: 480,
+				breakpoint: 1150,
 				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
+					slidesToShow: 2,
+					slidesToScroll: 2,
+					infinite: true,
+					dots: true,
+				},
+			},
+			{
+				breakpoint: 1300,
+				settings: {
+					initialSlide: 3,
+					slidesToShow: 3,
+					slidesToScroll: 2,
+					infinite: true,
+					dots: true,
 				},
 			},
 		],

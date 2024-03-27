@@ -59,7 +59,7 @@ const AppHeader: FunctionComponent<AppHeaderProps> = (props) => {
 
 	return (
 		<Header
-			height={HEADER_HEIGHT}
+			height={isMobile ? HEADER_HEIGHT - 20 : HEADER_HEIGHT}
 			className={`fixed transition-colors z-50 w-full mx-auto border-none bg-black`}
 		>
 			<Container className="container flex items-start justify-between px-6 py-4 md:items-center md:px-4">
