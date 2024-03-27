@@ -3,30 +3,33 @@ import { definitions } from "types/supabase";
 
 const homeCarousal = [
 	{
-		sourceURI: "home-banner/bridal_makeup_saree.webp",
+		// sourceURI: "home-banner/bridal_makeup_saree.webp",
+		sourceURI: "/images/home/banner/banner_1.png",
 		// style: "md:mt-[140px]",
 		style: "",
 	},
 	{
-		sourceURI: "home-banner/contemporary_dress_green_background.webp",
+		// sourceURI: "home-banner/contemporary_dress_green_background.webp",
+		sourceURI: "/images/home/banner/banner_2.png",
 		style: "",
 		// style: "md:mt-[140px]",
 	},
 	{
-		sourceURI: "home-banner/red_saree_garden_background.webp",
+		// sourceURI: "home-banner/red_saree_garden_background.webp",
+		sourceURI: "/images/home/banner/banner_3.png",
 		style: "",
 		// style: "md:mt-[140px]",
 	},
-	{
-		sourceURI: "home-banner/saree_home_background.webp",
-		style: "",
-		// style: "md:mt-[140px]",
-	},
-	{
-		sourceURI: "home-banner/saree_temple_background.webp",
-		style: "",
-		// style: "md:mt-[140px]",
-	},
+	// {
+	// 	sourceURI: "home-banner/saree_home_background.webp",
+	// 	style: "",
+	// 	// style: "md:mt-[140px]",
+	// },
+	// {
+	// 	sourceURI: "home-banner/saree_temple_background.webp",
+	// 	style: "",
+	// 	// style: "md:mt-[140px]",
+	// },
 ];
 
 export const getHomePageData = async () => {

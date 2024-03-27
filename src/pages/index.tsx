@@ -5,8 +5,6 @@ import { HomeCarousalNew, CarousalCardSliderNew, CategorySection, SiteFeatureIco
 import { useAuthValidator } from "../helpers";
 import { getHomePageData } from "../helpers/static_builder";
 import { getCategoryMenuLinks } from "@/helpers/static_builder/menuLinks";
-import {  } from "@/components/feature/home/HeroCarousalNew";
-
 type HomePageProps = {
 	menuLinks: Array<MenuLinkPropTypes>;
 	featured: Array<ProductWithRelations>;

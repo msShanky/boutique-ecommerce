@@ -18,10 +18,10 @@ const AppLayout: FunctionComponent<AppLayoutProps> = (props) => {
 	const { children, menuLinks, isLanding, pageTitle } = props;
 	return (
 		<>
-			<AppHeader menuLinks={menuLinks} isLanding={isLanding} />
 			<Head>
 				<title>{pageTitle}</title>
 			</Head>
+			<AppHeader menuLinks={menuLinks} isLanding={isLanding} />
 			<main className={isLanding ? "mb-32" : "my-32"}>{children}</main>
 			<AppFooter menuLinks={menuLinks} />
 			<div className="flex-row hidden gap-1 lg:fixed lg:flex md:flex-col bottom-4 md:left-10 left-2">
