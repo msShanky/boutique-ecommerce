@@ -18,6 +18,15 @@ export const getCategoryData = (categories: GetCategoryDataInput): Array<Product
 
 export const formatProductFormForUpdate = (product: ProductPostBody): ProductPostBody => {
 	const { category, ...coreProduct } = product;
+
+	if (typeof coreProduct.care_specs === "string") {
+		coreProduct.care_specs = (coreProduct.care_specs as string).split(",");
+	}
+
+	if (typeof coreProduct.specification === "string") {
+		coreProduct.specification = (coreProduct.specification as string).split(",");
+	}
+
 	return coreProduct;
 };
 

@@ -31,12 +31,24 @@ type ProductVariants = {
 	care_specs?: Array<string>;
 };
 
+type ProductFormVariants = {
+	variants?: Array<import("../types/supabase").definitions["product_variant"]>;
+	category?: import("../types/supabase").definitions["product_category"];
+	gender_group?: import("../types/supabase").definitions["gender_group"];
+	sub_category?: import("../types/supabase").definitions["product_sub_category"];
+	add_on?: Array<string>;
+	specification?: Array<string>;
+	care_specs?: Array<string>;
+};
+
 type ProductCategory = import("../types/supabase").definitions["product_category"];
 type ProductCategoryWithRelations = import("../types/supabase").definitions["product_category"] & {
 	gender_group?: import("../types/supabase").definitions["gender_group"];
 };
 type ProductWithRelations = import("../types/supabase").definitions["product"] & ProductVariants;
+type ProductFormWithRelations = import("../types/supabase").definitions["product"] & ProductFormVariants;
 type ProductPostBody = Omit<ProductWithRelations, "id">;
+type ProductFormBody = Omit<ProductFormWithRelations, "id">;
 type CategoryPostBody = Omit<ProductCategory, "id" | "created_at">;
 type ProductVariantPost = Omit<import("../types/supabase").definitions["product_variant"], "id">;
 
