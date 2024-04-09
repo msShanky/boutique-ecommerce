@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Button, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
+import { Button, JsonInput, NumberInput, Select, Textarea, TextInput } from "@mantine/core";
 import { getCategoryData } from "helpers/supabase-helper";
 import { getSellingPriceFromDiscount } from "helpers/price-calculator";
 import { UseFormReturnType } from "@mantine/form";
@@ -101,7 +101,30 @@ const ProductDetailsForm: FunctionComponent<ProductDetailsFormProps> = (props) =
 			/>
 			<TextInput placeholder="Product link" label="Product Link" readOnly {...getInputProps("page_link")} />
 			{/* <TextInput placeholder="Product link" label="Product Link" readOnly value={constructPageLink()} /> */}
-			<Textarea autosize minRows={6} placeholder="Product Description" label="Product Description" {...getInputProps("description")} />
+			<Textarea
+				autosize
+				minRows={6}
+				placeholder="Product Description"
+				label="Product Description"
+				{...getInputProps("description")}
+			/>
+			<JsonInput
+				autosize
+				minRows={4}
+				placeholder="Add On"
+				label="Add On"
+				value={JSON.stringify(values.add_on)}
+				defaultValue={JSON.stringify(values.add_on)}
+				readOnly
+			/>
+			<Textarea
+				autosize
+				minRows={6}
+				placeholder="Specification"
+				label="Specification"
+				{...getInputProps("specification")}
+			/>
+			<Textarea autosize minRows={6} placeholder="Care Specs" label="Care Specs" {...getInputProps("care_specs")} />
 			<div className="flex items-center justify-between gap-4">
 				{isSuccess && genderGroupData && (
 					<Select
